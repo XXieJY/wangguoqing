@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>书评管理-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/bookDis.css">
+    <link rel="stylesheet" href="__STATIC__/author/css/set.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/author/css/del.css">
+    <link rel="stylesheet" href="__STATIC__/author/css/common.css" />
+
+</head>
+
+<body>
+<!--头部 begin-->
+{include file="public/ruser"}
+<!--头部--->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">书评管理</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Ruser/index')}"><li class="fl active">书评管理</li></a>
+        <a href="{:url('Ruser/user')}"><li class="fl  ">读者管理</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+        <form method="post" action="">
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+                <input class="txt fl " value="{$bookName}" type="text " name="bookName" readonly="readonly">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    {volist name="book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="form-box fl ">
+            <span class="fl">书评类型：</span>
+            <div class="fl input-box sels prop">
+                <input class="txt fl " value="全部" type="text " name="" readonly="readonly" style="width: 125px;">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    <!--<li>一般</li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="form-box fl ">
+            <label for='search' class="fl">搜索：</label>
+            <input class="txt fl input-box name " placeholder="书评内容/读者昵称" type="text " name="message" id="search" />
+        </div>
+        <input type="submit" value="查询" class="btn">
+        </form>
+    </div>
+    {if condition="count($message) neq 0"}
+    <form action="/author/Ruser/piliang" method="post">
+    <table cellspacing="0" cellpadding="1" class="booinfo">
+        <thead>
+        <tr>
+            <th class="selectBox">
+                <input type="checkbox" name="" id="checkAll" />
+            </th>
+            <th class="list">序号</th>
+            <th class="dis ">书评</th>
+            <th class="reader">读者ID/昵称</th>
+            <th class="praise">赞</th>
+            <th class="replyTime">发表时间</th>
+            <th class="handleDeal">管理操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {volist name="message" id="vo"}
+        <tr>
+            <td class="selectBox">
+                <input type="checkbox" name="checkbox[]" value="{$vo.z_id}" />
+            </td>
+            <td class="list num">{++$a}</td>
+            {if condition="$vo.top eq 1"}
+            <td class="dis txt red" >
+                {$vo.content}
+            </td>
+            {else /}
+            <td class="dis txt" >
+                {$vo.content}
+            </td>
+            {/if}
+            <td class="reader">{$vo.pen_name}</td>
+            <td class="praise">{$vo.thumb}</td>
+            <td class="replyTime">{$vo.time}</td>
+            <td class="handleDeal">
+                {if condition="$vo.top eq 1"}
+                <a href="javascript:removeTop({$vo.z_id});" class="fl stick oh"><i class="fl"></i><span class="fl">取消置顶</span></a>
+                {else /}
+                <a href="javascript:zhiding({$vo.z_id});" class="fl stick oh"><i class="fl"></i><span class="fl">置顶评论</span></a>
+                {/if}
+
+                <a href="javascript:;" data-attr="{$vo.z_id}"  class="fl del oh"><i class="fl"></i><span class="fl">删除评论</span></a>
+
+            </td>
+        </tr>
+        {/volist}
+
+
+        </tbody>
+    </table>
+    <div class="handleDeals oh ">
+        {if condition="count($message) neq 0"}
+        <button class="fl " id="delAll" type="submit" >批量删除</button>
+        {/if}
+         {$message->render()}
+    </div>
+    </form>
+    {else /}
+    <!--<p class="noInfo">暂无数据~~</p>-->
+    <div class="noInfo">
+        <img src="__STATIC__/author/images/authors_icon_nodata.png" alt="" />
+        <span>目前暂无数据~~</span>
+    </div>
+    {/if}
+</div>
+{include file="public/bot"}
+<div class="mask dn">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span class="fr close"></span></p>
+        <p class="ts">是否删除该书评?</p>
+        <p class=" btnDel">
+            <input type="hidden" id="zid" value=""/>
+            <span href="javascript:;" id="cancel" class="fl">取消</span>
+            <button id="del" class=" fl act dele" onclick="delMsg()">删除</button>
+        </p>
+    </div>
+</div>
+</body>
+<!--<script src="js/jquery.dotdotdot.js" type="text/javascript" charset="utf-8"></script>-->
+<script type="text/javascript" src="__STATIC__/author/js/set.js"></script>
+<script src="__STATIC__/author/js/bookDis.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    $('#search').on('keyup', function(event) {
+        /* Act on the event */
+        wraHeight();
+    });
+</script>
+
+</html>
+<script type="text/javascript">
+    function zhiding(zid) {
+       $.ajax({
+           url:'/author/Ruser/topMessage',
+           type:'post',
+           data:{'zid':zid},
+           timeout:1000,
+           success:function (data) {
+              if(data.code==200){
+                  window.location.href="/author/ruser/index.html";
+              }
+              if(data==201){
+                  alert('置顶失败')
+              }
+           },
+           error:function (data) {
+               alert('系统错误');
+           }
+
+       })
+
+    }
+
+function removeTop(zid) {
+    $.ajax({
+        url:'/author/Ruser/topMessage',
+        type:'post',
+        data:{'zid':zid},
+        timeout:1000,
+        success:function (data) {
+            if(data.code==300){
+                window.location.href="/author/ruser/index.html";
+            }
+            if(data==301){
+                alert('取消置顶失败')
+            }
+        },
+        error:function (data) {
+            alert('系统错误');
+        }
+
+    })
+}
+
+function delMsg() {
+    var zid =document.getElementById("zid").value;
+    $.ajax({
+        url:'/author/Ruser/delete',
+        type:'post',
+        data:{'zid':zid},
+        timeout:1000,
+        success:function (data) {
+            if(data.code==200){
+                window.location.href="/author/ruser/index.html";
+            }
+            if(data==201){
+                alert('删除失败')
+            }
+        },
+        error:function (data) {
+            alert('系统错误');
+        }
+
+
+    })
+}
+
+
+
+</script>

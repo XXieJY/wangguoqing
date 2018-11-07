@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>读者绑定信息</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/contain.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/perInfo.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+        .form-control .inputBox{
+            width: 300px;
+            height: 40px;
+
+        }
+        .form-control .inputBox.disabled:hover{
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 8px transparent;
+        }
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/info"}
+<!--头部--->
+<div class="wrapper zhuijia-height">
+    <div class="wrap-nav">
+        <span class="fl">设置中心</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Writer/index')}"><li class="fl ">修改密码</li></a>
+        <a href="{:url('Writer/info')}"><li class="fl ">完善个人资料</li></a>
+        <a href="{:url('Writer/bank')}"><li class="fl">银行账号信息</li></a>
+        <a href="{:url('Writer/user')}"><li class="fl active">读者绑定信息</li></a>
+    </ul>
+    <form action="" method="post" class="forms mab">
+        <div class="form-control ">
+            <label for="reader" class="fl"><span class="fr">读者账号：</span></label>
+            <input type="text" name="reader" value="{$info.user_name}" id="reader" class="fl inputBox disabled" readonly="readonly">
+        </div>
+        <div class="form-control ">
+            <label for="readerName" class="fl"><span class="fr">读者昵称：</span></label>
+            <input type="text" name="readerName" value="{$info.pen_name}" id="readerName" class="fl inputBox disabled" readonly="readonly">
+        </div>
+        <div class="form-control ">
+            <label for="phone" class="fl"><span class="fr">手机号：</span></label>
+            <input type="text" name="phone" value="{$info.phone}" id="phone" class="fl inputBox disabled" readonly="readonly">
+        </div>
+
+        <div class="form-control ">
+            <label for="email" class="fl"><span class="fr">邮箱：</span></label>
+            <input type="text" name="email" value="{$info.email}" id="email" class="fl inputBox disabled" readonly="readonly" >
+        </div>
+        <div class="form-control ">
+            <label for="email" class="fl"><span class="fr">读者钱包：</span></label>
+            <input type="text" name="email" value="{$info.alance}咚币/{$info.dobing}赠币" id="" class="fl inputBox disabled" style="color: #999;" readonly="readonly" >
+        </div>
+    </form>
+
+</div>
+
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+
+<script src="__STATIC__/author/js/jquery.provincesCity.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/provincesData.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="js/alter.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="js/perInfo.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="__STATIC__/author/js/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/bankInfo.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

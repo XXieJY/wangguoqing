@@ -1,0 +1,113 @@
+<div class="footer">
+    <div class="col-footer oh">
+        <div class="col-left-footer fl">
+            <ul class="col-footer-info oh">
+                <li class="fl col-home sd-bdl">
+                    <a href="http://www.shuddd.com">HOME</a>
+                </li>
+                <li class="fl sd-bdl">
+                    <a href="/aboat">关于书咚</a>
+                </li>
+                <li class="fl sd-bdl">
+                    <a href="/contract">联系我们</a>
+                </li>
+                <li class="fl sd-bdl">
+                    <a href="/help">问题帮助</a>
+                </li>
+                <li class="fl col-help">
+                    <a href="javascript:;">免责声明</a>
+                </li>
+            </ul>
+            <div class="sd-col-info">
+                <p>请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何内容违法的小说，一经发现，即作删除！</p>
+                <p>本站收录的作品、社区话题、书库评论及本站所做之广告均属个人行为，与本站立场无关。</p>
+            </div>
+        </div>
+        <!--底部右侧BEGIN-->
+        <div class="col-right-footer fl">
+            <div class="sd-col-intr">
+                <div class="col-sd oh">
+                    <div class="col-info fl">
+                        <p class="col-link-logo oh">
+                            <i class="sd-weibo-img fl" id="sd-weibo"></i>
+                            <i class="sd-weixin-img fl" id="sd-weixin"></i>
+                            <i class="sd-qq-img fl" id="sd-qq"></i>
+                        </p>
+                        <p>新浪微博：@书咚网络</p>
+                        <p>书咚作者交流群：378078588</p>
+                        <p>官方客服： 0571-86951068</p>
+                    </div>
+                    <div class="col-code fr">
+                        <img src="__STATIC__/images/home_img_sinaweibo_code.png" id="sd-weibo-code"  />
+                        <img src="__STATIC__/images/home_img_mobile_code.png" id="sd-weixin-code"  />
+                        <img src="__STATIC__/images/home_img_qq_code.png" id="sd-qq-code" style="width: 88px; height: 88px; margin-top:6px ;display:none;" />
+                    </div>
+                </div>
+                <p class="sd-copy-right">Copyright&copy;2018</p>
+                <p class="sd-copy-right">Hangzhou Shuddd Network Technology Co.,Ltd.</p>
+                <p class="sd-copy-right">浙ICP备18013433号-1</p>
+            </div>
+        </div>
+        <!--底部右侧END-->
+    </div>
+</div>
+<div class="app" id="js-app">
+	<a href="http://m.shuddd.com/index/index/download" target="_blank">
+    <img src="__STATIC__/images/home_img_shudddgirl.png" alt="" />
+     <button  class="app-btn">下载APP</button>
+     </a>
+    <p class="app-code"><img src="__STATIC__/images/download_img_code.png" /></p>
+   
+</div>
+<!--登陆弹窗-->
+
+
+<script type="text/javascript">
+    $(".pp>#rePwd").on('blur',function(){
+//	checkPwd($(this).val(),$('.rePwd'),$('.rePwd'));
+        if($(this).val()!=$("#pwd").val()){
+            $('.pwdWarns').show();
+            $(".rePwd").css('margin-bottom','0');
+            flag=false;
+        }else{
+            $('.pwdWarns').hide();
+            $(".rePwd").css('margin-bottom','10px');
+            flag=true;
+        }
+    })
+</script>
+
+<script type="text/javascript">
+    function code() {
+        var phone =document.getElementById("phone").value;
+        if(flag){
+
+            $.ajax({
+                url: "/api/Send/code",
+                type: "post",
+                data:{'phone':phone},
+                success: function (data) {
+
+                    if(data==1){
+                        alert('手机号码格式不正确');
+                        return false;
+                    }
+                    if(data==3){
+                        alert('验证码发送失败');
+                        return false;
+                    }
+                    if(data==2){
+                        alert('验证码发送成功');
+                    }
+                }
+            });
+        }else {
+            alert('请输入合法的手机号')
+        }
+
+    }
+
+
+</script>
+
+

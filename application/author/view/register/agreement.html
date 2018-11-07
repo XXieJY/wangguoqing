@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>接受协议-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/author/css/rest.css"/>
+    <link href="https://cdn.bootcss.com/jScrollPane/2.1.3-rc.1/style/jquery.jscrollpane.css" rel="stylesheet">
+    <link rel="stylesheet" href="__STATIC__/author/css/header.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/footer.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/contain.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/author/css/guid/guid.css"/>
+    <!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <style>
+        .agree>a:first-child:hover {
+            background-color: #E6E6E6;
+        }
+        .agree>a:last-child:hover {
+            background-color: #E5B528;
+        }
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/login"}
+<!--头部 end-->
+<!--中间容器 BEGIN-->
+<div class="wrap">
+    <div class="wrap-nav">
+        <span class="fl">申请作者</span>
+        <p class="fr att">
+            带有<span>*</span> 的项目必须填写
+        </p>
+    </div>
+    <!--注册导航栏 BEGIN-->
+    <div class="regNav">
+        <ul class="navList">
+            <li >注册通行证  &gt;</li>
+            <li class="cur">接受协议   &gt;</li>
+            <li>填写资料  &gt;</li>
+            <li>申请成功  &gt;</li>
+            <li>创建作品  &gt;</li>
+            <li>上传章节  &gt;</li>
+            <li>完善信息  &gt;</li>
+            <li>等待审核 </li>
+        </ul>
+    </div>
+    <!--注册导航栏 end-->
+    <!--注册协议 begin-->
+    <div class="reDeal">
+        <div class="wrapTxt scroller" id="wrapTxt" style="">
+            <!--<div class="txt " id="txt">-->
+            <p class="dealTitle">书咚网作者注册投稿协议</p>
+            <p class="rules">书咚网（杭州书咚网络科技有限公司）诚挚地欢迎您注册为书咚网的一名作者，同时，请您仔细阅读并同意以下条款：</p>
+            <ul class="authorSigIn">
+                <p>一、作者注册</p>
+                <li>1、注册作者时，请准确填写您的个人信息，若个人信息有变动，请及时更改。若因资料提供不准确而享受不到相关服务时，书咚网不承担任何责任。</li>
+                <li>2、注册成为书咚网作者后，您有义务妥善保存您的作者账号和密码，并对您的账号进行的所有活动和行为负法律责任。因您保管不善可能导致遭受盗号或密码失窃，责任由您自行承担。建议您定期更改密码，或发现账号异常时立即更换密码，以保障您的权益。</li>
+                <li>3、注册成为本站作者后，即表示您同意授权本站在所属网站平台发表、上传、下载、排版、宣传您的作品，以及本站合作伙伴在本站所获授权范围内使用您作品的公众阅读章节。</li>
+                <li>4、填写作者的笔名、个性签名等作者信息时，不得含有违反国家法律、社会公德及本站规定的文字，否则本站有权随时无条件删除作者账号及其账号下发表的任何内容，不另行通知。</li>
+                <li>5、为有效利用网站资源，如作者注册后30天内未上传发表任何作品文字，或清空、锁定所有作品章节达7天，或声明离开本站的，本站有权选择无条件删除此作者账号及其账号下发表的任何内容，不另行通知。</li>
+            </ul>
+            <ul class="contributRules">
+                <p>二、作者投稿</p>
+                <li>
+                    <p>书咚网作者在发表、上传作品时，应遵守以下规定：</p>
+                    <p>1、作品禁止包含下列内容：</p>
+                    <ul>
+                        <li>a、反对宪法所确定的基本原则的；</li>
+                        <li>b、危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；</li>
+                        <li>c、损害国家荣誉和利益的；</li>
+                        <li>d、煽动民族仇恨、民族歧视，破坏民族团结的；</li>
+                        <li>e、破坏国家宗教政策，宣扬邪教和封建迷信的；</li>
+                        <li>f、散布谣言，扰乱社会秩序，破坏社会稳定的；</li>
+                        <li>g、散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；</li>
+                        <li>h、侮辱或者诽谤他人，侵害他人合法权益的；</li>
+                        <li>i 、含有法律、行政法规禁止的其他内容的。</li>
+                        <p>如作者违反上述规定的，本站有权立即无条件删除作者账号及其账号下发表的任何内容，不另行通知。</p>
+                    </ul>
+                </li>
+                <li>
+                    <p>2、作品内容要求：</p>
+                    <ul>
+                        <li>a、作品内容健康，表达青春内涵，彰显时尚风格，注重文学品位；</li>
+                        <li>b、作品确系署名作者本人所创作，谢绝转载，严禁剽窃、抄袭，文责自负。</li>
+                    </ul>
+                </li>
+                <li>3、除特别规定外，书咚网作品在未经作者或本站同意的情况下，一律不得转载。</li>
+                <li>4、书咚网对剽窃、抄袭行为的发生不具备充分的监控能力。凡有本站用户未经作者许可，在书咚网内转载作品，书咚网对用户转载行为不负任何责任，但是一经发现，负有移除剽窃、抄袭作品停止继续传播的义务。</li>
+                <li>5、本站根据法律规定或司法部门要求其提供侵权人网络注册资料的情况下，负有提供该注册资料的协助义务。</li>
+                <li>6、如书咚网上发表上传的作品被认为有剽窃、抄袭等侵权之嫌的，在作品著作权人提供以下必要的资料后，本站会根据其要求采取包括移除、警告等协助措施：一是著作权人的身份证明，包括身份证、法人执照、营业执照等有效身份证件；二是著作权权属证明，包括有关著作权登记证书、发表书籍或期刊、创作手稿等；三是侵权情况证明，包括被控侵权信息的内容、所在位置等。如未提供上述资料或不满足要求的，本站将暂不采取相应措施。</li>
+                <li>7、书咚网不对作品的侵权纠纷以及移除作品等相应措施承担侵权、违约或其他任何法律责任，包括但不限于因侵权指控不成立而给作者带来损失的赔偿责任等。</li>
+                <li>8、凡在本站注册作者并发表或上传作品的，应按照本站公布的相关规则进行申请、操作和使用，并愿受其约束。</li>
+            </ul>
+            <ul>
+                <p>三、作品签约</p>
+                <li>1、当作者根据自己的意愿选择签约模式后，视为愿意接受该签约模式对于稿酬的的结算模式。</li>
+                <li>2、订阅稿酬结算仅以本站虚拟币咚币收入作为依据。</li>
+            </ul>
+            <ul>
+                <p>四、免责声明</p>
+                <li>1、书咚网有权限制有损害本站利益行为的作者在本站的一切活动。作者同意保障和维护书咚网的利益，如因作者违反有关法律、法规或本协议项下的任何条款而给书咚网造成损失，作者同意承担由此造成的损害赔偿责任。</li>
+                <li>2、如有人恶意冒充网络作者向书咚网投稿，并被书咚网接受录入非其所有的原创作品，本站不承担任何责任，但保证接到真实作者投诉时，经验证后第一时间内删除该作品及冒充者账号。</li>
+                <li>3、凡有书咚网用户未经作者许可，在书咚网社区论坛内或用户BLOG系统转载作品，书咚网对用户转载行为不负任何责任，但承诺接到作者投诉后，第一时间内删除该贴并对该用户进行相应处理。</li>
+                <li>4、书咚网对作者的隐私资料做最大的努力的保护，但不能保证现有的安全技术措施使用户的技术信息等不受任何形式的损失。</li>
+                <li>5、书咚网有权将上述作品推荐给合作伙伴宣传或转载，不另行通知。</li>
+                <li>6、书咚网不保证收录作品稿件的安全性，请作者自行留存原稿。</li>
+                <li>7、作者文责自负，任何作者及其发布内容的文字，不代表本站观点。</li>
+            </ul>
+            <div class="firm">
+                <p>杭州书咚网络科技有限公司</p>
+                <p>2018年（暂行）</p>
+            </div>
+        </div>
+
+    </div>
+    <!--注册协议 end-->
+    <div class="agree">
+        <a href="{:url('Register/disAgreen',['id'=>$id])}">不同意</a>
+        <a href="{:url('Register/agreen',['id'=>$id])}">同意</a>
+    </div>
+</div>
+<!--中间容器 end-->
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+<script src="https://cdn.bootcss.com/jScrollPane/2.1.3-rc.1/script/jquery.jscrollpane.js"></script>
+
+<script src="__STATIC__/author/js/scroll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/lib/jquery.mousewheel.min.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

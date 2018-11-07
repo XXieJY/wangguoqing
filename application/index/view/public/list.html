@@ -1,0 +1,125 @@
+<ul class="list-items fl">
+    
+    {if condition="$title eq '收藏榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+    
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li class="list-act">收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '畅销榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+    
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li class="list-act">畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '推荐榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li class="list-act">推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+	<a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '点击榜' "}
+    <a href="{:url('/ranking')}"><li >全部排行榜</li></a>
+    <a href="{:url('/listclick',['p'=>'collect'])}"><li>收藏榜</li></a>
+    <a href="{:url('/listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/listclick',['p'=>'click'])}"><li class="list-act">点击榜</li></a>
+    <a href="{:url('/listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '更新榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li>收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li  class="list-act">更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '新书榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li class="list-act">新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    {elseif condition="$title eq '月票榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li>新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li class="list-act">月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-last" >总字数榜</li></a>
+    
+    {elseif condition="$title eq '同人榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li >新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li class="list-act">同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li  >总字数榜</li></a>
+    {elseif condition="$title eq '总字数榜'"}
+    <a href="{:url('/Ranking')}"><li>全部排行榜</li></a>
+
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li >新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li class="list-act">总字数榜</li></a>
+    {else /}
+    <a href="{:url('/Ranking')}"><li class="list-act">全部排行榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'collect'])}"><li >收藏榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'buy'])}"><li >畅销榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vote'])}"><li>推荐榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'click'])}"><li >点击榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'count'])}"><li >更新榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'newBook'])}"><li >新书榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'vipvote'])}"><li>月票榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'tongren'])}"><li>同人榜</li></a>
+    <a href="{:url('/Listclick',['p'=>'words'])}"><li >总字数榜</li></a>
+    {/if}
+</ul>

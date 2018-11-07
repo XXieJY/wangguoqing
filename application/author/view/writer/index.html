@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/contain.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/alter.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+        .form-control .inputBox{
+            width: 300px;
+            height: 40px;
+
+        }
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/info"}
+<!--头部--->
+<div class="wrapper zhuijia-height">
+    <div class="wrap-nav">
+        <span class="fl">设置中心</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Writer/index')}"><li class="fl active">修改密码</li></a>
+        <a href="{:url('Writer/info')}"><li class="fl">完善个人资料</li></a>
+        <a href="{:url('Writer/bank')}"><li class="fl ">银行账号信息</li></a>
+        <a href="{:url('Writer/user')}"><li class="fl">读者绑定信息</li></a>
+    </ul>
+    <form action="{:url('Writer/update')}" method="post" class="forms">
+        <div class="form-control pwds">
+            <label for="pwd" class="fl"><span class="fr">旧密码：</span></label>
+            <div class="fl pwd ">
+                <input type="password" name="oldpwd" placeholder="请输入旧密码" id="pwd" class="fl inputBox " maxlength="16">
+                <img class="fl show" src="__STATIC__/author/images/authors_login_btn_hide.png">
+            </div>
+            <p class="fl pwdWarn warn"></p>
+        </div>
+        <div class="form-control pwds">
+            <label for="newpwd" class="fl"><span class="fr">新密码：</span></label>
+            <div class="fl pwd">
+                <input type="password" name="newpwd" placeholder="请设置新密码" id="newpwd" class="fl inputBox" maxlength="16">
+                <img class="fl show" src="__STATIC__/author/images/authors_login_btn_hide.png">
+            </div>
+            <p class="fl newpwdWarn warn">8-16位，至少包含一个大写字母，一个小写字母，一个数字，一个特殊字符!+@#%^&*()_-，例：Shuddd111_或Shuddd!666</p>
+        </div><div class="form-control ">
+        <label for="repwd" class="fl"><span class="fr">确认新密码：</span></label>
+        <div class="fl pwd">
+            <input type="password" name="repwd" placeholder="请确认新密码" id="repwd" class="fl inputBox" maxlength="16">
+            <img class="fl show" src="__STATIC__/author/images/authors_login_btn_hide.png">
+        </div>
+        <p class="fl repwdWarn warn">请在此输入相同的密码</p>
+    </div>
+        <p class="btns"><button>提交修改</button></p>
+    </form>
+</div>
+
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+<!--<script src="__STATIC__/author/js/jq-select.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="__STATIC__/author/js/alter.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>
+<script>
+    var isBox = false; // 定义一个触发焦点事件的开关，默认为不开启状态 || 也可以给input设置一个属性，来判断
+
+    $('.inputBox').on('focus',function(){
+        $(this).addClass('act');
+//		alert(11);
+    });
+    $('.inputBox').on('blur',function(){
+        $(this).removeClass('act');
+//	 	alert(12)
+    })
+</script>

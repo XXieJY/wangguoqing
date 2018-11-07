@@ -1,0 +1,11 @@
+
+    {volist name="chapter" id="vo" offset="21" length="$count-21"}
+    <li class="fl oh">
+    	{if condition="$vo.the_price neq 0"}
+         <img src="__STATIC__/images/catalog_icon_vip.png" alt="" class="fl vip" />
+        {/if}
+    	<a href="javascript:jumpRead({$vo.book_id},{$vo.num},{$vo.the_price});" class="fl">{$vo.title}</a>
+        
+    </li>
+    {/volist}
+    <!--<p class="show-all" id="show-all"><a href="javascript:show();" style="color: red;">+显示全部章节</a></p>-->

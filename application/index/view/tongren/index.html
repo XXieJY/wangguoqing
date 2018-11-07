@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{:config('queue.WebName')}-同人</title>
+    <meta name="keywords" content="同人小说，动漫世界">
+    <meta name="description" content="最齐全的同人小说、最好看的同人小说尽在{:config('queue.WebName')}，{:config('queue.WebName')}提供免费阅读，最新章节更新">
+
+    <!--样式重置-->
+    <!--样式重置-->
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css"  />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/header-small.css"  media="screen and (max-width: 1400px)"/>-->
+    <!--中间部分样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/container.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/container-small.css"  media="screen and (max-width: 1400px)"/>-->
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--轮播图样式-->
+     <link href="__STATIC__/css/swiper.css" rel="stylesheet">
+    <script src="__STATIC__/js/swiper.js"></script>
+    <link rel="stylesheet" href="__STATIC__/css/slider.css" />
+
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/sd-circle.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/sd-circle-small.css" media="screen and (max-width: 1400px)"/>-->
+    <!--引入jq-->
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?2df11b0fa32bd346747a261e889fb2a3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+{include file="public/top"}
+<!--banner END-->
+<!--container BEGIN-->
+<div class="container oh">
+    <!--左侧栏目 -->
+    <div class="sd-left-wrap fl">
+        <div class="oh">
+            <!--slider BEGIN-->
+            <div class="slider fl swiper-container" id="slider">
+                <ul class="swiper-wrapper" id="slider-items ">
+                    {volist name="solid" id="vo"}
+                    <li class="fl swiper-slide">
+
+                            <img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}" style="cursor: pointer;" onclick="jumpURL({$vo.book_id})">
+                            <p>
+                                <span>{$vo.book_name}</span>
+                            </p>
+
+                    </li>
+                    {/volist}
+                </ul>
+                <div class="swiper-pagination"></div>
+            </div>
+            <!--slider END-->
+            <!--深夜神触 BEGIN-->
+            <div class="sd-feel fr">
+                {volist name="touch" id="vo"}
+                <div class="oh">
+                    <p class="fl book-sort">[{$vo.book_type}]</p>
+                    <a href="/bookinfo/{$vo.book_id}"  class="fl"><p class=" sd-book">{$vo.book_name}：{$vo.book_brief}</p></a>
+                    <span class="fl sd-vip">{$vo.click|num}</span>
+                </div>
+               {/volist}
+            </div>
+            <!--深夜神触 END-->
+        </div>
+        <!--推荐部分 BEGIN-->
+        <div class="sd-hot">
+            <!--推荐头部BEGIN-->
+            <div class="hot-info oh">
+                <p class="fl">
+                    <i class="fl fiery"></i>
+                    <span class="sd-hot-title fl">连载中</span>
+                    <span class="sd-hot-intr fl">我又回来了</span>
+                </p>
+
+                <a href="{:url('/Book',['type'=>0,'key'=>0,'rank'=>0,'time'=>0,'words'=>0,'state'=>0])}" class="fr sd-more">
+                    <span class="fl more">更多</span>
+                    <span class="fl">&gt;</span>
+                </a>
+            </div>
+            <!--推荐头部END-->
+            <!--书籍列表-->
+            <ul class=" sd-book-list ">
+                {volist name="lianzai" id="vo"}
+                <a href="/bookinfo/{$vo.book_id}" >
+                    <li class="fl ">
+                        <div class="book-cover">
+                            <img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}">
+                            <!--书籍遮罩BEGIN-->
+                            <div class="book-cover-mask">
+                                <!--作品信息BEGIN-->
+                                <div class="sd-works">
+                                    <p class="book-works">
+                                        <i><img src="{$vo.portrait}" width="25"/></i>
+                                        <span class="sd-author-name">{$vo.author_name}</span>
+                                    </p>
+                                    <p class="book-intr"  >
+                                        {$vo.book_brief}
+                                    </p>
+                                    <span>{$vo.level|level}</span>
+                                </div>
+                                <!--作品信息END-->
+                            </div>
+                            <!--书籍遮罩END-->
+                        </div>
+                        <p class="book-title">{$vo.book_name}</p>
+                        <p class="oh sd-book-info">
+                            <span class="book-price sd-vip fl">{$vo.click|num}</span>
+                            <span class="fl sd-bor"></span>
+                            <span class="book-sort fl"> 同人衍生</span>
+                        </p>
+                    </li>
+                </a>
+                {/volist}
+
+            </ul>
+
+        </div>
+
+        <!--推荐部分 END-->
+        <!--banner轮播部分-->
+
+
+        <div class="sd-hot sdd">
+            <!--推荐头部BEGIN-->
+            <div class="hot-info oh">
+                <p class="fl">
+                    <i class="fl icon_book"></i>
+                    <span class="sd-hot-title fl">已完结</span>
+                    <span class="sd-hot-intr fl">华丽大餐</span>
+                </p>
+
+                <a href="{:url('/Book',['type'=>0,'key'=>0,'rank'=>0,'time'=>0,'words'=>0,'state'=>0])}" class="fr sd-more">
+                    <span class="fl more">更多</span>
+                    <span class="fl">&gt;</span>
+                </a>
+            </div>
+            <!--推荐头部END-->
+            <!--书籍列表-->
+            <ul class=" sd-book-list ">
+                {volist name="wanjie" id="vo"}
+                <a href="/bookinfo/{$vo.book_id}" >
+                    <li class="fl ">
+                        <div class="book-cover">
+                            <img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}">
+                            <!--书籍遮罩BEGIN-->
+                            <div class="book-cover-mask">
+                                <!--作品信息BEGIN-->
+                                <div class="sd-works">
+                                    <p class="book-works">
+                                        <i><img src="{$vo.portrait}" width="25"/></i>
+                                        <span class="sd-author-name">{$vo.author_name}</span>
+                                    </p>
+                                    <p class="book-intr"  >
+                                        {$vo.book_brief}
+                                    </p>
+                                    <span>{$vo.level|level}</span>
+                                </div>
+                                <!--作品信息END-->
+                            </div>
+                            <!--书籍遮罩END-->
+                        </div>
+                        <p class="book-title">{$vo.book_name}</p>
+                        <p class="oh sd-book-info">
+                            <span class="book-price sd-vip fl">{$vo.click|num}</span>
+                            <span class="fl sd-bor"></span>
+                            <span class="book-sort fl"> 同人衍生</span>
+                        </p>
+                    </li>
+                </a>
+                {/volist}
+
+            </ul>
+
+        </div>
+
+        <!--推荐部分 END-->
+        <!--banner轮播部分-->
+        <!--最近新书-->
+        <div class="sd-hot sdd">
+            <div class="hot-info oh">
+                <p class="fl">
+                    <i class="fl icon_new"></i>
+                    <span class="sd-hot-title fl">最近新书</span>
+                    <span class="sd-hot-intr fl">小甜点</span>
+                </p>
+
+                <a href="{:url('/Book',['type'=>0,'key'=>0,'rank'=>0,'time'=>0,'words'=>0,'state'=>0])}" class="fr sd-more">
+                    <span class="fl more">更多</span>
+                    <span class="fl">&gt;</span>
+                </a>
+            </div>
+            <ul class=" sd-book-list ">
+                {volist name="newBook" id="vo"}
+                <a href="/bookinfo/{$vo.book_id}">
+                    <li class="fl ">
+                        <div class="book-cover">
+                            <img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}">
+                            <!--书籍遮罩BEGIN-->
+                            <div class="book-cover-mask">
+                                <!--作品信息BEGIN-->
+                                <div class="sd-works">
+                                    <p class="book-works">
+                                        <i><img src="{$vo.portrait}" width="25"/></i>
+                                        <span class="sd-author-name">{$vo.author_name}</span>
+                                    </p>
+                                    <p class="book-intr"  >
+                                        {$vo.book_brief}
+                                    </p>
+                                    <span>{$vo.level|level}</span>
+                                </div>
+                                <!--作品信息END-->
+                            </div>
+                            <!--书籍遮罩END-->
+                        </div>
+                        <p class="book-title">{$vo.book_name}</p>
+                        <p class="oh sd-book-info">
+                            <span class="book-price sd-vip fl">{$vo.click|num}</span>
+                            <span class="fl sd-bor"></span>
+                            <span class="book-sort fl"> 同人衍生</span>
+                        </p>
+                    </li>
+                </a>
+                {/volist}
+
+            </ul>
+
+        </div>
+        <!--最新章节BEGIN-->
+        <div class="hot-info oh sd-chapter-new">
+            <p class="fl">
+                <i class="fl"></i>
+                <span class="sd-hot-title fl sd-chapter-title">同人最新章节列表 </span>
+
+            </p>
+
+            <a href="{:url('/Book',['type'=>0,'key'=>0,'rank'=>0,'time'=>0,'words'=>0,'state'=>0])}" class="fr sd-more sd-chapter-more">
+                <span class="fl more">更多</span>
+                <span class="fl">&gt;</span>
+            </a>
+        </div>
+        <!--章节信息BEGIN-->
+        <div class="chaper">
+        	<table class="tab" cellpadding="1" cellspacing="0">
+                	<tr>
+                		<th><p>序号</p></th>
+                		<th><p>小说类别</p></th>
+                		<th><p>小说书名/小说章节</p></th>
+                		<th><p>字数</p></th>
+                		<th><p>小说作者</p></th>
+                		<th>更新时间</th>
+                	</tr>
+                	{volist name="newChapter" id="vo" }
+                	<tr>
+                		<td><p>{$a++}</p></td>
+                		<td><p class="type">[同人衍生]</p></td>
+                		<td>
+	                		<p class="chaperlist">
+	                		<a href="/bookinfo/{$vo.book_id}"  title="{$vo.book_name}">
+	                        <span class="book-chaper">{$vo.book_name}</span>
+	                   		 </a>
+	                    	<span class="chaper-title " >{$vo.title}</span>
+		                    {if condition="$vo.the_price eq 0"}
+		                    <!--<span class="sd-vip">[免费]</span>-->
+		                    {else /}
+		                   	<img src="__STATIC__/images/catalog_icon_vip.png" alt="" />
+		                    {/if}
+	                		</p>
+                		</td>
+                		<td><p class="num">{$vo.words}</p></td>
+                		<td><p class="author"><a href="javascript:;">{$vo.author_name}</a></p></td>
+                		<td><p><?php echo date('Y-m-d H:i',strtotime($vo['time']));?></p></td>
+                	</tr>
+                	  {/volist}
+               </table>
+        	
+         
+
+            <!--章节更新BEGIN-->
+        </div>
+        <!--最新章节END-->
+    </div>
+    <!--左侧栏目 END-->
+    <!--右侧栏目 BEGIN-->
+    <!--右侧栏目 BEGIN-->
+    <div class="sd-right fr">
+        <div class="sd-right-glogo"></div>
+        <div class="sd-banner-img">
+            <a href="/gao" class="" target="_blank"><img src="__STATIC__/images/home_img_authorwelfare.png" alt="" /></a>
+            <a href="/welfare" class="banner02" target="_blank"><img src="__STATIC__/images/home_img_manuscripts.png" alt="" /></a>
+        </div>
+        <!--神触大作排行榜 BEGIN-->
+        <div class="rank oh">
+            <i class="fl ranking_1"></i>
+            <p class="fl">
+                <b class="db">点击榜</b>
+                <span class="sd-rank">咚咚咚？点点点！</span>
+            </p>
+            <a href="{:url('/Listclick',['p'=>'click'])}" class="fr sd-more sd-mat0">
+                <span class="fl more">更多</span>
+                <span class="fl">&gt;</span>
+            </a>
+        </div>
+        <div class="rank-list">
+            <div class="rank-book oh">
+                <div class="left-book-info fl">
+                    <span class="book-num num-icon">NO.1</span>
+                    <a href="/bookinfo/{$click[0]['book_id']}" >
+                    <p class="book-title"> {$click[0]['book_name']}</p>
+                    </a>
+                    <p class="sd-author">{$click[0]['author_name']}</p>
+                    <p class="sd-vip">
+                        {$click[0]['click_weeks']|num}
+                        <span class="sd-fz12">点击</span>
+                    </p>
+                </div>
+                <div class="right-img-cover fr">
+                    <a href="/bookinfo/{$click[0]['book_id']}" >
+                    <img src="http://images.shuddd.com/{$click[0]['upload_img']}" alt="{$click[0]['book_name']}" width="80px;"/>
+                    </a>
+                </div>
+            </div>
+            <a href="/bookinfo/{$click[1]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary  col-red">2</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$click[1]['book_name']}</span> </p>
+                    <p class=" fz14 col-click num-icons fr">{$click[1]['click_weeks']|num}</p>
+                </div>
+            </a>
+            <a href="/bookinfo/{$click[2]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary col-light-red">3</span>
+                    <p class="book-item-list fl fz14 oh"> <span class="fl">[同人衍生]</span><span class="col-black items fl">{$click[2]['book_name']}</span> </p>
+                    <p class=" fz14 col-click numIcon fr">{$click[2]['click_weeks']|num}</p>
+                </div>
+            </a>
+            {volist name="click" id="vo" offset="3" length="7"}
+            <a href="/bookinfo/{$vo.book_id}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary">{++$b}</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$vo.book_name}</span> </p>
+                    <p class=" fz14 col-click fr">{$vo.click_weeks|num}</p>
+                </div>
+            </a>
+          {/volist}
+        </div>
+        <!--神触大作排行榜 END-->
+        <!--神触大作排行榜 BEGIN-->
+        <div class="rank oh">
+            <i class="fl ranking_2"></i>
+            <p class="fl">
+                <b class="db">收藏榜</b>
+                <span class="sd-rank">看了还想看</span>
+            </p>
+            <a href="{:url('/Listclick',['p'=>'collect'])}" class="fr sd-more sd-mat0">
+                <span class="fl more">更多</span>
+                <span class="fl">&gt;</span>
+            </a>
+        </div>
+        <div class="rank-list">
+            <div class="rank-book oh">
+                <div class="left-book-info fl">
+                    <span class="book-num num-icon">NO.1</span>
+                    <a href="/bookinfo/{$collection[0]['book_id']}" >
+                    <p class="book-title"> {$collection[0]['book_name']}</p>
+                    </a>
+                    <p class="sd-author">{$collection[0]['author_name']}</p>
+                    <p class="sd-vip">
+                        {$collection[0]['collection_weeks']}
+                        <span class="sd-fz12">收藏</span>
+                    </p>
+                </div>
+                <div class="right-img-cover fr">
+                    <a href="/bookinfo/{$collection[0]['book_id']}" >
+                    <img src="http://images.shuddd.com/{$collection[0]['upload_img']}" alt="{$collection[0]['book_name']}" width="80px;"/>
+                    </a>
+                </div>
+            </div>
+            <a href="/bookinfo/{$collection[1]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary  col-red">2</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$collection[1]['book_name']}</span> </p>
+                    <p class=" fz14 col-click num-icons fr">{$collection[1]['collection_weeks']}</p>
+                </div>
+            </a>
+            <a href="/bookinfo/{$collection[2]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary col-light-red">3</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生]</span> <span class="col-black items fl">{$collection[2]['book_name']}</span> </p>
+                    <p class=" fz14 col-click numIcon fr">{$collection[2]['collection_weeks']}</p>
+                </div>
+            </a>
+
+            {volist name="collection" id="vo" offset="3" length="7"}
+            <a href="/bookinfo/{$vo.book_id}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary">{++$c}</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$vo.book_name}</span> </p>
+                    <p class=" fz14 col-click fr">{$vo.collection_weeks}</p>
+                </div>
+            </a>
+            {/volist}
+
+        </div>
+
+        <!--神触大作排行榜 END-->
+        <!--神触大作排行榜 BEGIN-->
+        <div class="rank oh">
+            <i class="fl ranking_3"></i>
+            <p class="fl">
+                <b class="db">推荐榜</b>
+                <span class="sd-rank">安利安利</span>
+            </p>
+            <a href="{:url('/Listclick',['p'=>'vote'])}" class="fr sd-more sd-mat0">
+                <span class="fl more">更多</span>
+                <span class="fl">&gt;</span>
+            </a>
+        </div>
+        <div class="rank-list">
+            <div class="rank-book oh">
+                <div class="left-book-info fl">
+                    <span class="book-num num-icon">NO.1</span>
+                    <a href="/bookinfo/{$vote[0]['book_id']}" class="col-space" >
+                    <p class="book-title"> {$vote[0]['book_name']}</p>
+                    </a>
+                    <p class="sd-author">{$vote[0]['author_name']}</p>
+                    <p class="sd-vip">
+                        {$vote[0]['vote_weeks']}
+                        <span class="sd-fz12">推荐</span>
+                    </p>
+                </div>
+                <div class="right-img-cover fr">
+                    <a href="/bookinfo/{$vote[0]['book_id']}" class="col-space" >
+
+                    <img src="http://images.shuddd.com/{$vote[0]['upload_img']}" alt="{$vote[0]['book_name']}" width="80px;"/>
+                    </a>
+                </div>
+            </div>
+            <a href="/bookinfo/{$vote[1]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary  col-red">2</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生]</span> <span class="col-black items fl">{$vote[1]['book_name']}</span> </p>
+                    <p class=" fz14 col-click num-icons fr">{$vote[1]['vote_weeks']}</p>
+                </div>
+            </a>
+            <a href="/bookinfo/{$vote[2]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary col-light-red">3</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$vote[2]['book_name']}</span> </p>
+                    <p class=" fz14 col-click numIcon fr">{$vote[2]['vote_weeks']}</p>
+                </div>
+            </a>
+            {volist name="vote" id="vo" offset="3" length="7"}
+            <a href="/bookinfo/{$vo.book_id}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary">{++$d}</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$vo.book_name}</span> </p>
+                    <p class=" fz14 col-click fr">{$vo.vote_weeks}</p>
+                </div>
+            </a>
+            {/volist}
+
+        </div>
+        <!--神触大作排行榜 END-->
+        <!--排行4排行榜 BEGIN-->
+        <div class="rank oh">
+            <i class="fl ranking_4"></i>
+            <p class="fl">
+                <b class="db">畅销榜</b>
+                <span class="sd-rank">技术活，当赏</span>
+            </p>
+            <a href="{:url('/Listclick',['p'=>'buy'])}" class="fr sd-more sd-mat0">
+                <span class="fl more">更多</span>
+                <span class="fl">&gt;</span>
+            </a>
+        </div>
+        <div class="rank-list">
+            <div class="rank-book oh">
+                <div class="left-book-info fl">
+                    <span class="book-num num-icon">NO.1</span>
+                    <a href="/bookinfo/{$exce[0]['book_id']}" class="col-space" >
+                    <p class="book-title"> {$exce[0]['book_name']}</p>
+                    </a>
+                    <p class="sd-author">{$exce[0]['author_name']}</p>
+                    <p class="sd-vip">
+                        {$exce[0]['click_weeks']|num}
+                        <span class="sd-fz12">点击</span>
+                    </p>
+                </div>
+                <div class="right-img-cover fr">
+                    <a href="/bookinfo/{$exce[0]['book_id']}" class="col-space" >
+                        <img src="http://images.shuddd.com/{$exce[0]['upload_img']}" alt="{$exce[0]['book_name']}" width="80px;"/>
+                    </a>
+                </div>
+            </div>
+            <a href="/bookinfo/{$exce[1]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary  col-red">2</span>
+                    <p class="book-item-list fl fz14 oh"> <span class="fl">[同人衍生]</span><span class="col-black items fl">{$exce[1]['book_name']}</span> </p>
+                    <p class=" fz14 col-click num-icons fr">{$exce[1]['click_weeks']|num}</p>
+                </div>
+            </a>
+            <a href="/bookinfo/{$exce[2]['book_id']}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary col-light-red">3</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生] </span><span class="col-black items fl">{$exce[2]['book_name']}</span> </p>
+                    <p class=" fz14 col-click numIcon fr">{$exce[2]['click_weeks']|num}</p>
+                </div>
+            </a>
+            {volist name="exce" id="vo" offset="3" length="7"}
+            <a href="/bookinfo/{$vo.book_id}" class="col-space" >
+                <div class="rank-book-item oh">
+                    <span class="book-num fl fz12 col-primary">{++$e}</span>
+                    <p class="book-item-list fl fz14 oh"><span class="fl">[同人衍生]</span> <span class="col-black items fl">{$vo.book_name}</span> </p>
+                    <p class=" fz14 col-click fr">{$vo.click_weeks|num}</p>
+                </div>
+            </a>
+            {/volist}
+        </div>
+    </div>
+    <!--右侧栏目 END-->
+</div>
+<!--container END-->
+<!--底部BEGIN-->
+{include file="public/bot"}
+<!--书咚APP下载模块BEGIN-->
+
+<p class="sd-back" id="j-top"><img src="__STATIC__/images/home_btn_top.png" title="返回顶部哟" /></p>
+<script type="text/javascript" src="__STATIC__/js/clamp.js"></script>
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+<!--APP下载模块END-->
+<!--返回顶部BEGIN-->
+
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/slider.js"></script>
+
+<script src="__STATIC__/js/sd-selectcolor.js"></script>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    function jumpURL(bookid) {
+        window.location.href="/bookinfo/"+bookid;
+    }
+
+</script>

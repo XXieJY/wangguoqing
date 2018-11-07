@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$book.book_name}-草稿箱-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/lib/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+
+    <link rel="stylesheet" href="__STATIC__/author/css/draft.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/del.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部 end-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+            &gt;
+            <span> {$book.book_name}</span>
+        </p>
+        <p class="fr att">
+            带有<span>*</span> 的项目必须填写
+        </p>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Book/set',['id'=>$book.book_id])}"><li class="fl ">作品设置</li></a>
+        <a href="{:url('Chapter/index',['bookid'=>$book.book_id])}" ><li class="fl">章节管理</li></a>
+        <a href="{:url('Chapter/add',['bookid'=>$book.book_id])}"><li class="fl ">上传章节</li></a>
+        <a href="{:url('Chapter/txt',['bookid'=>$book.book_id])}"><li class="fl">TXT多章上传</li></a>
+        <a href="{:url('Chapter/draft',['bookid' =>$book.book_id])}"><li class="fl active">草稿箱</li></a>
+
+    </ul>
+    <div class="draftWrap oh">
+        <div class="draft-chapterTitle fl">
+            <div class="totalChapter"><p class="fl"> 共<span>{$j_count}</span>卷，共<span>{$c_count}</span>章</p></div>
+
+          {volist name="$chapter"  id="vo"}
+
+            <div class="chapterTotals">
+                <div class="rollTotals">
+                    <span class="fl">{$vo.volume_id.title}</span>
+                    <div class="fr totalsRoll">
+                        <p class="fl">共<span>{$vo.volume_id.count}</span>章</p>
+                        <i class="fl showHide"></i>
+                    </div>
+                </div>
+                <ul class="detail">
+                    {volist name="$vo.volume_id.chapter"  id="v"}
+                    <li>
+                        <a href="javascript:content({$v.content_id});" data-attr="{$v.content_id}">
+                            <p class="title">{$v.title}</p>
+                            <p class="oh"><span class="fl">共{$v.number}字  </span><span class="fr">{$v.update_time}</span></p>
+                        </a>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+       {/volist}
+
+            <input type="hidden" name="bookid" id="bookid" value="{$book.book_id}">
+        </div>
+        <div class="draft-chapterDetail fl chapterDetails" id="zhuijia">
+            <!--修改 发布功能区-->
+            <div class="btnNav">
+                <p class="fl chapterInfo">
+                    <span>字数：{$content.number}</span>
+                    {if condition="$content.the_price eq 0"}
+                    <span>章节价格：免费</span>
+                    {else /}
+                    <span>章节价格：{$content.the_price}</span>
+                    {/if}
+                    <span>草稿类型：新建草稿</span>
+                </p>
+                {if condition="count($content) neq 1"}
+                <p class="fr btn">
+                    <button  class="fl omit">删除本章</button><a href="{:url('Chapter/update',['contentId'=>$content.content_id])}" id="reply" class="fl">修改/发布</a>
+                </p>
+                {/if}
+            </div>
+            {if condition="count($content) neq 1"}
+            <div class="chapter li5">
+                <p class="chapter-title">{$content.title}</p>
+                <div class="wrap-box">
+                  <p style="text-indent: 2em;line-height: 30px;font-size: 16px;">
+                      {$content.content}
+                  </p>
+
+                </div>
+            </div>
+            <div class="authorWords">
+                <p class="title">作者有话说</p>
+                <p class="info">
+                    {$content.msg}
+                </p>
+            </div>
+            {else /}
+            <div class="chapter li5" style="height: 600px;">
+                <p class="no-info ">暂无草稿~~</p>
+            </div>
+
+            {/if}
+
+
+        </div>
+    </div>
+</div>
+    <!--底部 BEGIN-->
+  {include file="public/bot"}
+    <!--底部 END-->
+    <!--弹层-->
+<div class="mask dn cnm">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span class="fr close" ></span></p>
+        <p class="ts">是否删除本章节?</p>
+        <p class="btn btnDel">
+            <input type="hidden" name="title" id="draftTitle" value=""/>
+            <span href="javascript:;" id="cancel" class="fl" >取消</span>
+            <button onclick="dele();" id="del" class=" fl act" >删除</button>
+        </p>
+    </div>
+</div>
+
+</body>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<!--图片上传-->
+
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/draft.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/content.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
+<script type="text/javascript">
+    $('.showHide').each(function(){
+        $(this).on('click',function(){
+            $('.detail').hide();
+            $('.showHide').removeClass('selected');
+            $(this).addClass('selected');
+            //	$(this).siblings().removeClass('selected');
+            $(this).parent().parent().next('.detail').show();
+        })
+    })
+    //第一个展示
+    $('.showHide').eq(0).addClass('selected');
+    $('.detail').hide();
+    $('.detail').eq(0).show();
+    $('.detail').eq(0).children('li').eq(0).addClass('bdl');
+    $('#chapterTiltle').val($('.detail li').eq(0).children().children(".title").text());
+    $('#draftTitle').val( $('.detail li').eq(0).children("a").attr("data-attr"));
+
+    $('.detail').on('click','li',function(){
+        // console.log($(this).index());
+        $(this).addClass('bdl').siblings().removeClass('bdl');
+        $(this).parent().siblings().children('li').removeClass('bdl');
+        var index = $(this).index();
+        $('#chapterTiltle').val($(this).children().children(".title").text());
+        $('#draftTitle').val($(this).children("a").attr("data-attr")) ;
+
+    })
+
+</script>
+<script type="text/javascript">
+    function dele() {
+         var bookid =document.getElementById("bookid").value;
+         var content_id =document.getElementById("draftTitle").value;
+
+            $.ajax({
+                url: "/api/Content/dele",
+                type: "post",
+                data:{'bookid':bookid,'content_id':content_id},
+                success: function (data) {
+
+                     if(data==1){
+                        alert('章节删除成功');
+                        window.location.href=window.location.href;
+                    }else{
+                        alert('章节删除失败');
+                    }
+                }
+            });
+
+    }
+
+
+</script>

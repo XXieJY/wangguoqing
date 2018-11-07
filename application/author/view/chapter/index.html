@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$book.book_name}-章节管理-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/lib/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/moretext.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/draft.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/del.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+      .btn-btn-btn{
+          width: 98px;
+          height: 34px;
+          margin-left: 10px;
+          margin-top: 10px;
+          line-height: 34px;
+          text-align: center;
+          cursor: pointer;
+          color: #222;
+          border-radius: 4px;
+      }
+  .btnDel>span{
+      display: inline-block;
+      margin-top: 14px;
+      width: 140px;
+      height: 40px;
+      font-size: 14px;
+      color: #222;
+      border-radius:4px;
+      line-height: 38px;
+      background-color: #F2F2F2;
+      border: 1px solid #ccc;
+      cursor: pointer;
+  }
+      .button>a:hover{
+          background: #E6E6E6;
+
+      }
+        .add:hover{
+            background-color: #E6E6E6;
+        }
+        .dele:hover{
+            background-color: #E6E6E6;
+        }
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部 end-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+            &gt;
+            <span>{$book.book_name}</span>
+        </p>
+
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Book/set',['id'=>$book.book_id])}"><li class="fl ">作品设置</li></a>
+        <a href="{:url('Chapter/index',['bookid'=>$book.book_id])}" ><li class="fl active">章节管理</li></a>
+        <a href="{:url('Chapter/add',['bookid'=>$book.book_id])}"><li class="fl ">上传章节</li></a>
+        <a href="{:url('Chapter/txt',['bookid'=>$book.book_id])}"><li class="fl">TXT多章上传</li></a>
+        <a href="{:url('Chapter/draft',['bookid' =>$book.book_id])}"><li class="fl">草稿箱</li></a>
+    </ul>
+    <div class="draftWrap oh">
+        <div class="draft-chapterTitle fl">
+            <div class="totalChapter">
+                <p class="fl">共<span>{$t_juan}</span>卷，共<span>{$t_list}</span>章</p><button class="fr add" style="width: 80px;line-height: 25px;">+ 新增分卷</button></div>
+
+            <div class="chapterTotals">
+                <ul id="accordion">
+
+                    <!--{volist name="chapter" id="vo" offset="0" length="1"}-->
+                    <!--<li class="open">-->
+
+                <!--<div class="rollTotals">-->
+                    <!--<span class="fl">{$vo.title}</span>-->
+                   <!--<span class="fl red change" style="cursor: pointer" onclick="volume({$vo.volume_id});">[修改]</span>-->
+                    <!--<div class="fr totalsRoll">-->
+                        <!--<p class="fl">共<span>{$vo.count}</span>章</p>-->
+                        <!--<i class="fl showHide selected"></i>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<ul class="detail">-->
+                  <!--{volist name="$vo.chapter" id="vv"}-->
+                    <!--<li>-->
+                        <!--<a href="javascript:content({$vv.content_id});">-->
+                            <!--<p class="title">{$vv.title}</p>-->
+                            <!--<p class="oh"><span class="fl">共{$vv.number}字  </span><span class="fr">{$vv.time}</span></p>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--{/volist}-->
+                <!--</ul>-->
+
+                    <!--</li>-->
+                    <!--{/volist}-->
+                    {volist name="chapter" id="vo"}
+                    <li >
+
+                        <div class="rollTotals">
+                            <span class="fl">{$vo.title}</span>
+                            <span class="fl red change" style="cursor: pointer" onclick="volume({$vo.volume_id},event);">[修改]</span>
+                            <div class="fr totalsRoll">
+                                <p class="fl">共<span>{$vo.count}</span>章</p>
+                                <i class="fl showHide selected"></i>
+                            </div>
+
+                        </div>
+                        <ul class="detail dn">
+                            {volist name="$vo.chapter" id="vv"}
+                            <li>
+                                <a href="javascript:content({$vv.content_id});">
+                                    <p class="title">{$vv.title}</p>
+                                    <p class="oh"><span class="fl">共{$vv.number}字  </span><span class="fr">{$vv.time}</span></p>
+                                </a>
+                            </li>
+                            {/volist}
+                        </ul>
+
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+
+         <input type="hidden" name="bookid" id="bookid" value="{$bookid}">
+        </div>
+        <div class="draft-chapterDetail fl " id="zhuijia">
+            <!--修改 发布功能区-->
+            <div class="btnNav">
+                <p class="fl chapterInfo">
+                    <span>字数：{$content.number}</span>
+                    <span>章节价格：{if condition="$content.the_price eq 0"}免费{else /}{$content.the_price}{/if}</span>
+                    <span>章节类型： <span class="red"> {if condition="$content.update_time gt $time"} 待发布   {$content.update_time} {else /}已发布   {$content.time} {/if}</span></span>
+
+                </p>
+                {if condition="count($content) neq 1"}
+                <p class="fr btn">
+                    <button class="dele fl" >删除本章</button><button class="fl" onclick="sav({$content.content_id});">修改/发布</button>
+                </p>
+                {/if}
+            </div>
+            {if condition="count($content) neq 1"}
+            <div class="chapter li5">
+                <p class="chapter-title">{$content.title}</p>
+                <div class="wrap-box">
+                <p style="text-indent: 2em;line-height: 30px;font-size: 16px;">
+                  {$content.content}
+                </p>
+                </div>
+            </div>
+            <div class="authorWords">
+                <p class="title">作者有话说</p>
+                <p class="info">
+                    {$content.msg}
+                </p>
+            </div>
+            {else /}
+            <div class="chapter li5" style="height: 600px;">
+                <p class="no-info ">暂无章节~~</p>
+            </div>
+            {/if}
+
+        </div>
+    </div>
+</div>
+    <!--底部 BEGIN-->
+   {include file="public/bot"}
+    <!--底部 END-->
+    <!--弹层-->
+    <div class="mask dn shows">
+        <div class="maskwrap">
+            <p class="nav"><span class="fl">提示</span> <span	 class="fr close" ></span></p>
+            <form action="{:url('Chapter/delete')}" method="post" class="delchapter">
+                <input type="hidden" name="bookid" value="{$book.book_id}"/>
+                <div class="form-control form-box">
+                    <div class="fl title oh"><p class="fr"><span class="fl"></span><span class="fl">删除章节：</span></p></div>
+                    <input type="text" value="" class="fl input-box disabled " id ='chapterTiltle' maxlength="30" name="delchapter" readonly="readonly">
+                </div>
+                <div class="form-control  form-box">
+                    <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">删除理由：</span></p></div>
+                    <div class="fl input-box sels">
+                        <div>
+                            <input class="txt fl" placeholder="请选择删除理由" value="" type="text" name="delreason" readonly="readonly" id="txt">
+                            <i class="fr"></i>
+                            <ul class="roll-list list" style="display: none;">
+                                <li>重复发布章节</li>
+                                <li>章节内容修改</li>
+                                <li>顺序错误，重新排序</li>
+                                <li>发布时间错误</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="btn btnDel">
+                    <span id="cancel" class="fl" >取消</span>
+                    <button id="dele" class=" fl act">提交删除申请</button>
+                </p>
+            </form>
+        </div>
+    </div>
+    <!--新建分卷-->
+    <div class="mask dn " id="recomed">
+        <!--弹框--->
+        <div class="monolayer maiBox">
+            <!--导航-->
+            <div class="monolayernav ">
+                <p class="fl tit">新增分卷</p>
+                <i class="fr close exit"></i>
+            </div>
+            <!--导航-->
+            <div class="msgInfo msgwid">
+                <p class="msgInfoTitle ">【重要提示】</p>
+                <p>1、 一部作品系统默认分为1个分卷 —> 分卷号：1，卷名：第一卷；</p>
+                <p>2、分卷名可以修改，分卷号不可以修改；</p>
+                <p>3、作品分卷顺序按照序号（<span>大小</span>）从小到大依次排列。</p>
+            </div>
+            <form action="{:url('Chapter/addJuan')}" method="post">
+                <input type="hidden" name="bookid" value="{$book.book_id}"/>
+                <div class="form-control  form-box  ">
+                    <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷号：</span></p></div>
+                    <input class="txt fl input-box disabled" value="{$v_id+1}" type="text" name="newRollnum" maxlength="100"  readonly="readonly">
+                    <!--<p class="fl intro">分卷号不能和现有的卷号相同</p>-->
+                </div>
+                <div class="form-control  form-box  ">
+                    <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷名：</span></p></div>
+                    <input class="txt fl input-box" value="{$v_id+1|juan}" type="text" name="newRoll" maxlength="100"  >
+                    <p class="fl intro" style="line-height: 40px;">分卷名不能为空</p>
+                </div>
+                <p class="unmet "></p>
+                <div class="btn button">
+                    <a  class="can-btn fl cancel" style="width: 100px;height: 36px;" >取消</a>
+                    <button class="sub-btn fl">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--新建分卷-->
+<!--新建分卷-->
+<div class="mask dn roll">
+    <!--弹框--->
+    <div class="monolayer maiBox">
+        <!--导航-->
+        <div class="monolayernav ">
+            <p class="fl tit">修改分卷</p>
+            <i class="fr close "></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo msgwid">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p>1、 一部作品系统默认分为1个分卷 —> 分卷号：1，卷名：第一卷；</p>
+            <p>2、 自己新建分卷，可以设定为2 、3 、4；</p>
+            <p>3、 分卷序号是排列分卷顺序的唯一标志，当新增的分卷序号比现有分卷序号大就会排后面，小就会放前面。</p>
+        </div>
+        <form action="{:url('Chapter/save_juan')}" method="post">
+            <div class="form-control  form-box  ">
+                <input type="hidden" name="bookid" value="{$book.book_id}"/>
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷号：</span></p></div>
+                <input class="txt fl input-box disabled" id="input-box" value="" type="text" name="newRollnum" maxlength="100" readonly="readonly"  >
+                <!--<p class="fl intro">分卷号不能和现有的卷号相同</p>-->
+            </div>
+            <div class="form-control  form-box  ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷名：</span></p></div>
+                <input class="txt fl input-box name" id="volute-title"  value="" type="text" name="newRoll" maxlength="100"  >
+                <p class="fl intro" style="line-height: 40px;">分卷名不能为空</p>
+            </div>
+            <p class="unmet "></p>
+            <div class="btn button">
+                <a  class="can-btn fl cancel" style="width: 100px;height: 36px;">取消</a>
+                <button class="sub-btn fl">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--新建分卷-->
+</body>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<!--图片上传-->
+
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/draft.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/content.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/leftnav.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
+<script type="text/javascript">
+    function volume(id,event) {
+        var bookid =document.getElementById("bookid").value;
+            event.stopPropagation();
+            $('.roll').removeClass('dn');
+            $('#input-box').val(id);
+
+           getTitle(bookid,id);
+
+
+    }
+    function getTitle(bookid,volume_id) {
+          $.ajax({
+              url:"/api/Book/getTitle",
+              type:'post',
+              data:{'bookid':bookid,'volume_id':volume_id},
+              success:function (data) {
+                 $("#volute-title").val(data);
+              }
+
+          })
+    }
+
+</script>

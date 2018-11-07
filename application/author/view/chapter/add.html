@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>上传章节-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/lib/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/popup.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+.input-box:hover{
+    border: 1px solid #FFCA2D;
+    box-shadow: 0px 0px 8px #FFCA2D;
+}
+
+    </style>
+    <script type="text/javascript">
+        function paiban() {
+            gt.typeset_go();
+        }
+        var fm = new Object;
+        fm.construct = function(){}
+        var gt = new Object;
+        gt.construct = function(){
+            this.content = null;
+            this.text = "";
+            this.arrText = [];
+            this.o_trim = true;
+            this.o_linespace = 1;
+            this.o_paragraphFirstString = "　　";
+            this.o_linefeedword = "\n";
+            //初始化调用
+            this.typeset_go = function ()
+            {
+                this.syncForm();                     //load option
+                this.splitText();                    //split the Text to Array
+                this.baseType();                     //base typeset
+                this.mergeArray();                   //unsplit
+                this.content.value = this.text;        //处理完毕   返回结果值
+            }
+            //首行缩进操作
+            this.syncForm = function ()
+            {   this.text = this.content.value;
+                this.o_linespace = 1;
+                this.o_trim = true;
+                this.o_paragraphFirstString = "    ";
+            }
+            this.splitText = function ()
+            {
+                this.arrText = this.text.split(this.o_linefeedword);
+            }
+            //通过数组拼接开头空行
+            this.baseType = function ()
+            {
+                for ( var i = 0; i < this.arrText.length; i++ ) {
+                    if (this.o_trim)
+                    {
+                        this.arrText[i] = this.o_paragraphFirstString+this.arrText[i].trim();
+                    }
+                }
+            }
+            //拼接行距代码
+            this.mergeArray = function ()
+            {
+                if (this.o_linespace > 0)
+                {
+                    this.text = "";
+                    var thislinefeed = "";
+                    for ( var i = 0; i < this.o_linespace; i++ ) thislinefeed += this.o_linefeedword+"";
+                    for ( var i = 0; i < this.arrText.length; i++ ) {
+                        if (this.arrText[i].trim() == "") continue;
+                        this.text += this.text == '' ? this.arrText[i] : thislinefeed + this.arrText[i];
+                    }
+                }
+            }
+        }
+        String.prototype.trim = function(){
+            return this.replace(/^( |[\s　])+|( |[\s　])+$/g, "");
+        }
+        gt.construct();
+        fm.construct();
+        window.onload = function(){
+            gt.content = document.getElementById('txt');
+        };
+
+
+
+    </script>
+    <script type="text/javascript">
+        function checkForm() {
+            if(myform.roll.value==""){
+                alert('请选择分卷名');
+                myform.roll.focus();
+                return false;
+            }
+            if(myform.chapter.value==""){
+                alert('标题不能为空');
+                myform.chapter.focus();
+                return false;
+            }
+            if(myform.txt.value==""){
+                alert('内容不能为空');
+                myform.txt.focus();
+                return false;
+            }
+            gt.typeset_go();
+        }
+
+    </script>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部 end-->
+<!--container 部分 Begin-->
+<div class="wrapper  ">
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+            &gt;
+            <span>{$book.book_name}</span>
+        </p>
+        <p class="fr att">
+            带有<span>*</span> 的项目必须填写
+        </p>
+    </div>
+    <!--功能切换区-->
+    <ul class="btn-works-list oh">
+        <a href="{:url('Book/set',['id'=>$book.book_id])}"><li class="fl ">作品设置</li></a>
+        <a href="{:url('Chapter/index',['bookid'=>$book.book_id])}" ><li class="fl">章节管理</li></a>
+        <li class="fl active">上传章节</li>
+        <a href="{:url('Chapter/txt',['bookid'=>$book.book_id])}"><li class="fl">TXT多章上传</li></a>
+        <a href="{:url('Chapter/draft',['bookid' =>$book.book_id])}"><li class="fl">草稿箱</li></a>
+    </ul>
+    <ol class="items">
+        <!--作品设置-->
+        <!--<li class="fl dn"></li>
+        <li class="fl dn"></li>-->
+        <li class="fl ">
+            <form action="{:url('Chapter/addChapter')}" method="post" name="myform" enctype="multipart/form-data" onsubmit="return checkForm();">
+                <!--卷-->
+                <input type="hidden" name="bookid" value="{$book.book_id}"/>
+                <div class="form-control ">
+                    <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">选择所在卷：</span></p></div>
+                    <div class="fl input-box sels">
+                        <div>
+                            <input class="txt fl"   value="{$maxJuan}" type="text" name='roll' readonly="readonly"/>
+                            <i class="fr"></i>
+                            <ul class="roll-list">
+                                {volist name="juan" id="vo"}
+                                <li>{$vo.title}</li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="button" value="+新建分卷" class="fl new-roll add"/>
+                </div>
+                <!--章节-->
+                <div class="form-control ">
+                    <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">章节名：</span></p></div>
+                    <!--<div class="">-->
+                    <input type="text" placeholder="请输入章节名" value="" class=" fl input-box chapter" maxlength="30" name="chapter"/>
+                    <!--</div>-->
+                    <p class="fl intro">30字以内，按规范输入，例：第1章 新婚惊魂 （章也可以用节、话、回代替）</p>
+                </div>
+                <div class="form-control ">
+                    <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">千字价格：</span></p></div>
+                    <div class="fl input-box sels">
+                        <div>
+                            <input class="txt fl" type="text" value="{$price}" name="price" readonly="readonly">
+                            <i class="fr"></i>
+                            <ul class="roll-list cnmcnmcnm">
+                                <li>免费</li>
+                                <li>千字3分</li>
+                                <li>千字4分</li>
+                                <li>千字5分(书咚建议价格)</li>
+                                <li>千字6分</li>
+                                <li>千字8分</li>
+                                <li>千字10分</li>
+                                <li>千字12分</li>
+                                <li>千字14分</li>
+                                <li>千字16分</li>
+                                <li>千字18分</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="fl intro">请选择章节千字价格，每选择一次，后面章节将默认延续该价格（可手动调整价格），已发布章节价格不可更改，章节少于1000字默认免费</p>
+                </div>
+                <div class="form ">
+                    <div class="fl title">
+                        <p class="fr"><span class="fl">*</span><span class="fl">章节内容：</span></p>
+                    </div>
+                    <!--文章排版区 begin-->
+                    <!--
+                    <div class="btn-set-type"><div class="fr"><p class="fl set-type"><i class="fl"></i><span class="fl">一键排版</span></p></div> </div>
+                    <div class="txt-part container">
+                        <div class="txt fl backdrop"  id="tt">
+                            <div class="highlights"></div>
+                        </div>
+                        <textarea  rows="" cols=""  name="txt" id="txt" style="border:none;outline: none;" maxlength="20000" autofocus></textarea>
+                    </div>
+
+                </div>-->
+                    <div class="content fl">
+                        <!--按钮区-->
+                        <div class="btn-set-type"><div class="fr"><p class="fl set-type" onclick="paiban();"><i class="fl"></i><span class="fl">一键排版</span></p></div> </div>
+                        <div class="txt-part container">
+                            <div class="txt fl backdrop"  id="tt">
+                                <div class="highlights"></div>
+                            </div>
+                            <textarea  rows="" cols="" class=" chapterDetail  txts" name="txt" id="txt" style="border:none;outline: none;" maxlength="20000" autofocus></textarea>
+                            <!--<textarea name="add" rows="" cols="" id="tt" class="dn"></textarea>-->
+                        </div>
+
+                    </div>
+                    <!--文章排版区 end-->
+                    <input type="hidden" name="number" id="number" value="">
+                </div>
+                <div class="clearfix"></div>
+                <p class="words" id="J_words">请控制在100~20000字，未满1000字不收费。   当前字数：<span class="current-words">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="heightLight">注：背景红色的字为敏感词汇；请先修改，然后再进行一键排版等操作</span></p>
+                <!--作者有话说 BEGIN-->
+                <div class="form">
+                    <p class="title fl">作者有话说：</p>
+                    <textarea name="msg" rows="" cols="" class="author-txts fl" maxlength="500"></textarea>
+                </div>
+                <div class="clearfix"></div>
+                <p class="words">500字以内，非正文，你有什么想对读者、自己和老天爷等吐槽，都可以吐~</p>
+                <!--作者有话说 END-->
+                <!--发布时间-->
+                <div class="form-control ">
+                    <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">发布时间：</span></p></div>
+                    <div class="fl reply-box">
+                        <input type="text" value="请选择时间" disabled="disabled" class="reply fl "  id="datetimepicker" name="time"/>
+                        <span class="fl sel "></span>
+                        <span class="fl ">定时发布</span>
+                    </div>
+                </div>
+                <div class="btns"><button name="chap" value="1">上传章节</button><button name="drift" value="2">保存草稿</button></div>
+                <!--描述：说明-->
+                <ul class="explain">
+                    <span>说明：</span>
+                    <li>1、章节分卷错误、章节名输入错误、章节内容需要修改或添加，请选择左栏“章节管理”功能进行操作；</li>
+                    <li>2、章节名是必须输入的，添加章节时它是该章节的标题（含标号），输入如第一章 引言；</li>
+                    <li>3、添加的章节会被程序识别为作品或当前卷的最新一章，请注意选择章节所在卷，章节请按顺序输入，不要颠倒；</li>
+                    <li>4、上传的章节内容必须与符合书咚网收录标准，不符合收录标准的作品将被禁阅或删除。</li>
+                </ul>
+            </form>
+        </li>
+        <!--<li class="fl dn"></li>
+        <li class="fl dn"></li>-->
+    </ol>
+    <!--新建分券-->
+
+
+</div>
+
+
+<!--container 部分 END-->
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+<div class="mask dn " id="recomed">
+    <!--弹框--->
+    <div class="monolayer maiBox">
+        <!--导航-->
+        <div class="monolayernav ">
+            <p class="fl tit">新增分卷</p>
+            <i class="fr close "></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo msgwid">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p>1、 一部作品系统默认分为1个分卷 —> 分卷号：1，卷名：第一卷；</p>
+            <p>2、分卷名可以修改，分卷号不可以修改；</p>
+            <p>3、作品分卷顺序按照序号（<span >大小</span>）从小到大依次排列。</p>
+        </div>
+        <form action="{:url('Chapter/addJuan')}" method="post">
+            <input type="hidden" name="bookid" id="bookid" value="{$book.book_id}"/>
+            <div class="form-control  form-box  ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷号：</span></p></div>
+                <input class="txt fl input-box newRoll disabled" value="{$v_id+1}" type="text" name="newRollnum" maxlength="100" readonly="readonly" >
+                <!--<p class="fl intro">分卷号不能和现有的卷号相同</p>-->
+            </div>
+            <div class="form-control  form-box  ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷名：</span></p></div>
+                <input class="txt fl input-box" value="{$v_id+1|juan}" type="text" name="newRoll" maxlength="100"  >
+                <p class="fl intro">分卷名不能为空</p>
+            </div>
+            <p class="unmet "></p>
+            <div class="btn">
+                <a href='javascript:;' class="can-btn fl" >取消</a>
+                <button class="sub-btn fl">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--新建分卷-->
+<div class="mask dn shows">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span class="fr close"></span></p>
+        <p class="ts">是否保存?</p>
+        <p class="btn btnDel">
+            <span  id="cancel" class="fl">取消</span>
+            <button id="save" class=" fl act">保存</button>
+        </p>
+    </div>
+</div>
+
+</body>
+<script src="__STATIC__/author/lib/jquery.datetimepicker.js"></script>
+<script src="__STATIC__/author/js/author/chapterDetailhandle.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<!--图片上传-->
+<script src="__STATIC__/author/js/author/jsReadFiles.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/sort.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/index.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
+<script>
+    $('.cnmcnmcnm').each(function(){
+        $(this).on('click','li',function(){
+            var txt = $(this).text();
+            $(this).parent().siblings('.txt').val(txt);
+            $(this).parent().siblings('.txt').attr('value',txt)
+            $(this).parent().hide();
+            getli(txt);
+        })
+    })
+    function getli(txt) {
+        var bookid =document.getElementById("bookid").value;
+        $.ajax({
+            url:'/api/Book/checkPrice',
+            type:'post',
+            data:{'bookid':bookid,'title':txt},
+            success:function (data) {
+                if(data==1){
+                    alert('书咚建议你字数满12万字再进行收费，方便作品后续签约以及吸引更多人气。')
+                }
+            }
+
+        });
+    }
+</script>

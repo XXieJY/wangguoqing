@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>银行账号信息</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/contain.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/perInfo.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+        .form-control .inputBox{
+            width: 300px;
+            height: 40px;
+
+        }
+        .form-control .inputBox.disabled:hover{
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 8px transparent;
+        }
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/info"}
+<!--头部--->
+<div class="wrapper zhuijia-height">
+    <div class="wrap-nav">
+        <span class="fl">设置中心</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Writer/index')}"><li class="fl ">修改密码</li></a>
+        <a href="{:url('Writer/info')}"><li class="fl ">完善个人资料</li></a>
+        <a href="{:url('Writer/bank')}"><li class="fl active">银行账号信息</li></a>
+        <a href="{:url('Writer/user')}"><li class="fl">读者绑定信息</li></a>
+    </ul>
+    <form action=" " method="post" class="forms">
+        <div class="form-control ">
+            <label for="user" class="fl"><span class="fr"><i class="col">*</i> 开户人姓名：</span></label>
+            <input type="text" name="user_name" value="{$info.user_name}" id="user" class="fl inputBox " >
+            <p class="warn fl userWarn">请填写真实的信息，和作者真实姓名保持一致</p>
+        </div>
+        <div class="form-control ">
+            <label for="bank" class="fl"><span class="fr"><i class="col">*</i>  开户银行：</span></label>
+            <input type="text" name="bank" value="工商银行" id="bank" class="fl inputBox disabled" readonly="readonly" >
+            <p class="warn fl bankWarn">本站固定开户行，如有疑问请联系所属编辑</p>
+        </div>
+        <div class="form-control ">
+            <label for="bankId" class="fl"><span class="fr"><i class="col">*</i> 银行账号：</span></label>
+            <input type="text" name="bankId" value="{$info.bank_number}" placeholder="请输入银行卡号" id="bankId" class="fl inputBox "  >
+            <p class="warn fl bankIdWarn">请填写真实的银行卡号</p>
+        </div>
+        <div class="form-control ">
+            <label for="" class="fl"><span class="fr"><i class="col">*</i> 联系地址：</span></label>
+            <div id="province" class="fl"></div>
+        </div>
+        <div class="form-control ">
+            <label for="" class="fl">&nbsp;</label>
+            <input type="text" name="bankName" placeholder="请输入支行名称" value="{$info.bank_open}" id="bankName" class="fl inputBox"  autocomplete='address-line1'>
+            <p class="fl warn bankNamewarn">分行/支行/营业部/储蓄所名称，如杭州高新支行</p>
+        </div>
+        <p><button class="btns">确认提交</button></p>
+    </form>
+
+</div>
+
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+
+<script src="__STATIC__/author/js/jquery.provincesCity.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/provincesData.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="js/alter.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="js/perInfo.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="__STATIC__/author/js/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/bankInfo.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

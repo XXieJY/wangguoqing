@@ -1,0 +1,103 @@
+<div class="clicklistDetail list-item active">
+    <ul class="clicklist-title oh clicks">
+        {if condition="$xin eq 'abc'"}
+        <li class="f1" style="border-right: 0px solid #999999">月榜</li>
+        {elseif condition="$xin eq 'ab'" /}
+        <li class="fl"><a href="javascript:month();">月榜</a></li>
+        <li class="fl"><a href="javascript:total();">总榜</a></li>
+        {elseif condition="$xin eq 'a'" /}
+        <li class="fl" style="border-right: 0px solid #999999">总榜</li>
+        {else /}
+        <li class="fl clicklist-act"><a href="javascript:weeks();">周榜</a></li>
+        <li class="fl"><a href="javascript:month();">月榜</a></li>
+        <li class="fl"><a href="javascript:total();">总榜</a></li>
+        {/if}
+    </ul>
+    <div id="zhuijia">
+        {volist name="weeks" id="vo"}
+        <input type="hidden" name="bang" id="bang"  value="{$bang}" />
+        <input type="hidden" name="bangs" id="bangs"  value="{$bangs}" />
+        <input type="hidden" name="type" id="type"  value="{$type}" />
+        <input type="hidden" name="p" id="p"  value="{$p}" />
+        <div class="list-show show">
+            <div class="bookDetails oh">
+                <p class="bookListNum fl">{++$a}</p>
+                        <a href="/bookinfo/{$vo.book_id}" class="fl"><img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}" class="fl booklist-cover"></a>
+
+                <div class="booklist-info fl">
+                    <p class="book-title " >{$vo.book_name}</p>
+                     <div class="oh booksInfo">
+                        <span class="fl">小说作者：</span><span class="fl author">{$vo.author_name}</span>
+                        <p class="fl update"><span class="">最近更新：<?php echo date('Y-m-d H:i',strtotime($vo['time'])) ?>/  </span><span class="">{$vo.title|newtitle}</span></span></p>
+                    </div>
+                    <p  class="chapterInfo ">
+                        {$vo.book_brief}
+                    </p>
+                </div>
+                <ul class="fr btn-cell">
+                    <li class="read-cell"><a href="/bookinfo/{$vo.book_id}">点击阅读</a></li>
+                    <li><a href="#">加入书架</a></li>
+                    <li><a href="#">投推荐票</a></li>
+                </ul>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+<input type="hidden" id="current" name="current" value="{$current}">
+<div class="book-page fr oh">
+    <ul class="bookNum fl">
+        {if condition="$current gt 1"}
+        <a href="javascript:pre_page();"><li class="arrowLeft"></li></a>
+        {/if}
+        {if condition="$current+3 elt $page"}
+        <a href="javascript:cur_current();"><li class="current">{$current}</li></a>
+        <a href="javascript:current_one();"><li>{$current+1}</li></a>
+        <a href="javascript:current_two();"><li>{$current+2}</li></a>
+        <a href="javascript:current_three();"> <li>{$current+3}</li></a>
+        {elseif condition="$current+2 elt $page"}
+        <a href="javascript:one_current();"><li class="">{$current-1}</li></a>
+        <a href="javascript:cur_current();"><li class="current">{$current}</li></a>
+        <a href="javascript:current_one();"><li>{$current+1}</li></a>
+        <a href="javascript:current_two();"> <li>{$current+2}</li></a>
+        {elseif condition="$current+1 elt $page"}
+        <a href="javascript:two_current();"><li class="">{$current-2}</li></a>
+        <a href="javascript:one_current();"><li>{$current-1}</li></a>
+        <a href="javascript:cur_current();"><li class="current">{$current}</li></a>
+        <a href="javascript:current_one();"> <li>{$current+1}</li></a>
+        {elseif condition="$current elt $page"}
+        <a href="javascript:three_current();"><li class="">{$current-3}</li></a>
+        <a href="javascript:two_current();"><li>{$current-2}</li></a>
+        <a href="javascript:one_current();"><li>{$current-1}</li></a>
+        <a href="javascript:cur_current();"> <li class="current">{$current}</li></a>
+        {/if}
+        {if condition="$current lt $page"}
+        <a href="javascript:next_page();"><li class="arrowRight"></li></a>
+        {/if}
+    </ul>
+    <form method="post" action="" class="f1" name="myform" onsubmit="return checkForm();">
+        <p class="book-take oh fl">
+            <span class="fl">跳转</span>
+            <input type="text" class="fl" name="jump" value="" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            <input type="hidden" name="page" value="{$page}">
+            <span class="fl">/{$page}页</span>
+            <input type="submit" class="f1 confirm" value="" />
+        </p>
+    </form>
+</div>
+
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/js/list/click-list.js"></script>
+<script type="text/javascript">
+    function checkForm() {
+
+        if(parseInt(myform.jump.value)==0){
+            return false;
+        }
+        if(parseInt(myform.jump.value)>parseInt(myform.page.value)){
+            return false;
+        }
+    }
+
+
+</script>

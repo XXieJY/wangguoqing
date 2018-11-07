@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>道具获得-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/income.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/manages.css">
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/author/css/common.css" />
+</head>
+
+<body>
+<!--头部 begin-->
+{include file="public/wallet"}
+<!--头部--->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">作者钱包</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Wallet/index')}"><li class="fl ">订阅查询</li></a>
+        <a href="{:url('Wallet/obtain')}"><li class="fl  active">道具获得</li></a>
+        <a href="{:url('Wallet/qudao')}"><li class="fl  ">渠道收入</li></a>
+        <a href="{:url('Wallet/apply')}"><li class="fl  ">作者福利</li></a>
+        <a href="{:url('Wallet/income')}"><li class="fl  ">收入结算</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+        <form action="" method="post">
+
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+                <!-- <div> -->
+                <input class="txt fl " value="{$bookName}" type="text " name="bookName" readonly="readonly">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    {volist name="$book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                    {/volist}
+                </ul>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="form-box fl ">
+            <span class="fl">道具类型：</span>
+            <div class="fl input-box sels prop">
+                <!-- <div> -->
+                <input class="txt fl " value="全部" type="text " name="prop" readonly="readonly" style="width: 138px;">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    <li>全部</li>
+                    <li>打赏</li>
+                    <li>月票</li>
+                    <li>推荐票</li>
+                </ul>
+                <!-- </div> -->
+            </div>
+        </div>
+        <input type="submit" value="查询" class="btn">
+
+        </form>
+    </div>
+    <!-- <div class="noInfo">
+           <img src="images/authors_icon_nodata.png" alt="" />
+           <span>目前暂无数据~~</span>
+        </div> -->
+    {if condition="count($obtain['data']) neq 0"}
+    <div class="total">
+        <p class="fl">
+            <span class="nums">{$shang}</span>
+            <span>打赏</span>
+        </p>
+        <p class="fl">
+            <span class="nums">{$vipvote}</span>
+            <span>月票</span>
+        </p>
+        <p class="fl">
+            <span class="nums">{$vote}</span>
+            <span>推荐票</span>
+        </p>
+        <p class="fl">由于平台目前按照每日00:00到次日00:00处理当日全勤和结算，此处月份统计实际显示每月1号00:00到次月1号00:00的统计结果。</p>
+    </div>
+    <table class="tab" cellspacing="0">
+        <thead>
+        <tr>
+            <th class="selectBox"><input type="checkbox" name="" id="checkAll"  /></th>
+            <th class="list">序号</th>
+            <th class="workname">作品名称</th>
+            <th class="scenetype">道具类型</th>
+            <th class="scenenum">道具数量</th>
+            <th class="reader">读者ID/昵称</th>
+            <th>获得时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="$obtain['data']" id="vo"}
+        <tr>
+            <td class="selectBox"><input type="checkbox" name="" id=""></td>
+            <td>{++$a}</td>
+            <td>{$bookName}</td>
+            <td>{$vo.type|obtain}</td>
+            {if condition="$vo.type eq 2"}
+            <td>{$vo.count}张</td>
+            {/if}
+            {if condition="$vo.type eq 3"}
+            <td>{$vo.count}张</td>
+            {/if}
+            {if condition="$vo.type eq 4"}
+            <td>{$vo.count}咚币</td>
+            {/if}
+            <td>{$vo.pen_name}</td>
+            <td>{$vo.date}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="handleDeals oh ">
+        <!-- <button class="fl " id="delAll">批量删除</button> -->
+        <div class="numList fr">
+            <p class="fl">共{$obtain[total]}条</p>
+
+        </div>
+        {$page->render()}
+    </div>
+   {else /}
+    <div class="noInfo">
+        <img src="__STATIC__/author/images/authors_icon_nodata.png" alt="" />
+        <span>目前暂无数据~~</span>
+    </div>
+   {/if}
+</div>
+{include file="public/bot"}
+</body>
+<script src="__STATIC__/author/js/lib/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/author/js/income.js"></script>
+<script type="text/javascript" src="__STATIC__/author/js/bookDis.js"></script>
+<script type="text/javascript">
+
+    $('.pagenum').on('click', 'a', function() {
+        $(this).addClass('act').siblings().removeClass('act');
+        if ($(this).text() == '...') {
+            $(this).removeClass('act')
+        }
+    })
+</script>
+
+</html>

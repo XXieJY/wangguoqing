@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>登录-{:config('queue.WebName')}</title>
+	<link rel="stylesheet" href="__STATIC__/login/css/rest.css" />
+	<link rel="stylesheet" href="__STATIC__/login/css/jointly.css" />
+	<link rel="stylesheet" href="__STATIC__/login/css/login.css" />
+
+	<link rel="stylesheet" href="__STATIC__/login/css/footer.css" />
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+{include file="public/header"}
+<div class="wrap">
+	<p class="wrap-title">
+		咚咚咚!!! 让书咚撞开你的脑洞\^o^/
+	</p>
+	<!--登录框-->
+	<div class="wrap-login">
+		<div class="login-wrap">
+			<div class="img fl">
+				<img src="__STATIC__/login/images/login_slices/register_img_shudddgirl.png" alt="" />
+			</div>
+			<div class="loginBox fl">
+				<p class="login-logo"></p>
+				<form action="login/login" method="post" autocomplete="off">
+					<input type="text" placeholder="请输入您注册的手机号" name="phone" id="email" class="email db inputBox"   />
+					<p class="warn emailWarn dn"><i class="fl"></i><span class="fl">手机号码不对</span></p>
+					<div class="pwd inputBox">
+						<input type="password" name="password"  placeholder="请输入密码" class="fl" id="pwd" maxlength="20" />
+						<span class="fr " id="J_showHide"></span>
+					</div>
+					<p class="warn pwdWarn dn"><i class="fl"></i><span class="fl">密码格式不对</span></p>
+					<div class="oh"><p class="forgetPwd  fr"><a href="/forget.html" class=" forget">忘记密码</a><a href="/register.html">注册</a></p></div>
+					<!--<a href='' class="db signIn">登录</a>-->
+					<input type="submit" class="db signIn" value="登陆"/>
+					<p class='loginWay-title'> 第三方账户登录</p>
+					<p class="loginWay-logo"><a href="javasctipt:;"></a><a href="javasctipt:;"></a><a href="javasctipt:;"></a></p>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public/bot"}
+<p class="sd-back" id="j-top" style="display: block;"><img src="__STATIC__/login/images/login_slices/home_btn_top.png" title="返回顶部哟"></p>
+<script src="__STATIC__/login/js/login.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/login/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/login/js/sd.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

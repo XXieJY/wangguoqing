@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>关于书咚-config('queue.A_Name')</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/about-us.css" />
+
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/head"}
+<!--头部 end-->
+<!--内容部分 begin-->
+<div class="wrapper ">
+    <div class="wrap-nav">
+        <span class="fl">书咚资讯</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Inform/notice')}"><li class="fl">网站公告</li></a>
+        <a href="{:url('Inform/sign')}"><li class="fl ">作者福利</li></a>
+        {if condition="$e_info eq 0"}
+        <a href="{:url('Inform/email')}"><li class="fl ">作者邮箱</li></a>
+        {else /}
+        <a href="{:url('Inform/email')}"><li class="fl active">作者邮箱<span></span></li></a>
+        {/if}
+        <a href="{:url('Inform/refer')}"><li class="fl">新建咨询</li></a>
+        <a href="{:url('Inform/adoat')}"><li class="fl active">关于书咚</li></a>
+    </ul>
+    <!--信息介绍-->
+    <div class="sdInfo">
+        <p>书咚网，成立于2018年1月，隶属于中驰财团，是一家集阅读和创作为一体的原创文学平台。现大量招募原创作者加入书咚大家庭，携手共创深度爆炸好文！</p>
+
+        <p>杭州书咚网络科技有限公司，是拥有着一支90、95后团队的年轻公司，我们秉行“改变世界从改变自己做起”的理念，一直努力打破传统网络小说界限，打破传统签约模式，打破传统推书状态。我们旨在打造小说自由集市和精品IP，为作者保驾护航！</p>
+
+        <p>书咚作为泛次元小说互动阅读平台的引导者，在传统网络文学的签约模式基础上，创新性提出了开放式签约（又称“新咚签约”）和升级签约的概念。</p>
+
+        <p>新咚签约是以作者为中心打造的“自主定价”、“自由上架”、“开放式签约”三位一体的签约模式。在书咚网所有新咚签约的作品，作者拥有100%版权。作者负责创作，我们负责运营。作者可以自由选择上架的时间、字数，并且对自己的作品进行定价。这一系列举措，旨在帮助作者拥有对自己作品的终生所有权。</p>
+
+        <p>在传统的签约模式上，书咚提出了升级签约的概念。如果第一次签约是C级，不用担心，只要满足条件，即可从C级升到B级，甚至直接升级为S级签约，作者福利也会水涨船高。</p>
+        <p>只需日更2000字，便可轻松拿全勤！</p>
+
+        <p>此外，书咚首创的积分兑换推荐位模式，也让每部作品有获得更多推荐位的可能，只要你的作者积分足够，想兑换多少推荐位就兑换多少推荐位。从新咚签约到升级签约，再到积分兑换推荐位，我们一直努力维护着广大作者的切身利益，为作者提供最好的创作环境。 </p>
+
+        <p>这里是朝气蓬勃的年轻团队，这里有不断优化的签约模式，这里面向所有喜爱文学的作者和读者。这里是书咚，一个创作和阅读的大家庭。</p>
+
+
+
+        <p style="margin-top: 40px;">杭州书咚网络科技有限公司</p>
+        <div class="mab">
+            <p>◆ 公司地址：杭州市西湖区文一西路98号杭州数娱大厦1113室</p>
+            <p>◆ 联系电话：0571-86951068</p>
+            <p><span>◆ 联系编辑：</span><span>大刀（QQ：3040277546）</span></p>
+            <p class="mal"><span>司辰（QQ：1239053623）</span></p>
+            <p class="mal"><span>七七（QQ：1552425641）</span></p>
+            <p class="mal"><span> 客服（QQ：1812768618）</span></p>
+            <p >◆ 感谢你关注书咚文学，欢迎加入作者交流群：378078588</p>
+        </div>
+    </div>
+</div>
+<!--底部 Begin-->
+{include file="public/bot"}
+<!--底部 end-->
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

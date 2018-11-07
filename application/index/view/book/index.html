@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>书库-{:config('queue.WebName')}</title>
+    <!--样式重置-->
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/header-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--中间部分样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/container.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/container-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--书库样式-->
+    <link rel="stylesheet" href="__STATIC__/css/books.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/books-small.css" media="screen and (max-width: 1400px)" />-->
+    <!-- 同人宅圈 -->
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/sd-circle.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/sd-circle-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--引入jq-->
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+     <script type="text/javascript">
+         function checkSearch() {
+             var jump =myForm.jump.value;
+             var page =myForm.page.value;
+             if(parseInt(jump)>parseInt(page)){
+
+                    return false;
+             }
+             if(parseInt(jump)==0){
+
+                 return false;
+             }
+         }
+
+     </script>
+</head>
+
+<body>
+
+{include file="public/top"}
+<!--banner END-->
+<!--书库-->
+<div class="wrap">
+    <!-- 标题 -->
+    <p class="bookTitle"><span class="fl">书库</span></p>
+    <!-- 分类栏目 BEGIN-->
+    <div class="bookList">
+        <!-- 作品分类 BEGIN-->
+        <div class="book-gategories oh">
+            <p class="book-gategories-tilte fl">作品分类：</p>
+            <ul class="fl book-gategories-items bookSort">
+
+                    <a href="{:url('/book',['type'=>0,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                        <li class="{$type} fl">
+                        全部
+                        </li>
+                    </a>
+
+                {volist name="bookType" id="vo"}
+
+                <a href="{:url('/book',['type'=>$vo.type_id,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+
+                    <li class="fl {if condition="$Request.param.type eq $vo.type_id"}current{/if}">
+                    {$vo.book_type}
+                </li>
+                </a>
+                {/volist}
+            </ul>
+        </div>
+        <!-- 作品分类 END-->
+        <!-- 标签分类 BEGIN-->
+        <div class="book-gategories oh">
+            <div class="oh">
+                <p class="book-gategories-tilte fl">作品标签：</p>
+                <div class="fl book-gategories-items">
+                    <ul class=" bookSorts oh">
+                        <a href="{:url('/book',['type'=>$Request.param.type,'key'=>0,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                            <li class="fl {$key1}">全部</li>
+                        </a>
+                        {volist name="book_key" id="vo" offset="0" length="29"}
+                        <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$vo.id,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                            <li class="fl {if condition="$Request.param.key eq $vo.id"}current{/if}">{$vo.key}</li>
+                        </a>
+                        {/volist}
+
+                        <!--<a href="javascript:;">-->
+                            <p class=" show-btn">+显示全部</p>
+                        <!--</a>-->
+                        {volist name="book_key" id="vo" offset="29"}
+                        <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$vo.id,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                            <li class="fl   {if condition="$Request.param.key eq $vo.id"}current{/if}">{$vo.key}</li>
+                        </a>
+                       {/volist}
+                        <!--<a href="javascript:;">-->
+                            <p class="hide-btn db">-收起</p>
+                        <!--</a>-->
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- 标签分类 END-->
+        <!-- 排序方式 -->
+        <div class="book-gategories oh">
+            <p class="book-gategories-tilte fl">排序方式：</p>
+            <ul class="fl book-gategories-items">
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>0,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="{$cl0} fl">默认</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>1,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl1}">周点击</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>2,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl2}">月点击</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>3,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl3}">总点击</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>4,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl4}">周推荐</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>5,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl5}">月推荐</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>6,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl6}">总推荐</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>7,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$cl7}">总收藏</li>
+                </a>
+            </ul>
+        </div>
+        <!-- 排序方式 end -->
+        <!-- 更新时间 BEGIN -->
+        <div class="book-gategories oh">
+            <p class="book-gategories-tilte fl">更新时间：</p>
+            <ul class="fl book-gategories-items">
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>0,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="{$t0} fl">不限</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>1,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$t1}">三日内</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>2,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$t2}">七日内</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>3,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$t3}">半月内</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>4,'words'=>$Request.param.words,'state'=>$Request.param.state])}">
+                    <li class="fl {$t4}">一个月内</li>
+                </a>
+            </ul>
+        </div>
+        <!-- 更新时间 END -->
+        <!-- 作品字数  BEGIN-->
+        <div class="book-gategories oh">
+            <p class="book-gategories-tilte fl">作品字数：</p>
+            <ul class="fl book-gategories-items">
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>0,'state'=>$Request.param.state])}">
+                    <li class="{$w0} fl">不限</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>1,'state'=>$Request.param.state])}">
+                    <li class="fl {$w1}">30万以下</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>2,'state'=>$Request.param.state])}">
+                    <li class="fl {$w2}">30-50万</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>3,'state'=>$Request.param.state])}">
+                    <li class="fl {$w3}">50-100万</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>4,'state'=>$Request.param.state])}">
+                    <li class="fl {$w4}">100-200万</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>5,'state'=>$Request.param.state])}">
+                    <li class="fl {$w5}">200万以上</li>
+                </a>
+            </ul>
+        </div>
+        <!-- 作品字数  END-->
+        <!-- 其他选择  BEGIN-->
+        <div class="book-gategories oh">
+            <p class="book-gategories-tilte fl">其他选择：</p>
+            <ul class="fl book-gategories-items">
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>0])}">
+                    <li class="{$q0} fl">不限</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>6])}">
+                    <li class="fl {$q6}">连载</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>2])}">
+                    <li class="fl {$q2}">完本</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>1])}">
+                    <li class="fl {$q1}">免费</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>7])}">
+                    <li class="fl {$q7}">VIP</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>8])}">
+                    <li class="fl {$q8}">签约</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>4])}">
+                    <li class="fl {$q4}">男神爱看</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>5])}">
+                    <li class="fl {$q5}">女神爱看</li>
+                </a>
+                <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>3])}">
+                    <li class="fl {$q3}">R18+</li>
+                </a>
+            </ul>
+        </div>
+        <!-- 其他选择  END-->
+    </div>
+    <!-- 分类栏目 END-->
+    <!-- 最新章节 -->
+    <div class="book-new-chapter oh">
+        <!--章节信息BEGIN-->
+        <div class="bookWrap fl">
+            <div class="chaper ">
+                <table class="tab" cellpadding="1" cellspacing="0">
+                	<tr>
+                		<th><p>序号</p></th>
+                		<th><p>小说类别</p></th>
+                		<th><p>小说书名/小说章节</p></th>
+                		<th><p>字数</p></th>
+                		<th><p>小说作者</p></th>
+                		<th>更新时间</th>
+                	</tr>
+                	{volist name="book" id="vo" }
+                	<tr>
+                		<td><p>{++$a}</p></td>
+                		<td><p class="type">[{$vo.book_type}]</p></td>
+                		<td>
+	                		<p class="chaperlist">
+	                		<a href="/bookinfo/{$vo.book_id}" target="_blank" title="{$vo.book_name}">
+	                        <span class="book-chaper">{$vo.book_name}</span>
+	                   		 </a>
+	                    	<span class="chaper-title " >{$vo.title}</span>
+		                    {if condition="$vo.the_price eq 0"}
+		                    <!--<span class="sd-vip">[免费]</span>-->
+		                    {else /}
+		                   	<img src="__STATIC__/images/catalog_icon_vip.png" alt="" />
+		                    {/if}
+	                		</p>
+                		</td>
+                		<td><p class="num">{$vo.words}</p></td>
+                		<td><p class="author"><a href="javascript:;">{$vo.author_name}</a></p></td>
+                		<td><p><?php echo date('Y-m-d H:i',strtotime($vo['time']));?></p></td>
+                	</tr>
+                	  {/volist}
+               </table>
+
+                <!-- 翻页功能  BEGIN-->
+            </div>
+            <div class="book-page fr oh" style="width: auto">
+                {if condition="count($book) gt 0"}
+                <ul class="bookNum fl">
+
+                    {if condition="$current gt 1"}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current-1])}"><li class="arrowLeft"></li></a>
+                     {/if}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current])}"><li class="current">{$current}</li></a>
+                   {if condition="$current+1 lt $total+1"}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current+1])}"><li>{$current+1}</li></a>
+                    {/if}
+                    {if condition="$current+2 lt $total+1"}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current+2])}"><li>{$current+2}</li></a>
+                    {/if}
+                    {if condition="$current+3 lt $total+1"}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current+3])}"> <li>{$current+3}</li></a>
+                    {/if}
+                    {if condition="$current+1 lt $total+1"}
+                    <a href="{:url('/book',['type'=>$Request.param.type,'key'=>$Request.param.key,'rank'=>$Request.param.rank,'time'=>$Request.param.time,'words'=>$Request.param.words,'state'=>$Request.param.state,'page'=>$current+1])}"><li class="arrowRight"></li></a>
+                    {/if}
+
+                </ul>
+                <form method="post" action="" name="myForm" class="f1 fr">
+                    <p class="book-take oh ">
+                        <span class="fl">跳转</span>
+                        <input type="text" class="fl" name="jump" value="" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                        <input type="hidden" name="page" value="{$total}">
+                        <span class="fl">/{$total}页</span>
+                        <input type="submit" class="f1 confirm" style="cursor: pointer" value="确认" onclick="return checkSearch();" />
+                    </p>
+                </form>
+                {/if}
+            </div>
+            <!-- 翻页功能  END-->
+        </div>
+        <div class="fr">
+        {volist name="vote" id="vo" offset="0" length="2"}
+            <div class="book-items ">
+                <p class="book-item-title">{$vo.book_name}</p>
+                <p class="book-author-name"><a href="javascript:;">{$vo.author_name}</a></p>
+                <div class="book-item-info oh">
+                    <a href="/bookinfo/{$vo.book_id}" class="fl"><img src="http://images.shuddd.com/{$vo.upload_img}" alt="" class="fl" ></a>
+                    <div class="bookItem fl">
+                        <p class="bookIntr">
+                            {$vo.book_brief}
+                        </p>
+                        <a href="/bookinfo/{$vo.book_id}" class="bookRead-btn" target="_blank">点击阅读</a>
+                    </div>
+                </div>
+                <ul class="book-click  oh">
+                    <li>
+                        <p>{$vo.click_total|num}</p>
+                        <span>点击</span>
+                    </li>
+                    <li class="recommed">
+                        <p>{$vo.vote_total}</p>
+                        <span>推荐</span>
+                    </li>
+                    <li>
+                        <p>{$vo.vipvote_total}</p>
+                        <span>月票</span>
+                    </li>
+                </ul>
+                <!-- 读者打赏信息  BEGIN-->
+                <ul class="bookTake-user">
+                    {volist name="$vo.user" id="v" offset="0" length="5"}
+                    <a href="javascript:;"><li class="bookTake-last"><img src="{$v.portrait}" alt="" style="border-radius: 50%; "/></li></a>
+                    {/volist}
+                </ul>
+                <p class="bookTake-info"><span class="bookTake-num">{$vo.count}</span>位读者订阅或打赏</p>
+                <!-- 读者打赏信息  END-->
+            </div>
+            {/volist}
+        </div>
+    </div>
+    <!--最新章节END-->
+</div>
+<!--书库 END-->
+<!--底部BEGIN-->
+{include file="public/bot"}
+<!--底部END-->
+<!--书咚APP下载模块BEGIN-->
+
+<p class="sd-back" id="j-top"><img src="__STATIC__/images/home_btn_top.png" title="返回顶部哟" /></p>
+<script type="text/javascript" src="__STATIC__/js/clamp.js"></script>
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+<!--APP下载模块END-->
+<!--返回顶部BEGIN-->
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-selectcolor.js"></script>
+<!-- 选项切换 -->
+<script type="text/javascript" src="__STATIC__/js/book/tab.js"></script>
+</body>
+</html>

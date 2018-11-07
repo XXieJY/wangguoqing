@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <title>{:config('queue.WebName')}-泛次元小说互动阅读平台</title>
+    <meta name="keywords" content="小说">
+    <meta name="description" content="小说阅读">
+
+    <!--样式重置-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/user/css/rest.css" />
+    
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/user/css/header.css"  />
+
+    <!--中间部分样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/user/css/container.css" />
+
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/user/css/footer.css" />
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css" />
+    <!--轮播图样式-->
+
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="__STATIC__/user/css/use.css" />
+     <!--360收录--> 
+     <!--<script>  
+        (function(){  
+        var src = (document.location.protocol == "http:") ? "http://js.passport.qihuc
+     .com/11.0.1.js?d7af82f5d5a7d431d4b53f4d0069f989":"https://jspassport.ssl.qhimg.com/11.0.1.js?d7af82f5d5a7d431d4b53f4d0069f989";  
+        document.write('<script src="' + src + '" id="sozz"><\/script>');  
+        })();  
+    </script>   -->
+</head>
+<body>
+  {include file="public/personal"}
+<!--//**用户书架*/-->
+<div class="list-wrap">
+	<ul class="list-items fl">
+		<a href="/user"><li class="act">我的书架</li></a>
+		<a href="/user/read"><li>最近阅读</li></a>
+		<a href="/user/order"><li>我的订阅</li></a>
+		<a href="/user/message"><li>我的书评</li></a>
+		<a href="javascript:;"><li>我的消息</li></a>
+		<a href="javascript:;"><li>我的钱包</li></a>
+		<a href="javascript:;"><li>我的资料</li></a>
+	</ul>
+	<div class="wrapper fl">
+	<div class="wraps ">
+		<div class="wrap-title">我的书架</div>
+		<ul class="bookList">
+		     {volist name="bookShelf" id="vo"}
+                <a href="/read/{$vo.book_id}/{$vo.chapter}" class="fl ">
+                    <li >
+                    	<div></div>
+                        <div class="book-cover">
+							{if condition="$vo.geng eq 1"}
+                        	<span class="update">更</span>
+							{/if}
+                            <img src="http://images.shuddd.com/{$vo.upload_img}" alt="{$vo.book_name}">
+                            <!--书籍遮罩BEGIN-->
+                            <div class="book-cover-mask bookCover">
+                                <!--作品信息BEGIN-->
+                                
+                                <div class="sd-works">
+	                                <p>更新至</p>  
+									<p class="chapterUpdate">{$vo.title}</p>
+									<p class="mat">更新时间</p>
+									<p>{$vo.time}</p>
+
+                                </div>
+                                <!--作品信息END-->
+                                <div class="dots" >
+                                	<div>
+	                                <ul class="dot-show">
+                                        {if condition="$vo.top eq 1"}
+	                                	<li onclick="cTop({$vo.book_id},{$Think.cookie.shudong_user['user_id']})">取消置顶</li>
+                                        {else /}
+                                        <li onclick="zTop({$vo.book_id},{$Think.cookie.shudong_user['user_id']})">置顶</li>
+                                        {/if}
+	                                	<li onclick="dTop({$vo.book_id},{$Think.cookie.shudong_user['user_id']})">删除</li>
+										{if condition="$vo.isBuy eq 1"}
+	                                	<li onclick="cBuy({$vo.book_id},{$Think.cookie.shudong_user['user_id']})">取消自动订阅</li>
+										{else /}
+										<li onclick="buy({$vo.book_id},{$Think.cookie.shudong_user['user_id']})">自动订阅</li>
+										{/if}
+	                                	
+	                                </ul>
+                                	</div>
+                                </div>
+                                
+                            </div>
+                            <!--书籍遮罩END-->
+                        </div>
+                        
+                        <p class="book-title" title="{$vo.book_name}">{$vo.book_name}</p>
+                        <p class="oh sd-book-info">
+                            <span class="book-price sd-vip fl">{$vo.click_total|num}</span>
+                            <span class="fl sd-bor"></span>
+                            <span class="book-sort fl"> {$vo.book_type}</span>
+                        </p>
+                    </li>
+                </a>
+                
+             {/volist}
+
+
+              <li class="clearfix"></li>
+		</ul>
+	
+	</div>
+	<div class="book-page fr oh" style="width: auto">
+
+		{$page->render()}
+        </div>
+	</div>
+<div class="fr">
+
+	{include file="public/right"}
+</div>
+
+</div>
+
+<!--//**用户书架*/-->
+
+    <!--底部BEGIN-->
+{include file="public/bot"}
+    
+    <!--<script src="js/jquery.dotdotdot.js" type="text/javascript" charset="utf-8"></script>-->
+    
+	<script type="text/javascript" src="__STATIC__/js/clamp.js"></script>
+	<!--<script src="js/require.js" type="text/javascript" charset="utf-8"></script>-->
+		
+    <script src="__STATIC__/user/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+    <!--APP下载模块END-->
+    <!--返回顶部BEGIN-->
+    <p class="sd-back" id="j-top"><img src="__STATIC__/user/images/home_btn_top.png" title="返回顶部哟" /></p>
+    <!--<script src="__STATIC__/user/js/re.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="__STATIC__/user/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+    <!--返回顶部END-->
+    <script src="__STATIC__/user/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+    <!--轮播图js-->
+    <script src="__STATIC__/user/js/public.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script src="__STATIC__/user/js/jquery.nicescroll.min.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script src="__STATIC__/user/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/user/js/sd.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/user/js/user.js" type="text/javascript" charset="utf-8"></script>
+	
+</body>
+</html>

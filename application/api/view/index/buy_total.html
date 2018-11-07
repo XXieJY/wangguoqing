@@ -1,0 +1,32 @@
+<div class="listItem-book oh">
+    <div class="bookInfo fl">
+        <span class="book-num">NO.1</span>
+        <p class="bookTitle"><a href="/bookinfo/{$buy[0]['book_id']}" title="{$buy[0]['book_name']}">{$buy[0]['book_name']}</a></p>
+        <a href="javascript:;" class="bookAuthor">{$buy[0]['author_name']}</a>
+        <p class="bookClick"><span>{$buy[0]['click_total']|num}</span><span>点击</span></p>
+    </div>
+    <a href="/bookinfo/{$buy[0]['book_id']}" title="{$buy[0]['book_name']}">
+        <img src="http://images.shuddd.com/{$buy[0]['upload_img']}" alt="{$buy[0]['book_name']}" class="fl">
+    </a>
+</div>
+<!-- 0书籍详情 END -->
+<div class="book-infos oh">
+    <span class="bookNum fl num-icon">2</span>
+    <span class="items-book fl">[{$buy[1]['book_type']}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$buy[1]['book_id']}" title="{$buy[1]['book_name']}">{$buy[1]['book_name']}</a></span>
+    <span class="book-click fr num-icons">{$buy[1]['click_total']|num}</span>
+</div>
+<div class="book-infos oh">
+    <span class="bookNum fl numIcon">3</span>
+    <span class="items-book fl">[{$buy[2]['book_type']}]</span>
+    <span class="book-title fl "><a href="/bookinfo/{$buy[2]['book_id']}" title="{$buy[2]['book_name']}">{$buy[2]['book_name']}</a></span>
+    <span class="book-click fr numIcons">{$buy[2]['click_total']|num}</span>
+</div>
+{volist name="buy" id="vo" offset="3" length="7"}
+<div class="book-infos oh">
+    <span class="bookNum fl">{$c++}</span>
+    <span class="items-book fl">[{$vo.book_type}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+    <span class="book-click fr">{$vo.click_total|num}</span>
+</div>
+{/volist}

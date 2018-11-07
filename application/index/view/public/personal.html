@@ -1,0 +1,63 @@
+<div class="topNav">
+    <div class="wrapper">
+        <a href="/index.html" class="register fl topNav-in" id="sd-register">返回首页</a>
+        <!--登录注册 END-->
+        <!--充值 作者后台 APP下载 BEGIN -->
+        <p class="fr sd-right-part ">
+            <a href="#" class="pay topNav-in oh fl">
+                <i class="fl"></i>
+                <span class="fl">充值中心</span>
+            </a>
+            <b class="fl topNav-in border"></b>
+            <a href="http://author.shuddd.com" target="_blank" class="au-stage topNav-in oh fl">
+                <i class="fl "></i>
+                <span class="fl">作者后台</span>
+            </a>
+            <a href="#" class="code fl">
+                <i></i>
+                <span class="sd-app">
+		  		<img src="__STATIC__/user/images/download_img_code.png" width="84">
+				<span>扫码下载手机端</span>
+		  	    </span>
+            </a>
+            <!--充值 作者后台 APP下载 END -->
+        </p>
+    </div>
+</div>
+<!--//banner-->
+<div class="banner">
+    <!--logo BEGIN-->
+    <div class="sd-logo ">
+        <a href="/index.html">
+            <img src="__STATIC__/user/images/home_shuddd_logo.png" class="fl">
+        </a>
+        <p class="sd-info fl">泛次元小说互动阅读平台</p>
+
+    </div>
+    <!--logo END-->
+    <!--分类导航栏BEGIN-->
+    <div class="subnav">
+        <div class="sd-center">
+
+            <div class=" userInfo fl">
+                <img src="{$Think.cookie.shudong_user['portrait']}" alt="" class="fl avatar">
+                <p class="uname fl"><span>{$Think.cookie.shudong_user['pen_name']}</span>{if condition="$Think.cookie.shudong_user['days'] gt 0"} <span class="fznum"> • VIP</span>{/if}</p>
+                <span class="level fl ">LV.{$Think.cookie.shudong_user['mem_vip']}{$Think.cookie.shudong_user['mem_vip']|mem_vip}</span>
+                <p class="fl booksheet"><span>书架：</span><span class="fznum">{$Think.cookie.shudong_user['bookCount']}</span></p>
+                <p class="fl msg"><span>消息 ：</span> <span class="m-num">{$Think.cookie.shudong_user['newCount']}</span></p>
+                <a href="/logout" class="logout fl">[退出]</a>
+            </div>
+
+            <!--搜索功能 BEGIN-->
+            <form class="sd-search fr" method="post" action="/Book.html?type=0&amp;key=0&amp;rank=0&amp;time=0&amp;words=0&amp;state=0">
+                <input type="text" name="book_name" value="" autocomplete="off" placeholder="搜索作品" class="fl sd-search-text" id="txts">
+
+                <input type="submit" value="" style="background: url('images/reader_btn_search.png');width: 20px;height: 20px; margin-top: -2px;" class="fr">
+                <div class="sd-search-result" id="word" style="position: absolute; top: 30px;">
+
+                </div>
+            </form>
+            <!--搜索功能 END-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>作者邮箱-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/authorEmail.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/del.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/common.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+        .del:hover{
+            background-color: #E6E6E6;
+        }
+
+    </style>
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/head"}
+<!--头部 end-->
+
+<!--内容部分 begin-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">书咚资讯</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Inform/notice')}"><li class="fl">网站公告</li></a>
+        <a href="{:url('Inform/sign')}"><li class="fl ">作者福利</li></a>
+        {if condition="$e_info eq 0"}
+        <a href="{:url('Inform/email')}"><li class="fl active">作者邮箱</li></a>
+        {else /}
+        <a href="{:url('Inform/email')}"><li class="fl active">作者邮箱<span></span></li></a>
+        {/if}
+        <a href="{:url('Inform/refer')}"><li class="fl">新建咨询</li></a>
+        <a href="{:url('Inform/adoat')}"><li class="fl ">关于书咚</li></a>
+    </ul>
+    <form name="" method="post" action="{:url('Inform/piliang')}">
+    <div class="emailList">
+
+        <table class="table " cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th class="emailCheck"><input type="checkbox" name="" id="checkAll" /></th>
+                <th class="list">序号</th>
+                <th class="emailer">发件人</th>
+                <th class="emailTheme">邮件主题</th>
+                <th class="time">创建时间</th>
+                <th class="handle">管理操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {volist name="email" id="vo"}
+            <tr>
+                <td class="emailCheck"><input type="checkbox" name="checkbox[]" value="{$vo.id}" id="" class="check" /></td>
+                <td class="list">{$a++}</td>
+                <td class="emailer">{$vo.pen_name}</td>
+                <td class="emailTheme"><p>{$vo.content}</p></td>
+                <td class="time">{$vo.time}</td>
+                <td class="handle"><a href="jacascript:;" class="del" data-attr="{$vo.id}"><em class="fl"></em><span class="fl">删除邮件</span></a></td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+
+    </div>
+    {if condition="count($email) neq 0"}
+    <div class="handleDeals oh ">
+
+        <button class="fl " id="delAll" type="submit">批量删除</button>
+
+        <div >
+            {$email->render()}
+        </div>
+    </div>
+    {/if}
+    {if condition="count($email) eq 0"}
+    <p class="no-info">暂无邮件~~</p>
+    {/if}
+    </form>
+</div>
+<!--底部 Begin-->
+{include file="public/bot"}
+<!--底部 end-->
+
+<div class="mask delete dn">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span class="fr close"></span></p>
+        <p class="ts">是否删除邮件?</p>
+        <p class="btn btnDel oh">
+            <input type="hidden" name="contentId" value="" id="contentId">
+            <span href="javascript:;" id="cancel" class="fl">取消</span>
+            <button id="del" class=" fl act" onclick="deleEmail();">删除</button>
+        </p>
+    </div>
+</div>
+
+
+
+
+</body>
+<!--头部切换-->
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/authemail.js" type="text/javascript" charset="utf-8"></script>
+</html>
+<script type="text/javascript">
+    function deleEmail() {
+        var contentId =document.getElementById("contentId").value;
+        $.ajax({
+            url: "/author/Inform/deleEmail",
+            type: "post",
+            data:{'content_id':contentId},
+            success: function (data) {
+
+                if(data==1){
+                    alert('删除成功');
+                    window.location.href=window.location.href;
+                }else{
+                    alert('删除失败');
+                }
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新建咨询-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/refer.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/author/css/popup.css"/>
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript">
+      function checkForm() {
+          if(myform.bookName.value==""){
+              alert('请选择作品');
+              myform.bookName.focus();
+              return false;
+          }
+      }
+
+
+  </script>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/head"}
+<!--头部 end-->
+
+<!--内容部分 begin-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">书咚资讯</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Inform/notice')}"><li class="fl ">网站公告</li></a>
+        <a href="{:url('Inform/sign')}"><li class="fl ">作者福利</li></a>
+        {if condition="$e_info eq 0"}
+        <a href="{:url('Inform/email')}"><li class="fl ">作者邮箱</li></a>
+        {else /}
+        <a href="{:url('Inform/email')}"><li class="fl ">作者邮箱<span></span></li></a>
+        {/if}        <a href="{:url('Inform/refer')}"><li class="fl active">新建咨询</li></a>
+        <a href="{:url('Inform/adoat')}"><li class="fl ">关于书咚</li></a>
+    </ul>
+    <form action="" name="myform" enctype="" method="post" class="referForm" onsubmit="checkForm();">
+        <div class="form-control refer">
+            <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">选择咨询类型：</span></p></div>
+            <div class="fl input-box sels">
+                <div>
+                    <input class="txt fl" value="作者日常管理问题咨询" type="text" name="title" readonly="readonly">
+                    <i class="fr"></i>
+                    <ul class="roll-list" style="display: none;">
+                        <li>作者日常管理问题咨询</li>
+                        <li>作品违规屏敝、删扣点击推荐咨询</li>
+                        <li>新书审核问题咨询通道</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-control refer">
+            <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">选择作品：</span></p></div>
+            <div class="fl input-box sels">
+                <div>
+                    <input class="txt fl"  value="{$book[0]['book_name']}" type="text" name="bookName" readonly="readonly">
+                    <i class="fr"></i>
+                    <ul class="roll-list" style="display: none;">
+                        {volist name="book" id="vo"}
+                        <li>{$vo.book_name}</li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form">
+            <div class="fl title oh"><p class=" fr"><span class="fl">*</span><span class="fl">作者咨询：</span></p></div>
+            <textarea name="content" rows="" cols="" class="author-txts fl txtRefer" maxlength="500" placeholder="请输入您要咨询的问题"></textarea>
+        </div>
+        <div class="clearfix"></div>
+        <p class="words mal">200字内，请勿使用任何html、javascript脚本或其他非法性字符</p>
+        <div class="btns"><button class="" id="send">发送</button></div>
+    </form>
+    <div class="ant">
+        <p class="ants">备注：</p>
+        <p class="ants">1、作品日常管理问题咨询：包括作品更名、章节上传删除、分卷等日常作品管理问题的咨询；</p>
+        <p class="ants">2、作品违规屏敝、删扣点击推荐咨询：包括作品因情色等原因屏敝、因刷点票等原因删扣的问题咨询；</p>
+        <p class="ants">3、新书审核问题咨询：包括新建作品、作品审核不过等问题咨询。</p>
+    </div>
+</div>
+<!--底部 Begin-->
+{include file="public/bot"}
+<!--底部 end-->
+<div class="mask show dn">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span class="fr close"></span></p>
+        <p class="lh">抱歉咧，您有部分内容未填完整，书咚也传不上去~~</p>
+    </div>
+</div>
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/siteItem.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

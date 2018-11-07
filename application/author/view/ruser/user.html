@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>读者管理-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/bookDis.css">
+    <link rel="stylesheet" href="__STATIC__/author/css/set.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/author/css/common.css" />
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/ruser"}
+<!--头部--->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">读者互动</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Ruser/index')}"><li class="fl ">书评管理</li></a>
+        <a href="{:url('Ruser/user')}"><li class="fl active">读者管理</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+        <form action="" method="post">
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+
+                <input class="txt fl " value="{$bookName}" type="text " name="bookName" readonly="readonly">
+
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    {volist name="book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-box fl ">
+            <label for='search' class="fl">搜索：</label>
+            <input class="txt fl input-box name " placeholder="读者昵称" type="text " name="penName" id="search" />
+        </div>
+        <input type="submit" value="查询" class="btn">
+        </form>
+    </div>
+    {if condition="count($userInfo) neq 0"}
+    <table class="booinfo" cellspacing="0" cellspacing="1">
+        <thead>
+        <tr>
+            <th class="selectBox"><input type="checkbox" name="" id="checkAll"  /></th>
+            <th class="list">序号</th>
+            <th class=" diss">读者ID/昵称</th>
+            <th class=" recomed"><div class="oh"><span class="fl">推荐票</span><p class="fl"><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>1])}" class="up"></a><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>2])}" class="down"></a></p></div></th>
+            <th class=" ticket"><div class="oh"><span class="fl">月票</span><p class="fl"><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>3])}" class="up"></a><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>4])}" class="down"></a></p></div></th>
+            <th class=" fans"><div class="oh"><span class="fl">粉丝值</span><p class="fl"><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>5])}" class="up"></a><a href="{:url('ruser/user',['bookName'=>$Request.param.bookName,'type'=>6])}" class="down"></a></p></div></th>
+            <th class="handleDeal">管理操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+       {volist name="$userInfo" id="vo"}
+        <tr>
+            <td class="selectBox"><input type="checkbox" name="" id=""></td>
+            <td class="list">{++$a}</td>
+            <td class="reader">{$vo.pen_name}</td>
+            <td class="">{$vo.vote}</td>
+            <td class="">{$vo.vipvote}</td>
+            <td class="">{$vo.value}</td>
+            <td class="handleDeal">-</td>
+
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="handleDeals oh ">
+
+        {$page->render()}
+    </div>
+    {else /}
+    <!--<p class="noInfo">暂无数据~~</p>-->
+    <div class="noInfo">
+        <img src="__STATIC__/author/images/authors_icon_nodata.png" alt="" />
+        <span>目前暂无数据~~</span>
+    </div>
+    {/if}
+
+</div>
+
+
+{include file="public/bot"}
+</body>
+
+<script type="text/javascript" src="__STATIC__/author/js/set.js"></script>
+<script src="__STATIC__/author/js/bookDis.js" type="text/javascript" charset="utf-8"></script>
+</html>

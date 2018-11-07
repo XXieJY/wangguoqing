@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>申请薪酬-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/siging.css" />
+
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/wallet"}
+<!--头部 end-->
+
+<div class="wrapper ">
+    <div class="wrap-nav">
+        <span class="fl">作者钱包</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Wallet/index')}"><li class="fl ">订阅查询</li></a>
+        <a href="{:url('Wallet/obtain')}"><li class="fl  ">道具获得</li></a>
+        <a href="{:url('Wallet/qudao')}"><li class="fl  ">渠道收入</li></a>
+        <a href="{:url('Wallet/apply')}"><li class="fl  active">作者福利</li></a>
+        <a href="{:url('Wallet/income')}"><li class="fl  ">收入结算</li></a>
+    </ul>
+    <div class="sigingDetail">
+        <p class="fwb mab ta" style="font-size: 20px;">2018年书咚网作者福利，带你启航</p>
+        <p class="fwb mab ta">本福利自2018年07月01日开始实施</p>
+        <p  class="fwb mab ">升级签约：基于传统的分成签约模式，但签约等级可升级。如果你第一次签约是B级签约，只要你满足升级条件，可以升为A级签约，甚至是S级签约，相应作者福利提高。</p>
+
+        <p  class="fwb mab ">一、升级签约全勤奖</p>
+        <table class="tab" cellspacing="0" cellpadding="1">
+            <tr>
+                <td></td>
+                <td>日更≧2000字</td>
+                <td>日更≧4000字</td>
+                <td>日更≧8000字</td>
+                <td>升级条件</td>
+            </tr>
+            <tr>
+                <td>C级签约</td>
+                <td>300元（约千字5元）</td>
+                <td>500元</td>
+                <td>800元</td>
+                <td class="td" >连续三月拿到全勤，便可C→B，享受B级全勤。</td>
+            </tr>
+            <tr>
+                <td>B级签约</td>
+                <td>400元（约千字6.7元）</td>
+                <td>700元</td>
+                <td>1000元</td>
+                <td  rowspan="3" class="td">根据作品订阅成绩，决定B→A→S，享受高一级全勤。</td>
+            </tr>
+            <tr>
+                <td>A级签约</td>
+                <td>600元（约千字10元)</td>
+                <td>1000元</td>
+                <td>1500元</td>
+
+            </tr>
+            <tr>
+                <td>S级签约</td>
+                <td>800元（约千字13.3元）</td>
+                <td>1500元</td>
+                <td>2400元</td>
+            </tr>
+        </table>
+        <p>例如：作者和书咚A级签约，每日更新2000字，持续更新一个自然月，全勤有600元</p>
+        <div>注：<br>
+            <p class="list"><span class="fl maL">①</span><span  class="fl">作品签约当月起享有全勤资格，每月可断更一天；</span></p>
+            <p class="list"><span class="fl maL">②</span><span  class="fl">全勤字数统计只计一部作品当日实际字数增加量，作者有话说不计入作品字数统计；</span></p>
+            <p class="list"><span class="fl maL">③</span><span  class="fl">同一作者同一时期仅限一部签约作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p class="list"><span >④</span><span> 在文章上传中采用欺骗（包括但不限于大量无意义情节填充、重复内容、贴资料等）或者违禁手段（包括但不限于色情、政治、抄袭等）以达到规定的字数，经举报核查将取消全勤资格；</span></p>
+            <p class="list"><span class="fl maL">⑤</span><span  class="fl"> 签约等级申请升级成功后次月才享受下一级别全勤。如果作者于1月申请由A级签约变为S级签约并且成功升级，作者将于2月享受S级全勤福利。</span></p>
+        </div>
+        <p class="fwb">二、升级签约迎新奖</p>
+        <p>首次与书咚网签约成功：50元现金奖励+免费封面+1000咚币。</p>
+        <p>签约作品字数满12万： 100元现金奖励+2000咚币。</p>
+        <p>注：咚币奖励发放到读者账号，需作者账号与读者账号绑定，才可以得到咚币奖励</p>
+        <p class="fwb">三、升级签约完本续签奖</p>
+        <p>（1）正常完本字数30W以上，获得200元续签奖励</p>
+        <p>（2）正常完本字数60W以上，获得500元续签奖励</p>
+        <p>（3）正常完本字数100W以上，获得1000元续签奖励</p>
+        <div>
+            注：
+            <p class="list"><span class="fl maL">① </span><span class="fl">完结90天内，签约新书，可向责编申请，申请后作品字数满12万字后次月发放，逾期视为放弃奖励；</span></p>
+            <p class="list"><span class="fl maL">②</span><span class="fl"> 一个作者同一时期仅一部签约上架作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p class="list"><span class="fl maL">③ </span><span class="fl">如作品有恶意灌水，作品内容涉黄涉政涉暴等一系列恶意欺骗行为，经举报核实，取消奖励。</span></p>
+        </div>
+        <p class="fwb">新咚签约：只要字数满3万，都可以申请新咚签约。作者可以自主定价、自由上架，作品版权100%归作者所有。</p>
+        <p class="fwb">四、新咚签约勤奋奖</p>
+        <p>（1）更新每满15W字，可获得100元现金奖励+1000咚币，以此类推，总字数上限150万字。改签为升级签约，则不享受此种福利。</p>
+        <p>（2）新咚签约勤奋奖不限日更。</p>
+        <p>注：胡乱灌水、重复内容、抄袭、违反国家政策等将取消新咚签约勤奋奖</p>
+
+        <p class="fwb">五、新咚签约更新月榜</p>
+        <div class="ab">
+            <p><span>名次 </span><span> 奖励金额</span></p>
+            <p>	<span>第1名</span><span> 200元</span></p>
+            <p><span>第2名</span><span>150元</span></p>
+            <p><span>第3名</span><span>100元</span></p>
+            <p><span>第4-5名</span><span> 50元</span></p>
+            <p><span>第6-10名</span><span> 2000咚币</span></p>
+            <p><span>第11-20名</span><span>1000咚币</span></p>
+            <p>注：名次按新咚签约作品每月更新字数多少排序</p>
+        </div>
+
+        <p class="fwb">六、新咚签约完本续约奖</p>
+        <p>（1）正常完本字数30W以上，获得100元续签奖励</p>
+        <p>（2）正常完本字数50W以上，获得200元续签奖励</p>
+        <p>（3）正常完本字数100W以上，获得500元续签奖励</p>
+        <div>
+            注：
+            <p class="list"><span class="fl maL">① </span><span class="fl">完结90天内，签约新书，可向责编申请，申请后作品字数满12万字后次月发放，逾期视为放弃奖励；</span></p>
+            <p class="list"><span class="fl maL">② </span><span class="fl">一个作者同一时期仅一部签约上架作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p class="list"><span class="fl maL">③ </span><span class="fl ">如作品有恶意灌水，作品内容涉黄涉政涉暴等一系列恶意欺骗行为，经举报核实，取消奖励。</span></p>
+        </div>
+        <p class="fwb">七、保底或买断全勤奖</p>
+        <p>日更新4000字，500元</p>
+        <p>日更新6000字，800元</p>
+
+        <p class="fwb">八、推荐榜奖励</p>
+        <p class="fwb ">推荐票月榜</p>
+        <div class="ab">
+            <p><span>名次 </span><span> 奖励金额</span></p>
+            <p><span>第1名  </span><span> 2000元</span></p>
+            <p><span>第2名  </span><span> 1000元</span></p>
+            <p><span>第3名 </span><span>  600元</span></p>
+            <p><span>第4-6名 </span><span> 200元</span></p>
+            <p><span>第7-10名 </span><span> 100元</span></p>
+            <p><span>第11-20名 </span><span> 3000咚币</span></p>
+        </div>
+        <p class="fwb">推荐票周榜单</p>
+        <div class="ab">
+            <p><span>名次 </span><span> 奖励金额</span></p>
+            <p><span>第1名  </span><span>  120元</span></p>
+            <p><span>第2名  </span><span>100元</span></p>
+            <p><span>第3名 </span><span>  80元</span></p>
+            <p><span>第4-5名 </span><span>  50元</span></p>
+            <p><span>第6-10名  </span><span>  2000咚币</span></p>
+        </div>
+        <p > 注：推荐榜榜单自APP上线次周开始实施，上榜作品字数需达到1万字以上</p>
+        <p class="fwb">九、稿酬分成</p>
+        <p>对象：书咚家所有签约作者（包含新咚签约和升级签约）</p>
+        <div>
+            内容：
+            <p>（1）作者与网站之间订阅的分成比例，扣除运营费后6:4分成（网站Vip用户产生的订阅收入扣除运营费后100%给作者，网站不参与分成）；</p>
+            <p>（2）作者与网站之间道具的分成比例，扣除运营费后7:3分成；</p>
+            <p>（3）第三方收入扣除相关费用之后5:5分成；</p>
+            <p>（4）每张月票计0.5元稿费；</p>
+            <p>（5）税前稿费满200元才能结算。</p>
+        </div>
+        <p class="fwb">十、邀请有礼</p>
+        <div>
+            <p>（1）作者每邀请3位作者朋友来书咚发布作品，当月稿费增加40元；若邀请作品成功升级签约一本，当月稿费增加100元；</p>
+            <p>（2）邀请作品中，作者每月可推荐一本给编辑看哦，编辑会重点关注该作品 ；</p>
+            <p>（3）收到签约合同即视为签约成功，新建作品“网编/作者”一栏需填写作者笔名。</p>
+            <p class="fwb">七月初App上线，书咚将陆续推出月票榜、新咚榜、升级榜、IP精品奖等榜单福利。</p>
+            <p class="fwb">网站公测期间，可能存在bug，如发现问题，随时向我们反馈，给大家带来不便，敬请谅解。</p>
+            <p class="fwb">客服QQ：1812768618</p>
+        </div>
+    </div>
+</div>
+
+<!--底部 Begin-->
+{include file="public/bot"}
+<!--底部 end-->
+</body>
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+</html>

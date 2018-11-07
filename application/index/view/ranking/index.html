@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{:config('queue.WebName')}-排行榜</title>
+    <meta name="keywords" content="小说排行榜，最新、最热门、最好看小说排行榜，小说更新榜，小说月票榜，小说畅销榜">
+    <meta name="description" content="{:config('queue.WebName')}提供最新最好看的小说排行榜，包括：收藏榜、畅销榜、推荐榜、点击榜、更新榜、新书榜、月票榜、同人榜、总字数榜。">
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <!--样式重置-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css"  />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/header-small.css"  media="screen and (max-width: 1400px)"/>-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--轮播图样式-->
+    <link rel="stylesheet" href="__STATIC__/css/slider.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/slider-small.css" media="screen and (max-width: 1400px)" />-->
+    <!--排行样式-->
+    <link rel="stylesheet" href="__STATIC__/css/list.css">
+    <!--<link rel="stylesheet" href="__STATIC__/css/list-small.css" media="screen and (max-width: 1400px)">-->
+    <!--引入jq-->
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?2df11b0fa32bd346747a261e889fb2a3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+{include file="public/top"}
+<!--banner END-->
+<!-- 各类排行区 BEGIN-->
+<div class="list-wrap oh">
+    <!-- 排行分类  BEGIN-->
+  {include file="public/list"}
+
+    <!-- 排行分类  END-->
+    <ol class="listItem fl">
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">收藏榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="current fl"><a href="javascript:collection_weeks();">周</a></li>
+                    <li class="fl"><a href="javascript:collection_month();">月</a></li>
+                    <li class="fl"><a href="javascript:collection_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="collection">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$collection[0]['book_id']}" title="{$collection[0]['book_name']}">{$collection[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$collection[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$collection[0]['collection_weeks']}</span>收藏</p>
+                </div>
+                <a href="/bookinfo/{$collection[0]['book_id']}" title="{$collection[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$collection[0]['upload_img']}" alt="$collection[0]['book_name']" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$collection[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$collection[1]['book_id']}" title="{$collection[1]['book_name']}">{$collection[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$collection[1]['collection_weeks']}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$collection[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$collection[2]['book_id']}" title="{$collection[2]['book_name']}">{$collection[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$collection[2]['collection_weeks']}</span>
+            </div>
+            {volist name="collection" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$b++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.collection_weeks}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">畅销榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="current fl"><a href="javascript:buy_weeks();">周</a></li>
+                    <li class="fl"><a href="javascript:buy_month();">月</a></li>
+                    <li class="fl"><a href="javascript:buy_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="buy">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$buy[0]['book_id']}" title="{$buy[0]['book_name']}">{$buy[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$buy[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$buy[0]['click_weeks']|num}</span>点击</p>
+                </div>
+                <a href="/bookinfo/{$buy[0]['book_id']}" title="{$buy[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$buy[0]['upload_img']}" alt="{$buy[0]['book_name']}" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$buy[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$buy[1]['book_id']}" title="{$buy[1]['book_name']}">{$buy[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$buy[1]['click_weeks']|num}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$buy[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$buy[2]['book_id']}" title="{$buy[2]['book_name']}">{$buy[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$buy[2]['click_weeks']|num}</span>
+            </div>
+            {volist name="buy" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$c++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.click_weeks|num}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">推荐榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="current fl"><a href="javascript:vote_weeks();">周</a></li>
+                    <li class="fl"><a href="javascript:vote_month();">月</a></li>
+                    <li class="fl"><a href="javascript:vote_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="vote">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$vote[0]['book_id']}" title="{$vote[0]['book_name']}">{$vote[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$vote[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$vote[0]['vote_weeks']}</span>推荐</p>
+                </div>
+                <a href="/bookinfo/{$vote[0]['book_id']}" title="{$vote[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$vote[0]['upload_img']}" alt="" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$vote[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vote[1]['book_id']}" title="{$vote[1]['book_name']}">{$vote[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$vote[1]['vote_weeks']}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$vote[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$vote[2]['book_id']}" title="{$vote[2]['book_name']}">{$vote[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$vote[2]['vote_weeks']}</span>
+            </div>
+
+            {volist name="vote" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$d++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.vote_weeks}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">点击榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="current fl"><a href="javascript:click_weeks();">周</a></li>
+                    <li class="fl"><a href="javascript:click_month();">月</a></li>
+                    <li class="fl"><a href="javascript:click_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="click">
+                <div class="listItem-book oh">
+                    <div class="bookInfo fl">
+                        <span class="book-num">NO.1</span>
+                        <p class="bookTitle"><a href="/bookinfo/{$click[0]['book_id']}" title="{$click[0]['book_name']}">{$click[0]['book_name']}</a></p>
+                        <a href="javascript:;" class="bookAuthor">{$click[0]['author_name']}</a>
+                        <p class="bookClick"><span>{$click[0]['click_weeks']|num}</span>点击</p>
+                    </div>
+                    <a href="/bookinfo/{$click[0]['book_id']}" title="{$click[0]['book_name']}">
+                        <img src="http://images.shuddd.com/{$click[0]['upload_img']}" alt="{$click[0]['book_name']}" class="fl">
+                    </a>
+                </div>
+                <!-- 0书籍详情 END -->
+                <div class="book-infos oh">
+                    <span class="bookNum fl num-icon">2</span>
+                    <span class="items-book fl">[{$click[1]['book_type']}]</span>
+                    <span class="book-title fl"><a href="/bookinfo/{$click[1]['book_id']}" title="{$click[1]['book_name']}">{$click[1]['book_name']}</a></span>
+                    <span class="book-click fr num-icons">{$click[1]['click_weeks']|num}</span>
+                </div>
+                <div class="book-infos oh">
+                    <span class="bookNum fl numIcon">3</span>
+                    <span class="items-book fl">[{$click[2]['book_type']}]</span>
+                    <span class="book-title fl "><a href="/bookinfo/{$click[2]['book_id']}" title="{$click[2]['book_name']}">{$click[2]['book_name']}</a></span>
+                    <span class="book-click fr numIcons">{$click[2]['click_weeks']|num}</span>
+                </div>
+                {volist name="click" id="vo" offset="3" length="7"}
+                <div class="book-infos oh">
+                    <span class="bookNum fl">{$a++}</span>
+                    <span class="items-book fl">[{$vo.book_type}]</span>
+                    <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                    <span class="book-click fr">{$vo.click_weeks|num}</span>
+                </div>
+                {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">更新榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="current fl"><a href="javascript:count_weeks();">周</a></li>
+                    <li class="fl"><a href="javascript:count_month();">月</a></li>
+                    <li class="fl"><a href="javascript:count_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="count">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$count[0]['book_id']}" title="{$count[0]['book_name']}">{$count[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$count[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$count[0]['count_weeks']|num}</span>字</p>
+                </div>
+                <a href="/bookinfo/{$count[0]['book_id']}" title="{$count[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$count[0]['upload_img']}" alt="{$count[0]['book_name']}" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$count[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$count[1]['book_id']}" title="{$count[1]['book_name']}">{$count[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$count[1]['count_weeks']|num}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$count[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$count[2]['book_id']}" title="{$count[2]['book_name']}">{$count[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$count[2]['count_weeks']|num}</span>
+            </div>
+            {volist name="count" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$e++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.count_weeks|num}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">新书榜</span>
+                <ul class="listItem-raking fr">
+
+                    <li class="fl current"><a href="">月</a></li>
+
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$newBook[0]['book_id']}" title="{$newBook[0]['book_name']}">{$newBook[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$newBook[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$newBook[0]['vipvote_month']}</span>月票</p>
+                </div>
+                <a href="/bookinfo/{$newBook[0]['book_id']}" title="{$newBook[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$newBook[0]['upload_img']}" alt="{$newBook[0]['book_name']}" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$newBook[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$newBook[1]['book_id']}" title="{$newBook[1]['book_name']}">{$newBook[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$newBook[1]['vipvote_month']}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$newBook[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$newBook[2]['book_id']}" title="{$newBook[2]['book_name']}">{$newBook[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$newBook[2]['vipvote_month']}</span>
+            </div>
+
+            {volist name="newBook" id="vo"  offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$f++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.vipvote_month}</span>
+            </div>
+            {/volist}
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">月票榜</span>
+                <ul class="listItem-raking fr">
+
+                    <li class="fl current"><a href="javascript:vipvote_month();">月</a></li>
+                    <li class="fl"><a href="javascript:vipvote_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="vipvote">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$vipvote[0]['book_id']}" title="{$vipvote[0]['book_name']}">{$vipvote[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$vipvote[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$vipvote[0]['vipvote_month']}</span>月票</p>
+                </div>
+                <a href="/bookinfo/{$vipvote[0]['book_id']}" title="{$vipvote[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$vipvote[0]['upload_img']}" alt="{$vipvote[0]['book_name']}" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$vipvote[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vipvote[1]['book_id']}" title="{$vipvote[1]['book_name']}">{$vipvote[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$vipvote[1]['vipvote_month']}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$vipvote[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$vipvote[2]['book_id']}" title="{$vipvote[2]['book_name']}">{$vipvote[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$vipvote[2]['vipvote_month']}</span>
+            </div>
+            {volist name="vipvote" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$g++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.vipvote_month}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">同人榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="fl current"><a href="javascript:t_click_weeks();">周</a></li>
+                    <li class="fl "><a href="javascript:t_click_month();">月</a></li>
+                    <li class="fl"><a href="javascript:t_click_total();">总</a></li>
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div id="tongren">
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$tongren[0]['book_id']}" title="{$tongren[0]['book_name']}">{$tongren[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$tongren[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$tongren[0]['vote_weeks']}</span>推荐</p>
+                </div>
+                <a href="/bookinfo/{$tongren[0]['book_id']}" title="{$tongren[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$tongren[0]['upload_img']}" alt="$tongren[0]['book_name']" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$tongren[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$tongren[1]['book_id']}" title="{$tongren[1]['book_name']}">{$tongren[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$tongren[1]['vote_weeks']}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$tongren[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$tongren[2]['book_id']}" title="{$tongren[2]['book_name']}">{$tongren[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$tongren[2]['vote_weeks']}</span>
+            </div>
+            {volist name="tongren" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$h++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.vote_weeks}</span>
+            </div>
+            {/volist}
+            </div>
+        </li>
+        <li>
+            <!-- 分类详情 BEGIN-->
+            <div class="listItem-info oh">
+                <span class="listItem-title fl">总字数榜</span>
+                <ul class="listItem-raking fr">
+                    <li class="fl current"><a href="">总</a></li>
+
+                </ul>
+            </div>
+            <!-- 分类详情  END-->
+            <!-- 0书籍详情 BEGIN -->
+            <div class="listItem-book oh">
+                <div class="bookInfo fl">
+                    <span class="book-num">NO.1</span>
+                    <p class="bookTitle"><a href="/bookinfo/{$words[0]['book_id']}" title="{$words[0]['book_name']}">{$words[0]['book_name']}</a></p>
+                    <a href="javascript:;" class="bookAuthor">{$words[0]['author_name']}</a>
+                    <p class="bookClick"><span>{$words[0]['words']|num}</span>字</p>
+                </div>
+                <a href="/bookinfo/{$words[0]['book_id']}" title="{$words[0]['book_name']}">
+                <img src="http://images.shuddd.com/{$words[0]['upload_img']}" alt="{$words[0]['book_name']}" class="fl">
+                </a>
+            </div>
+            <!-- 0书籍详情 END -->
+            <div class="book-infos oh">
+                <span class="bookNum fl num-icon">2</span>
+                <span class="items-book fl">[{$words[1]['book_type']}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$words[1]['book_id']}" title="{$words[1]['book_name']}">{$words[1]['book_name']}</a></span>
+                <span class="book-click fr num-icons">{$words[1]['words']|num}</span>
+            </div>
+            <div class="book-infos oh">
+                <span class="bookNum fl numIcon">3</span>
+                <span class="items-book fl">[{$words[2]['book_type']}]</span>
+                <span class="book-title fl "><a href="/bookinfo/{$words[2]['book_id']}" title="{$words[2]['book_name']}">{$words[2]['book_name']}</a></span>
+                <span class="book-click fr numIcons">{$words[2]['words']|num}</span>
+            </div>
+            {volist name="words" id="vo" offset="3" length="7"}
+            <div class="book-infos oh">
+                <span class="bookNum fl">{$j++}</span>
+                <span class="items-book fl">[{$vo.book_type}]</span>
+                <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+                <span class="book-click fr">{$vo.words|num}</span>
+            </div>
+            {/volist}
+        </li>
+
+    </ol>
+
+</div>
+
+{include file="public/bot"}
+<!--书咚APP下载模块BEGIN-->
+
+<p class="sd-back" id="j-top"><img src="__STATIC__/images/home_btn_top.png" title="返回顶部哟" /></p>
+<script type="text/javascript" src="__STATIC__/js/clamp.js"></script>
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+<!--APP下载模块END-->
+<!--返回顶部BEGIN-->
+
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="__STATIC__/js/list/list.js"></script>
+<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+</body>
+
+
+</html>

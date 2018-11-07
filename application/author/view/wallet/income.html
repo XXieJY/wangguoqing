@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>收入结算-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/income.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/incomeManage.css">
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+<!--头部 begin-->
+{include file="public/wallet"}
+<!--头部--->
+<div class="wrapper" style="padding-bottom: 20px;">
+    <div class="wrap-nav">
+        <span class="fl">收入结算</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Wallet/index')}"><li class="fl ">订阅查询</li></a>
+        <a href="{:url('Wallet/obtain')}"><li class="fl  ">道具获得</li></a>
+        <a href="{:url('Wallet/qudao')}"><li class="fl  ">渠道收入</li></a>
+        <a href="{:url('Wallet/apply')}"><li class="fl  ">作者福利</li></a>
+        <a href="{:url('Wallet/income')}"><li class="fl  active">收入结算</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+        <form action="" method="post">
+        <div class="form-box fl">
+            <label for='ctime' class="fl oh title"><span class="fl">选择月份：</span></label>
+            <input type="text" value="{$time}" class="fl input-box " maxlength="30" name="month" id="ctime" readonly>
+        </div>
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+                <input class="txt fl " value="{$bookName}" type="text " name="bookName" readonly="readonly">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    <li>全部</li>
+                    {volist name="book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                    {/volist}
+
+                </ul>
+            </div>
+        </div>
+        <input type="submit" value="查询" class="btn fl ">
+        </form>
+        <p class="fl">总计人民币：{$money}元（税前，不含全勤）</p>
+    </div>
+    <!--<div class="noInfo">
+         <img src="images/authors_icon_nodata.png" alt="" />
+         <span>目前暂无数据~~</span>
+     </div> -->
+
+    <div class="incomeDetail">
+        <p class="order">【订阅汇总】</p>
+        <table class="tab" cellspacing="0">
+            <tr>
+                <th class="selectBox"><input type="checkbox" name="" id="check"  class="check" /></th>
+                <th>序号</th>
+                <th class="title">作品名称</th>
+                <th style=" width:112px;">月份</th>
+                <th style=" width:112px;">订阅总人数</th>
+                <th style=" width:112px;">订阅章节总量</th>
+                <th style=" width:112px;">Vip用户订阅量</th>
+                <th style=" width:112px;">普通用户订阅量</th>
+                <th class="formu">
+                    <p>结算人民币（元）</p>
+                    <p class="formula">公式</p>
+                    <div class="mask">
+                        <p class="fw">（订阅总额-运营成本） *分成比例</p>
+                        <p>注：普通用户订阅分成比例：60%</p>
+                        <p>Vip用户订阅分成比例：100%</p>
+                        <p>运营成本：10%</p>
+                    </div>
+                </th>
+            </tr>
+           {volist name="income" id="vo" key="k"}
+            <tr>
+                <td class="selectBox"><input type="checkbox" name="" class="checks"  /></td>
+                <td>{$k}</td>
+                <td>{$vo.book_name}</td>
+                <td>{$time}</td>
+                <td>{$vo.people}</td>
+                <td>{$vo.chapter}</td>
+                <td>{$vo.vipMoney}咚币</td>
+                <td>{$vo.money}咚币</td>
+                <td>{$vo.alance}</td>
+            </tr>
+            {/volist}
+        </table>
+        <p class="order">【打赏汇总】</p>
+        <table class="tab tas" cellspacing="0">
+            <tr>
+                <th class="selectBox"><input type="checkbox" name="" id="all"  class="" /></th>
+                <th>序号</th>
+                <th class="title">作品名称</th>
+                <th>月份</th>
+                <th >打赏总人数</th>
+                <th class="pay">打赏</th>
+                <th class="formu">
+                    <p>结算人民币（元）</p>
+                    <p class="formula">公式</p>
+                    <div class="mask inco-mask">
+                        <p class="fw">（打赏总额-运营成本） *分成比例</p>
+                        <p>注：打赏分成比例：70%</p>
+                        <p>运营成本：10%</p>
+                    </div>
+                </th>
+            </tr>
+           {volist name="dashang" id="vo" key="k"}
+            <tr>
+                <td class="selectBox"><input type="checkbox" name=""   class="all" /></td>
+                <td>{$k}</td>
+                <td>{$vo.book_name}</td>
+                <td>{$time}</td>
+                <td>{$vo.people}</td>
+                <td>{$vo.money}咚币</td>
+                <td>{$vo.alance}</td>
+            </tr>
+            {/volist}
+        </table>
+        <p class="order">【月票汇总】</p>
+        <table class="tab tas" cellspacing="0">
+            <tr>
+                <th class="selectBox"><input type="checkbox" name="" id="alls"  /></th>
+                <th>序号</th>
+                <th class="title">作品名称</th>
+                <th>月份</th>
+                <th>投票总人数</th>
+                <th class="pay">月票总量</th>
+                <th class="formu">
+                    <p>结算人民币（元）</p>
+                    <p class="formula">公式</p>
+                    <div class="mask ticket">
+                        <p class="fw">月票总量 * 0.5元</p>
+                        <p>注：每张月票兑换0.5元</p>
+                    </div>
+                </th>
+            </tr>
+            {volist name="vipvote" id="vo" key="k"}
+            <tr>
+                <td class="selectBox"><input type="checkbox" name=""   class="alls"/></td>
+                <td>{$k}</td>
+                <td>{$vo.book_name}</td>
+                <td>{$time}</td>
+                <td>{$vo.people}</td>
+                <td>{$vo.total}</td>
+                <td>{$vo.alance}</td>
+            </tr>
+            {/volist}
+        </table>
+        <p class="order">【全勤统计】</p>
+        <table class="tab tas" cellspacing="0">
+            <tr>
+                <th class="selectBox"><input type="checkbox" name="" id="as"  /></th>
+                <th>序号</th>
+                <th class="title">作品名称</th>
+                <th>月份</th>
+                <th>签约类型</th>
+                <th>日更字数</th>
+                <th class="wid">是否符合全勤奖</th>
+                <th class="money">结算人民币（元）</th>
+            </tr>
+           {volist name="quanqin" id="vo"  key="k"}
+            <tr>
+                <td class="selectBox"><input type="checkbox" name=""  class="as"/></td>
+                <td>{$k}</td>
+                <td>{$vo.book_name}</td>
+                <td>{$time}</td>
+                <td>{$vo.contract}</td>
+                <td>{$vo.word}</td>
+                {if condition="$vo.full eq 1"}
+                <td>断更一天</td>
+                {/if}
+                {if condition="$vo.full eq 0"}
+                <td>是</td>
+                {/if}
+                {if condition="$vo.full gt 1"}
+                <td>--</td>
+                {/if}
+
+                {if condition="$auth eq 1"}
+                {if condition="$isok eq 1"}
+                <td>{$vo.money}</td>
+                 {else /}
+                <td>--</td>
+                {/if}
+                {else /}
+                <td>{$vo.money}</td>
+                {/if}
+
+            </tr>
+            {/volist}
+        </table>
+    </div>
+
+
+</div>
+{include file="public/bot"}
+</body>
+
+<script type="text/javascript" src="__STATIC__/author/js/lib/laydate/laydate.js"></script>
+<script src="__STATIC__/author/js/bookDis.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/author/js/income.js"></script>
+<script type="text/javascript">
+    $('.formula').hover(function() {
+        /* Stuff to do when the mouse enters the element */
+        $(this).next().show();
+    }, function() {
+        /* Stuff to do when the mouse leaves the element */
+        $(this).next().hide();
+    });
+
+
+
+</script>
+
+</html>

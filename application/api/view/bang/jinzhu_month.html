@@ -1,0 +1,28 @@
+<div class="metal-listDetail oh">
+    <span class="fl metal-num color-f4">1</span>
+    <span class="metal-img fl"><img src="{$jinzhu[0][portrait]}"/></span>
+    <span class="reader-name fl"><a href="javascript:;">{$jinzhu[0][pen_name]}</a></span>
+    <span class="reader-reward fr color-f4s">{$jinzhu[0][money]}</span>
+</div>
+
+<div class="metal-listDetail oh">
+    <span class="fl metal-num color-ff">2</span>
+    <span class="metal-img fl"><img src="{$jinzhu[1][portrait]}"/></span>
+    <span class="reader-name fl"><a href="javascript:;">{$jinzhu[1][pen_name]}</a></span>
+    <span class="reader-reward fr color-ffs">{$jinzhu[1][money]}</span>
+</div>
+<div class="metal-listDetail oh">
+    <span class="fl metal-num color-fe">3</span>
+    <span class="metal-img fl"><img src="{$jinzhu[2][portrait]}"/></span>
+    <span class="reader-name fl"><a href="javascript:;">{$jinzhu[2][pen_name]}</a></span>
+    <span class="reader-reward fr color-fes">{$jinzhu[2][money]}</span>
+</div>
+{volist name="jinzhu" id="vo" offset="3" length="17"}
+
+<div class="metal-listDetail oh mab">
+    <span class="fl metal-num ">{$b++}</span>
+    <span class="reader-names fl">{$vo.pen_name}</span>
+    <span class="reader-reward fr">{$vo.money}</span>
+</div>
+
+{/volist}

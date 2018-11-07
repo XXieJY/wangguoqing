@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>渠道收入-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/income.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/manages.css">
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/wallet"}
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">作者钱包</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Wallet/index')}"><li class="fl ">订阅查询</li></a>
+        <a href="{:url('Wallet/obtain')}"><li class="fl  ">道具获得</li></a>
+        <a href="{:url('Wallet/qudao')}"><li class="fl  active">渠道收入</li></a>
+        <a href="{:url('Wallet/apply')}"><li class="fl  ">作者福利</li></a>
+        <a href="{:url('Wallet/income')}"><li class="fl  ">收入结算</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+                <!-- <div> -->
+                <input class="txt fl " value="{$book[0]['book_name']}" type="text " name="works" readonly="readonly">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    {volist name="book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                   {/volist}
+                </ul>
+                <!-- </div> -->
+            </div>
+        </div>
+
+        <input type="button" value="查询" class="btn">
+    </div>
+    <div class="noInfo">
+        <img src="__STATIC__/author/images/authors_icon_nodata.png" alt="" />
+        <span>目前暂无数据~~</span>
+    </div>
+
+</div>
+
+
+{include file="public/bot"}
+
+<script src="__STATIC__/author/js/lib/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/author/js/income.js"></script>
+
+</body>
+</html>

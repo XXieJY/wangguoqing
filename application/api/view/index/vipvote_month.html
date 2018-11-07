@@ -1,0 +1,32 @@
+<div class="listItem-book oh">
+    <div class="bookInfo fl">
+        <span class="book-num">NO.1</span>
+        <p class="bookTitle"><a href="/bookinfo/{$vipvote[0]['book_id']}" title="{$vipvote[0]['book_name']}">{$vipvote[0]['book_name']}</a></p>
+        <a href="javascript:;" class="bookAuthor">{$vipvote[0]['author_name']}</a>
+        <p class="bookClick"><span>{$vipvote[0]['vipvote_month']}</span><span>月票</span></p>
+    </div>
+    <a href="/bookinfo/{$vipvote[0]['book_id']}" title="{$vipvote[0]['book_name']}">
+        <img src="http://images.shuddd.com/{$vipvote[0]['upload_img']}" alt="{$vipvote[0]['book_name']}" class="fl">
+    </a>
+</div>
+<!-- 0书籍详情 END -->
+<div class="book-infos oh">
+    <span class="bookNum fl num-icon">2</span>
+    <span class="items-book fl">[{$vipvote[1]['book_type']}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$vipvote[1]['book_id']}" title="{$vipvote[1]['book_name']}">{$vipvote[1]['book_name']}</a></span>
+    <span class="book-click fr num-icons">{$vipvote[1]['vipvote_month']}</span>
+</div>
+<div class="book-infos oh">
+    <span class="bookNum fl numIcon">3</span>
+    <span class="items-book fl">[{$vipvote[2]['book_type']}]</span>
+    <span class="book-title fl "><a href="/bookinfo/{$vipvote[2]['book_id']}" title="{$vipvote[2]['book_name']}">{$vipvote[2]['book_name']}</a></span>
+    <span class="book-click fr numIcons">{$vipvote[2]['vipvote_month']}</span>
+</div>
+{volist name="vipvote" id="vo" offset="3" length="7"}
+<div class="book-infos oh">
+    <span class="bookNum fl">{$g++}</span>
+    <span class="items-book fl">[{$vo.book_type}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+    <span class="book-click fr">{$vo.vipvote_month}</span>
+</div>
+{/volist}

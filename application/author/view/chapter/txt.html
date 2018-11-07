@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$book.book_name}-多章上传-{:config('queue.A_Name')}</title>
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/moretext.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/popup.css" />
+
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部 end-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+            &gt;
+            <span>{$book.book_name}</span>
+        </p>
+        <p class="fr att">
+            带有<span>*</span> 的项目必须填写
+        </p>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Book/set',['id'=>$book.book_id])}"><li class="fl ">作品设置</li></a>
+        <a href="{:url('Chapter/index',['bookid'=>$book.book_id])}" ><li class="fl">章节管理</li></a>
+        <a href="{:url('Chapter/add',['bookid'=>$book.book_id])}"><li class="fl ">上传章节</li></a>
+        <a href="{:url('Chapter/txt',['bookid'=>$book.book_id])}"><li class="fl active">TXT多章上传</li></a>
+        <a href="{:url('Chapter/draft',['bookid' =>$book.book_id])}"><li class="fl">草稿箱</li></a>
+    </ul>
+    <div class="textWrap">
+        <p class="aut">重要提示：</p>
+        <p class="aut-list">1、章节归卷错误、章节名输入错误、章节内容修改或添加，请点击“章节管理”进行操作，不用重新上传；</p>
+        <p class="aut-list">2、为使作品章节上传能够更有序，杜绝上传空章以及超短字数章节的情况，凡是六小时内重复上传新章节、单章字数低于2000字将不在首页更新列表，以及分类更新列表内显示更新情况。</p>
+    </div>
+    <form action="" method="post" class="moreTxt" enctype="multipart/form-data">
+        <input type="hidden" name="bookid" id="bookid"  value="{$bookid}"/>
+        <div class="form-control ">
+            <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">选择所在卷：</span></p></div>
+            <div class="fl input-box sels">
+                <div>
+                    <input class="txt fl" placeholder="请选择分卷" value="" type="text" name="roll" readonly="readonly" >
+                    <i class="fr"></i>
+                    <ul class="roll-list">
+                        {volist name="juan" id="vo"}
+                        <li>{$vo.title}</li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <input type="button" value="+新增分卷" class="fl new-roll add">
+        </div>
+        <div class="form-control ">
+            <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">千字价格：</span></p></div>
+            <div class="fl input-box sels">
+                <div>
+                    <input class="txt fl" type="text" value="免费" name="price"  readonly="readonly">
+                    <i class="fr"></i>
+                    <ul class="roll-list cnmcnmcnm" style="display: none;">
+                        <li>免费</li>
+                        <li>千字3分</li>
+                        <li>千字4分</li>
+                        <li>千字5分(书咚建议价格)</li>
+                        <li>千字6分</li>
+                        <li>千字8分</li>
+                        <li>千字10分</li>
+                        <li>千字12分</li>
+                        <li>千字14分</li>
+                        <li>千字16分</li>
+                        <li>千字18分</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="fl intro">请选择章节千字价格，每选择一次，后面章节将默认延续该价格（可手动调整价格），已发布章节价格不可更改，章节少于1000字默认免费</p>
+        </div>
+        <div class="form-control ">
+            <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">上传文件：</span></p></div>
+            <p class="uploading fl file ">
+                <span onclick="jsReadFiles()">上传文件</span>
+                <input type="file" name="file" id="file" onchange="jsReadFiles(this.files)">
+            </p>
+            <span class="fl title" id="title">未选择文件</span>
+
+
+        </div>
+        <div class="btns"><button>上传章节</button></div>
+        <div class="ant">
+            <p class=" ">注意：</p>
+            <p class=" ">第1步：上传前请在每个章节名前加符号“###"，如“###第1章 新婚惊魂“；</p>
+            <p class=" ">第2步：在保存txt文档时，编码（E）请选择”UTF-8”格式，否则将无法上传，具体详见 <a href="#" class="red" style="color: #F44D4D" onclick="cnm();">操作图示</a>。</p>
+        </div>
+
+
+
+    </form>
+
+</div>
+
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+
+<!--新建分卷-->
+<div class="mask dn" id="recomed">
+    <!--弹框--->
+    <div class="monolayer maiBox">
+        <!--导航-->
+        <div class="monolayernav ">
+            <p class="fl tit">新增分卷</p>
+            <i class="fr close"></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo msgwid">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p>1、 一部作品系统默认分为1个分卷 —> 分卷号：1，卷名：第一卷；</p>
+            <p>2、分卷名可以修改，分卷号不可以修改；</p>
+            <p>3、作品分卷顺序按照序号（<span>大小</span>）从小到大依次排列。</p>
+        </div>
+        <form action="{:url('Chapter/addJuan')}" method="post">
+            <input type="hidden" name="bookid" value="{$bookid}">
+            <div class="form-control  form-box  ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷号：</span></p></div>
+                <input class="txt fl input-box disabled" value="{$v_id+1}" type="text" name="newRollnum" maxlength="100"  readonly="readonly">
+                <!--<p class="fl intro">分卷号不能和现有的卷号相同</p>-->
+            </div>
+            <div class="form-control  form-box  ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">分卷名：</span></p></div>
+                <input class="txt fl input-box" value="{$v_id+1|juan}" type="text" name="newRoll" maxlength="100"  >
+                <p class="fl intro">分卷名不能为空</p>
+            </div>
+            <p class="unmet "></p>
+            <div class="btn">
+                <a href="javascript:;" class="can-btn fl" >取消</a>
+                <button class="sub-btn fl">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--新建分卷-->
+<div class="mask dn show">
+    <div class="maskwrap">
+        <p class="nav"><span class="fl">提示</span> <span	 class="fr close" ></span></p>
+        <p class="lh">抱歉咧，您的TXT文件章节名不符合上传格式，书咚也传不上去</p>
+    </div>
+</div>
+<!--遮罩-->
+<div class="mask  HINT dn">
+    <div class="maskwrap hint">
+        <p class="nav"><span class="fl">提示</span> <span	 class="fr close" ></span></p>
+        <div class="hints oh">
+            <p class="hintFont fl">
+                <span  class="db steps">【第1步】</span>
+                <span  class="db">上传前请在每个章节名前加符号“###"</span>
+            </p>
+            <p class="hintFont fl">
+                <span class="db steps">【第2步】</span>
+                <span class="db">选择“另存为”</span>
+            </p>
+            <div class="clearfix"></div>
+            <p class="hintFont  hintFonts">
+                <span  class="db steps">【第3步】</span>
+                <span  class="db">在保存txt文档时，编码（E）请选择”UTF-8”格式。</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<!--图片上传-->
+
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/moreText.js" type="text/javascript" charset="utf-8"></script>
+</html>
+<script type="text/javascript">
+    function cnm() {
+        $(".HINT").removeClass("dn");
+    }
+
+</script>
+
+<script type="text/javascript">
+    $('.cnmcnmcnm').each(function(){
+        $(this).on('click','li',function(){
+
+            var txt = $(this).text();
+            $(this).parent().siblings('.txt').val(txt);
+            $(this).parent().siblings('.txt').attr('value',txt)
+            $(this).parent().hide();
+
+            getli(txt);
+        })
+    })
+    function getli(txt) {
+       // alert(111)
+        var bookid =document.getElementById("bookid").value;
+
+        $.ajax({
+            url:'/api/Book/checkPrice',
+            type:'post',
+            data:{'bookid':bookid,'title':txt},
+            success:function (data) {
+                if(data==1){
+                    alert('书咚建议你字数满12万字再进行收费，方便作品后续签约以及吸引更多人气。')
+                }
+            }
+
+        });
+    }
+</script>

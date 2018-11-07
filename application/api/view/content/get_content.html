@@ -1,0 +1,58 @@
+<!--修改 发布功能区-->
+<div class="btnNav">
+    <p class="fl chapterInfo">
+        <span>字数：{$content.number}</span>
+        <span>章节价格：{if condition="$content.the_price eq 0"}免费{else /}{$content.the_price}{/if}</span>
+        {if condition="$content.state eq 3"}
+        <span>草稿类型：新建草稿</span>
+        {else /}
+        <span>章节类型： <span class="red"> {if condition="$content.update_time gt $time"} 待发布   {$content.update_time} {else /}已发布   {$content.time} {/if}</span></span>
+        {/if}
+    </p>
+    <p class="fr btn">
+        {if condition="$content.state neq 3"}
+        <button class="dele fl omit" >删除本章</button><button class="fl" onclick="sav({$content.content_id});">修改/发布</button>
+        {else /}
+        <button  class="fl omit">删除本章</button><a href="{:url('/Author/Chapter/update',['contentId'=>$content.content_id])}" id="reply" class="fl">修改/发布</a>
+        {/if}
+
+    </p>
+</div>
+<div class="chapter li5">
+    <p class="chapter-title">{$content.title}</p>
+    <div class="wrap-box">
+        <p style="text-indent: 2em;line-height: 30px;font-size: 16px;">
+            {$content.content}
+        </p>
+    </div>
+</div>
+
+<div class="authorWords">
+    <p class="title">作者有话说</p>
+    <p class="info">
+        {$content.msg}
+    </p>
+</div>
+
+<script type="text/javascript">
+
+    $('.dele').on('click',function(){
+       // console.log($('.dele'))
+        $('.shows').removeClass('dn');
+
+    })
+    $('.omit').on('click',function(){
+        $('.cnm').removeClass('dn');
+    })
+
+    if($('.draft-chapterDetail').height()<630){
+        $(".draftWrap").css('height','630px');
+        $(".chapterDetails").css('height','630px');
+    }else{
+        $('.chapterDetails').css("height","auto");
+        // $(".draftWrap").css("height","auto");
+    }
+
+</script>
+
+

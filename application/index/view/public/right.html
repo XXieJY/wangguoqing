@@ -1,0 +1,48 @@
+<div class="list ">
+    <p class="myfocus">我的关注</p>
+    <div class="userScroll" id='scroll'>
+        <ul class="myfocus-user">
+
+            {volist name="$user" id="vo"}
+            <li>
+                <a href="javascript:;" class="info">
+                    <img src="{$vo.portrait}"/>
+                    <div class="userIn">
+                        <p><span class="username"> {$vo.pen_name}</span>{if condition="$vo.days gt 0"}<span class="fznum"> • VIP</span>{/if}</p>
+                        {if condition="$vo.mTime neq null"}
+                        <p>{$vo.mTime}发表了一条评论</p>
+                        {else /}
+                        <p>暂无评论</p>
+                        {/if}
+                    </div>
+                </a>
+            </li>
+            {/volist}
+
+        </ul>
+    </div>
+</div>
+<div class="list  mat">
+    <p class="myfocus">我的粉丝</p>
+    <div class="userScroll" id='scrolls'>
+        <ul class="myfocus-user">
+
+            {volist name="fans" id="vo"}
+            <li>
+                <a href="javascript:;" class="info">
+                    <img src="{$vo.portrait}"/>
+                    <div class="userIn">
+                        <p><span class="username"> {$vo.pen_name}</span>{if condition="$vo.days gt 0"}<span class="fznum"> • VIP</span>{/if}</p>
+                        {if condition="$vo.mTime neq null"}
+                        <p>{$vo.mTime}发表了一条评论</p>
+                        {else /}
+                        <p>暂无评论</p>
+                        {/if}
+                    </div>
+                </a>
+            </li>
+            {/volist}
+
+        </ul>
+    </div>
+</div>

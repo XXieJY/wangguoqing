@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>《{$book.book_name}》_{:config('queue.WebName')}</title>
+    <meta name="keywords" content="{$book.book_name}-{$content.title}-{:config('queue.WebName')}">
+    <meta name="description" content="{$book.book_name}，是由{$book.author_name}在{:config('queue.WebName')}创作的原创小说，{:config('queue.WebName')}提供{$book.book_name}的最新章节及全本阅读。">
+    <!--样式重置-->
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/read/css/rest.css" />
+    <!-- 阅读详情样式 -->
+    <link rel="stylesheet" href="__STATIC__/read/css/readDetails.css">
+    <!--<link rel="stylesheet" href="__STATIC__/read/css/readDetailsSmall.css" media="screen and (max-width: 1400px)"/>-->
+    <link rel="stylesheet" href="__STATIC__/read/css/readDetail_night.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/read/css/footer.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/read/js/lib/style.min.css"/>-->
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+<body onselectstart="return false">
+<div class="wrap">
+    <!-- 头部BEGIN -->
+    <div class="header ">
+        <div class="header-nav ">
+            <a href="{:url('/index')}">
+                <img src="__STATIC__/read/images/reader_slices/reader_shuddd_logo.png" alt=""  class="fl logo">
+            </a>
+            <p class="fl info">泛次元小说互动阅读平台</p>
+
+            <!-- 搜索登录模块 -->
+            <div class="header-search fr sd-search">
+                <!-- 搜索部分BEGIN -->
+                <form action="{:url('/book',['type'=>0,'key'=>0,'rank'=>0,'time'=>0,'words'=>0,'state'=>0])}" method="post" class="fl search-form">
+                    <input type="text" name="book_name"   class="fl tt"  placeholder="搜索更多作品或作者" />
+                    <input type="submit" value=""  class="fr tt-btn" >
+                    <div class="sd-search-result" id="word">
+
+                    </div>
+                </form>
+                <!-- 搜索部分END -->
+                <!-- 登录注册BEGIN -->
+                <p class="oh loginReg">
+                    <a href="javascript:;" class="fl login">登录</a>
+                    <span class="fl"></span>
+                    <a href="javascript:;" class="fl register">注册</a>
+                </p>
+                <!-- 登录注册BEGIN -->
+            </div>
+        </div>
+    </div>
+    <!-- 头部END -->
+    <!-- 导航 分类BEGIN-->
+    <p class="nav-list">
+        <a href="/index.html">首页</a>
+        &gt;
+        <a href="/bookinfo/{$book.book_id}">{$book.book_name}</a>
+    </p>
+    <!-- 导航 分类END-->
+    <!-- 中间内容部分BEGIN -->
+
+    <!-- 目录。详情 收藏 设置功能 BEGIN-->
+    <ul class=" set-list-left set-list" id="J_setLeft">
+        <li class="menu-set " id="J_menu" >
+            <i class="menu  "></i>
+            <span>目录</span>
+            <!-- 书籍卷列表 END -->
+        </li>
+        <li>
+            <i class="detail"></i>
+            <span>详情</span>
+            <a href="/bookinfo/{$book.book_id}"></a>
+        </li>
+        {if condition="$collection eq 1"}
+        <li onclick="removeBook({$book.book_id})">
+            <i class="collect active"></i>
+            <span>已收藏</span>
+        </li>
+        {else /}
+        <li onclick="joinBook({$book.book_id})">
+            <i class="collect "></i>
+            <span>收藏</span>
+        </li>
+        {/if}
+        <li class="bob setting " id="setup">
+            <i class="setup "></i>
+            <span>设置</span>
+        </li>
+        <div class="menu-wrap " id="wrap">
+            <em  class="close"></em>
+            <p class="book-list-title">目录</p>
+            <!-- 书籍卷列表 BEGIN -->
+            <div class="book-roll-wrap" id="bookScroll">
+                <div class="book-roll">
+                    {volist name="chapter"  id="vo"}
+                    <p class="roll-details">
+                        <span class="fl">{$vo.title}</span>
+                        <em class="select fr " ></em>
+                    </p>
+                    <ul class="oh chapter-list list show" >
+                        {volist name="$vo.chapter" id="v"}
+                        <li class="fl oh" id="{$v.content_id}">
+                            <a href="/read/{$vo.book_id}/{$v.num}">
+                                <span class="fl">{$v.title}</span>
+                                {if condition="$v.the_price neq 0"}
+                                <em class="fr locking "></em>
+                                {/if}
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+
+                    {/volist}
+                </div>
+                <!-- 滚动条  BEGIN-->
+                <!--<div class="book-scroll">
+                    <div class="bar"></div>
+                </div>-->
+                <!-- 滚动条  END-->
+            </div>
+        </div>
+        <!-- 设置 BEGIN -->
+        <div class="set-wrap">
+            <p class="oh col-set">
+                <span class="fl setup" >设置</span>
+                <em class="set-close fr"></em>
+            </p>
+            <!-- 阅读主题 BEGIN -->
+
+            <div class="read-motif lists  fl">
+                <span class="motif-title fl">阅读主题 ：</span>
+                <!-- 七中颜色 -->
+                <ul class="color-motif oh  fl maL  " id="J_theme">
+                    <li class=" col-white act" data-s="0"></li>
+                    <li class=" col-light"></li>
+                    <li class=" col-blue"></li>
+                    <li class=" col-gray"></li>
+                    <li class=" col-purple"></li>
+                    <li class=" col-pink"></li>
+                    <li class=" col-black " id="colBlack"></li>
+                </ul>
+            </div>
+            <!-- 阅读主题 END -->
+            <!-- 繁简切换 BEGIN-->
+            <div class="read-motif lists  fl ">
+                <span class="motif-title fl">繁简切换 ：</span>
+                <ul class="font-family oh  fl maL" id="J_tabs" >
+                    <li class="fl  act"  onclick="convert('s')" data-ss='0'>简体</li>
+                    <li class="fl "  onclick="convert('t')" >繁体</li>
+                </ul>
+            </div>
+            <!-- 繁简切换 END-->
+            <!-- 正文字体 BEGIN-->
+            <div class="read-motif lists  fl ">
+                <span class="motif-title fl">正文字体 ：</span>
+                <ul class="font-family oh  fl maL" id="J_tram">
+                    <li class="fl  act" data-st='0'>雅黑</li>
+                    <li class="fl " >宋体</li>
+                    <li class="fl ">楷体</li>
+                </ul>
+            </div>
+            <!-- 正文字体 END-->
+            <!-- 字体大小 BEGIN-->
+            <div class="read-motif lists  fl maD">
+                <span class="motif-title fl">字体 大小：</span>
+                <ul class="font-size oh  fl maL">
+                    <li class="fl  " data-str="0" >A-</li>
+                    <li class="fl default" id="txt" data-str="2">14</li>
+                    <li class="fl " data-str="3">A+</li>
+                </ul>
+            </div>
+            <!-- 字体大小 END-->
+            <!-- 设置保存按钮 -->
+            <div class="read-motif lists btns ">
+                <button class="save act" >保存</button>
+                <button class="cancel">取消</button>
+            </div>
+        </div>
+        <!-- 设置 END -->
+        <!-- 	<div></div> -->
+    </ul>
+    <!-- 目录。详情 收藏 设置功能 END-->
+    <!-- 推荐。月票 打赏 打赏 BEGIN-->
+    <ul class=" set-list-right set-list  " id="J_setRight">
+        <li>
+            <i class="reward"></i>
+            <span>打赏</span>
+        </li>
+        <li>
+            <i class="recommend"></i>
+            <span>推荐</span>
+        </li>
+        <li>
+            <i class="ticket"></i>
+            <span>月票</span>
+        </li>
+
+        <li class="bob">
+            <i class="download"></i>
+            <span>订阅</span>
+        </li>
+    </ul>
+    <!-- 目录。详情 收藏 设置功能 END-->
+    <!-- 内容部分BEGIN -->
+
+    <div class="content " id="{$content.content_id}">
+
+        <p class="chapterTitle">
+            {$content.title}
+        </p>
+        <p class="bookInfo oh">
+            	 <span class="fl">
+             		小说：
+            	 <span>{$book.book_name}</span>
+         		</span>
+            <span class="fl">
+              	小说作者：
+             	<span class="col-red">{$book.author_name} </span></span>
+            <span class="fl">
+             	更新时间：
+            	 {$content.time}
+         		</span>
+            <span class="fl">
+              	书评：
+         		 {$book.count}
+      			</span>
+            <span class="fl ma0">
+              	字数：
+         		{$content.number}
+         	</span>
+        </p>
+
+        <!-- 小说正文部分BEGIN -->
+        <div class="wrapper" id="tt">
+            <p style="text-indent: 2em;">{$content.content}</p>
+
+        </div>
+        <!-- 小说正文部分END -->
+        <!-- 打赏图片 BEGIN-->
+        <div class="sd-reward">
+            <span></span>
+        </div>
+        <!-- 打赏图片END -->
+        <!-- 打赏的用户 BEGIN -->
+        <div class="revote ">
+            <ul class="rewardUser fl">
+                {volist name="exception" id="vo"}
+                <li class="fl user-icon2 ">
+                    <img src="{$vo[portrait]}"/>
+                    <p>【{$vo.pen_name}】打赏了{$vo.count}咚币<em class="tran"></em></p>
+
+                </li>
+                {/volist}
+            </ul>
+
+        </div>
+        <!-- 打赏的用户 END -->
+    </div>
+    <!-- 内容部分END -->
+
+    <!-- 中间内容部分 END -->
+    <!-- 章节切换 BEGIN-->
+    <p class="chapterTab oh">
+        <a href="/read/{$book['book_id']}/{$pre}" class="fl prev-chapter disact">上一章</a>
+        <a href="/chapterlist/{$book.book_id}" class="fl book-menu">目录</a>
+        <a href="/read/{$book['book_id']}/{$next}"  class="fl next-chapter act">下一章</a>
+    </p>
+</div>
+<div class="app" id="js-app" >
+    <a href="http://m.shuddd.com/index/index/download" target="_blank">
+        <img src="/static/images/home_img_shudddgirl.png" alt="">
+        <button class="app-btn">下载APP</button>
+    </a>
+    <p class="app-code"><img src="/static/images/download_img_code.png"></p>
+
+</div>
+<div class="mask" style="display: block">
+    <div class="codes">
+        <div class="code-title">
+            <p>对不起，部分功能尚未开放，<br/>请下载书咚APP，再进行后续操作~~</p><i class="btn-close"></i>
+        </div>
+        <em class="code-img"></em>
+    </div>
+</div>
+<p class="sd-back" id="j-top"><img src="__STATIC__/read/images/home_btn_top.png" title="返回顶部哟" /></p>
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!-- 章节切换 END-->
+<!--<script type="text/javascript" src="__STATIC__/read/js/lib/scrollbar.min.js" ></script>-->
+<!--<script type="text/javascript" src="__STATIC__/read/js/lib/mousewheel.min.js" ></script>-->
+<script src="__STATIC__/read/js/lib/jquery.nicescroll.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-menu.js" ></script>
+
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-scroll.js"></script>
+<!--设置栏-->
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-set.js"></script>
+
+<script src="__STATIC__/read/js/roll/chinese.js" type="text/javascript" charset="utf-8"></script>
+
+<!--保存-->
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-save.js"></script>
+
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+
+<!--取消-->
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-cancel.js"></script>
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-close.js"></script>
+
+<!--显示打赏信息-->
+<script src="__STATIC__/read/js/roll/roll-show.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/read/js/roll/click.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/bookinfo.js" type="text/javascript" charset="utf-8"></script>
+
+<!--章节切换-->
+<script type="text/javascript" src="__STATIC__/read/js/roll/roll-setWrap.js"></script>
+<script >
+    $('.text').removeAttr('style');
+</script>
+</body>
+</html>

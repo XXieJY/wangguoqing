@@ -1,0 +1,58 @@
+<div id="header">
+    <div class="header">
+        <div class="fl logo">
+            <img src="__STATIC__/author/images/authors_background_slices/authors_shuddd_logo.png" alt="" class="fl" />
+            <p class="fl">
+                <span >作者管理后台</span>
+                <span>Authors Management Workspace</span>
+            </p>
+        </div>
+        <ul class="verity-action fl">
+            <li class="fl">
+                <a href="{:url('Inform/notice')}" class="authors_btn_information ">
+                    <i ></i>
+                    {if condition="$e_info eq 0"}
+                    <p>书咚资讯</p>
+                    {else /}
+                    <p>书咚资讯 <span></span></p>
+                    {/if}
+                </a>
+            </li>
+            <li class="fl" >
+                <a href="{:url('Book/index')}" class="authors_btn_works ">
+                    <i></i>
+                    <p>作品管理</p>
+                </a>
+            </li>
+            <li class="fl">
+                <a href="{:url('Ruser/index')}" class="authors_btn_readers selected">
+                    <i ></i>
+                    <p>读者互动</p>
+                </a>
+            </li>
+            <li class="fl">
+                <a href="{:url('Wallet/index')}" class="authors_btn_wallet">
+                    <i ></i>
+                    <p>作者钱包</p>
+                </a>
+            </li>
+            <li class="fl ">
+                <a href="{:url('Writer/index')}" class="authors_btn_user ">
+                    <i ></i>
+                    <p>作者信息</p>
+                </a>
+            </li>
+
+        </ul>
+        <div class="fl login-part">
+            <span>{$user.email}</span>
+            <!--退出-->
+            <a class="signout oh fr" href="{:url('Login/logout')}">
+                <i class="fl"></i>
+                <span class="fl">[退出]</span>
+            </a>
+        </div>
+
+    </div>
+
+</div>

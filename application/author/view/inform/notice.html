@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>网站公告-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/siteItems.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/head"}
+<!--头部 end-->
+<!--内容部分 begin-->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">书咚资讯</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Inform/notice')}"><li class="fl active">网站公告</li></a>
+        <a href="{:url('Inform/sign')}"><li class="fl ">作者福利</li></a>
+        {if condition="$e_info eq 0"}
+        <a href="{:url('Inform/email')}"><li class="fl ">作者邮箱</li></a>
+        {else /}
+        <a href="{:url('Inform/email')}"><li class="fl ">作者邮箱<span></span></li></a>
+        {/if}        <a href="{:url('Inform/refer')}"><li class="fl">新建咨询</li></a>
+        <a href="{:url('Inform/adoat')}"><li class="fl ">关于书咚</li></a>
+    </ul>
+    <!--公告详情 begin-->
+    <ol class="siteItems" id="accordion">
+        <li class="open">
+            <p class="oh itemTitle"><span class="fl">{$ad[0]['time']}   {$ad[0]['title']}</span><span class="fr hide" >-收起</span></p>
+            <div class="itemDetail db">
+
+                <p class="item">{$ad[0]['content']}</p>
+
+            </div>
+        </li>
+
+      {volist name="ad" id="vo" offset="1" length="4"}
+        <li>
+            <p class="oh itemTitle"><span class="fl">{$vo.time}  {$vo.title}</span><span class="fr hide">+展开</span></p>
+            <div class="itemDetail ">
+
+                <p class="item">{$vo.content}</p>
+            </div>
+        </li>
+        {/volist}
+    </ol>
+    <!--公告详情 end -->
+</div>
+<!--内容部分 end-->
+<!--底部 Begin-->
+{include file="public/bot"}
+<!--底部 end-->
+</body>
+<!--头部切换-->
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/siteItem.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/newleftnav.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>作者管理后台</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/lib/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<style type="text/css">
+    .disabled{
+        background-color: #E6E6E6;
+    }
+
+</style>
+</head>
+<script type="text/javascript">
+    function checkForm() {
+        if(myform.bookName.value==""){
+            alert('书名不能为空');
+            myform.bookName.focus();
+            return false;
+        }
+
+        if(myform.bookBrief.value==""){
+            alert('作品简介不能为空');
+            myform.bookBrief.focus();
+            return false;
+        }
+    }
+
+
+</script>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部 end-->
+<!--container 部分 Begin-->
+<div class="wrapper  ">
+
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+            &gt;
+            <span>创建作品</span>
+        </p>
+        <p class="fr att">
+            带有<span>*</span> 的项目必须填写
+        </p>
+    </div>
+
+    <!--功能切换区-->
+    <ul class="btn-works-list oh">
+       <a href="{:url('Book/index')}"> <li class="fl active">作品设置</li></a>
+        <a href="{:url('Chapter/index',['bookid'=>$book.book_id])}" ><li class="fl">章节管理</li></a>
+        <a href="{:url('Chapter/add',['bookid'=>$book.book_id])}"><li class="fl ">上传章节</li></a>
+        <a href="{:url('Chapter/txt',['bookid'=>$book.book_id])}"><li class="fl">TXT多章上传</li></a>
+        <a href="{:url('Chapter/draft',['bookid' =>$book.book_id])}"><li class="fl">草稿箱</li></a>
+    </ul>
+
+    <!--新建分券-->
+
+
+</div>
+
+<div class="wrapper " style="margin-top: 0px; border: 1px solid #FFFFFF;">
+    <form method="post" name="myform" action="{:url('Book/unsave')}" enctype="multipart/form-data" onsubmit="return checkForm();">
+        <a class="guide" href="{:url('Book/notice')}">新作品上传须知及审核指南，必看！></a>
+        <!--小说类别-->
+        <div class="item-novels ">
+       <input type="hidden" name="bookid" value="{$book.book_id}"/>
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">书名：</span></p></div>
+                <input type="text" class="fl input-box disabled"  name="bookName" value="{$book.book_name}" readonly="readonly" maxlength="20"/>
+                <p class="fl intro ">20字以内，书名不用加书名号《》和引号“”</p>
+            </div>
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">小说类别：</span></p></div>
+                <div class="fl input-box sels disabled">
+                    <div>
+                        <input class="txt fl " name="type" value="{$book.book_type}" readonly="readonly">
+                        <i class="fr"></i>
+
+                    </div>
+                </div>
+                <p class="fl intro lh ">小说类别详见约稿公告，如需修改，请联系编辑</p>
+            </div>
+            <!--<p class="sd-activity">-->
+                <!--<input type="checkbox" name="check" value="1" class="fl" >&nbsp;-->
+                <!--<em class="cup-png fl"></em>-->
+                <!--<a href="#" class="sd-activity-title fl">参加2018年*********征文大赛！  大赛详情请戳 > </a>-->
+                <!--<span class="sd-activity-site">Http://www.shuddd.com/*******</span>-->
+            <!--</p>-->
+            <div class="category form">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">封面：</span></p></div>
+                <div class="fl wrap">
+                    <div class="cover-info oh ">
+                        <p class="fl book-cover">
+                            <img src="/Upload/Book/zhong/{$book.upload_img}"/>
+                        </p>
+                        <div class="fl fun">
+                            <p class="cover-name">bookcover_img_no.png</p>
+                            <p class="uploading ">
+                                <span  onclick="jsReadFiles();">上传图片</span>
+                                <input type="file" name="uploadImg" id="file"  onchange="jsReadFiles(this.files)"/>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class=" rules">
+                        <li>1、规格180*240像素，小于200K的JPG、PNG格式图片（大于200k的图片，书咚也传不上去）；</li>
+                        <li>2、禁止上传任何有黄色、暴力、血腥、恐怖、广告宣传或者不适合公众欣赏的封面，一经发现即做禁书处理；</li>
+                        <li>3、作品封面由用户个人制作并上传的，基于此产生的法律责任本站不承担连带责任。</li>
+                    </ul>
+                </div>
+            </div>
+            <!--作品标签-->
+            <div class="category form">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">作品标签：</span></p></div>
+
+
+                <div class="tags fl">
+                    <ul class="currentTags  oh curTag">
+                        <li class="fl"><span class="fl" title="爽文">爽文</span><i class="fl"></i></li>
+                        <input  type="hidden" id="tag" name="tag" value="">
+
+                        <p class="fl tag">标签最多可选6个</p>
+                    </ul>
+                    <ol class="basicTags oh">
+                        {volist name="keyword" id="vo"}
+                        <li class="fl"><span>{$vo.key}</span></li>
+
+                        {/volist}
+                        <!--<div class="clearFix"></div>-->
+                        <!--<a href="javascript:;" class="db more-tags">更多推荐标签</a>-->
+                    </ol>
+                </div>
+            </div>
+            <!--作品级别-->
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">限制等级：</span></p></div>
+                <div class="fl input-box sels">
+                    <div>
+                        {if condition="$book.level eq 0"}
+                        <input class="txt fl" name="level" value="G级" >
+                        {else /}
+                        <input class="txt fl" name="level" value="R18+" >
+                        {/if}
+                        <i class="fr"></i>
+                        <ul class="roll-list">
+                            <li>G级</li>
+                            <li>R18+</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fl intro lh ">G级指无年龄限制，R18+指仅限于18岁以上可以阅读，你懂滴</p>
+            </div>
+            <!--编辑-->
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">选择编辑：</span></p></div>
+                <div class="fl input-box sels disabled">
+                    <div>
+                        <input class="txt fl " name="editName" value="{$book.e_id|edit_name}" readonly="readonly">
+                        <i class="fr"></i>
+
+                    </div>
+                </div>
+                <p class="fl intro lh ">一经选定，不能更改</p>
+            </div>
+            <!--网编-->
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl"></span><span class="fl">网编：</span></p></div>
+                <input type="text" name="weaving"  class="fl input-box disabled" readonly="readonly" value="{$book.weaving}" placeholder="请输入邀请您入驻本站的网编网名"/>
+                <p class="fl intro lh ">没有则不填</p>
+            </div>
+            <!--首发状态-->
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">首发状态：</span></p></div>
+                <div class="fl input-box sels">
+                    <div>
+                        {if condition="$book.cp_id eq 1"}
+                        <input class="txt fl" name="cp" value="书咚网首发" readonly="readonly">
+                        {else /}
+                        <input class="txt fl" name="cp" value="其他网站首发" readonly="readonly">
+                        {/if}
+
+                    </div>
+                </div>
+                <p class="fl intro lh ">一经选定，不能更改</p>
+            </div>
+            <!--首发状态-->
+            <!--更新状态-->
+            <div class="category form-control">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">写作进程：</span></p></div>
+                <div class="fl input-box sels">
+                    <div>
+                        {if condition="$book.state eq 1"}
+                        <input class="txt fl" name="state" value="连载中" >
+                        {else /}
+                        <input class="txt fl" name="state" value="已完结" >
+                        {/if}
+                        <i class="fr"></i>
+                        <ul class="roll-list">
+                            <li>连载中</li>
+                            <li>已完结</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<p class="fl intro lh ">一经选定，不能更改</p>-->
+            </div>
+            <!--更新状态-->
+            <!--
+                作者：offline
+                时间：2018-05-16
+                描述：内容简介
+            -->
+            <div class="form">
+                <div class="fl title oh"><p class="fr"><span class="fl">*</span><span class="fl">内容简介：</span></p></div>
+                <textarea name="bookBrief" rows="" cols="" class="author-txts fl" maxlength="400">{$book.book_brief}</textarea>
+            </div>
+            <div class="clearfix"></div>
+            <p class="words">请不要超过400字，是内容简介，不是章节内容，千万别传章节上去</p>
+        </div>
+        <div class="btns btn_sub"><button class="btn">提交</button></div>
+        <p class="words btn_sub">说明：提交数据后，系统将自动创建第一卷（正文），请上传2000字以上章节提交审核，不然无法通过审核！</p>
+    </form>
+</div>
+
+<!--container 部分 END-->
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+</body>
+<script src="__STATIC__/author/lib/jquery.datetimepicker.js"></script>
+<!--<script src="js/author/author-background.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<!--图片上传-->
+<script src="__STATIC__/author/js/author/jsReadFiles.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/default.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>-->
+
+
+</html>

@@ -1,0 +1,53 @@
+{volist name="$message.message" id="vo"}
+<input type="hidden" name="current" id="current" value="{$current}"/>
+<input type="hidden" id="bookid" value="{$bookid}"/>
+<li>
+    <div class="oh">
+        <div class="user-img fl">
+            <img src="http://images.shuddd.com/user/portrait/{$vo.portrait}" class="userImg"/>
+            {if condition="$vo.sex eq 1"}
+            <img src="__STATIC__/images/read/user_icon_boy.png" alt="" class="sex"/>
+            {else /}
+            <img src="__STATIC__/images/read/user_icon_girl.png" alt="" class="sex"/>
+            {/if}
+        </div>
+        <div class="user-infos fl">
+            <p class="userName oh"><a href="javascript:;" class="fl">{$vo.pen_name}</a>{if condition="$vo.days neq 0"}<span class="VIP fl">• VIP</span>{/if}{if condition="$vo.pen_name eq $book.author_name"}<span class="veritys fl">本书作者</span>{/if}</p>
+            <span class="user-levels">经验等级：LV.{$vo.mem_vip}{$vo.mem_vip|mem_vip}</span>
+            <p class="oh disc">{if condition="$vo.top eq 1"}<span class="stick fl">置顶</span>{/if}<span class="fl">{$vo.content}</span></p>
+        </div>
+    </div>
+    <div class=" sd-infos">
+        <span class="times fl"><?php echo date('Y-m-d H:i',strtotime($vo['time'])) ?></span>
+        <div class="fr  btn-item">
+            <p class="agree-assit fl"><span>赞</span>(<span class="assit">{$vo.thumb}</span>)</p>
+            <p class="agree-reply fr">回复(<span class="reply ">{$vo.num}</span>)</p>
+        </div>
+
+        <div class="clearFix"></div>
+        <!--回复区 begin -->
+        <div class="replyItem input-field dn">
+
+            <textarea name="" rows="" cols="" class="replayText text-input" maxlength="140" placeholder="回复这条书评："></textarea>
+            <div class="oh"><div class="fr oh btn"><p class="fl count"><span id="J_counter">0</span>/140</p><button class="fl btn-publish btns">回复</button></div></div>
+            <!--回复详情 begin-->
+            {if condition="$vo.msg" neq null}
+            <ul class="replyItems  replyItem-border">
+                {volist name="$vo.msg" id="v"}
+                <li class="oh item">
+                    <p class="fl replayImg"><img src="http://images.shuddd.com/user/portrait/{$v.portrait}" alt="" /></p>
+                    <div class="replayUser fl">
+                        <p class="userName oh"><a href="javascript:;" class="fl">{$v.pen_name}</a>{if condition="$v.days neq 0"}<span class="VIP fl">• VIP</span>{/if}{if condition="$v.is_author eq 1"}<span class="veritys fl">本书作者</span>{/if}<span class="replayTime fr times"><?php echo date('Y-m-d H:i',strtotime($v['time'])) ?></span></p>
+                        <p class="replay-word oh disc">{if condition="$v.top eq 1"}<span class="stick fl">置顶</span>{/if}{$v.content}</p>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+
+            {/if}
+            <!--回复详情 end-->
+        </div>
+        <!--回复区 end -->
+    </div>
+</li>
+{/volist}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>订阅查询-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/income.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/manages.css">
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/author/css/common.css" />
+
+</head>
+
+<body>
+<!--头部 begin-->
+{include file="public/wallet"}
+<!--头部--->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <span class="fl">作者钱包</span>
+    </div>
+    <ul class="btn-works-list oh">
+        <a href="{:url('Wallet/index')}"><li class="fl active">订阅查询</li></a>
+        <a href="{:url('Wallet/obtain')}"><li class="fl  ">道具获得</li></a>
+        <a href="{:url('Wallet/qudao')}"><li class="fl  ">渠道收入</li></a>
+        <a href="{:url('Wallet/apply')}"><li class="fl  ">作者福利</li></a>
+        <a href="{:url('Wallet/income')}"><li class="fl  ">收入结算</li></a>
+    </ul>
+    <!--搜索区-->
+    <div class="item">
+        <!-- <div class="form-box fl">
+            <label for='datetimepicker' class="fl oh title"><span class="fl">选择月份：</span></label>
+            <input type="text" placeholder="请选择月份" class="fl input-box form-control" maxlength="30" name="month" id="ctime" readonly>
+        </div> -->
+        <form action="" method="post">
+        <div class="form-box fl ">
+            <span class="fl">选择作品：</span>
+            <div class="fl input-box sels works">
+                <!-- <div> -->
+                <input class="txt fl " value="{$bookName}" type="text " name="bookName" readonly="readonly">
+                <i class="fr"></i>
+                <ul class="roll-list">
+                    {volist name="$book" id="vo"}
+                    <li>{$vo.book_name}</li>
+                    {/volist}
+                </ul>
+                <!-- </div> -->
+            </div>
+        </div>
+        <input type="submit" value="查询" class="btn">
+        </form>
+    </div>
+    <div class="total">
+        <p class="fl">
+            <span class="nums">{$totalBuy}</span>
+            <span>总订阅</span>
+        </p>
+        <p class="fl">
+            <span class="nums">{$yTotal}</span>
+            <span>昨日新增订阅</span>
+        </p>
+        <p class="fl">
+            <span class="nums">{$average}</span>
+            <span>章节平均订阅</span>
+        </p>
+        <p class="fl">
+            <span class="nums">{$totalChapter}</span>
+            <span>章节最高订阅</span>
+        </p>
+        <p class="fl" style="width: 706px">平台目前按照每日00:00到次日00:00处理当日全勤和结算，月份统计实际显示每月1号00:00到次月1号00:00的统计结果。</p>
+    </div>
+    <table class="tab" cellspacing="0">
+        <thead>
+        <tr>
+            <th class="selectBox"><input type="checkbox" name="" id="checkAll"  /></th>
+            <th class="list">序号</th>
+            <th class="name">章节名称</th>
+            <th class="reply">发布日期</th>
+            <th class="chapternum">章节字数</th>
+            <th class="chapternum">章节单价</th>
+            <th class="nomaluser">普通用户订阅量</th>
+            <th class="nomaluser">Vip用户订阅量</th>
+            <th class="nomaluser">章节订阅总量</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="content" id="vo"}
+        <tr>
+            <td class="selectBox"><input type="checkbox" name="" /></td>
+            <td>{++$a}</td>
+            <td class="tal">{$vo.title}</td>
+            <td>{$vo.time}</td>
+            <td>{$vo.number}</td>
+            {if condition="$vo.the_price eq 0"}
+            <td>免费</td>
+            {else /}
+            <td>{$vo.the_price}咚币</td>
+            {/if}
+            <td>{$vo.dyc}</td>
+            <td>{$vo.vipdyc}</td>
+            <td>{$vo.dyc+$vo.vipdyc}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="handleDeals oh ">
+        <!--<button class="fl " id="delAll">批量删除</button>-->
+        <div class="numList fr">
+            <p class="fl">共{$total}条</p>
+        </div>
+        {$page->render()}
+    </div>
+    <!--{if condition="count($content) eq 0"}&ndash;&gt;-->
+     <!--&lt;!&ndash;<div class="noInfo">&ndash;&gt;-->
+              <!--&lt;!&ndash;<img src="__STATIC__/author/images/authors_icon_nodata.png" alt="" />&ndash;&gt;-->
+              <!--&lt;!&ndash;<span>目前暂无数据~~</span>&ndash;&gt;-->
+           <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--{/if}-->
+</div>
+{include file="public/bot"}
+</body>
+<script src="__STATIC__/author/js/lib/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/author/js/income.js"></script>
+<script type="text/javascript" src="__STATIC__/author/js/bookdis.js"></script>
+
+</html>

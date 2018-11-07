@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$book.book_name}-{:config('queue.WebName')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <!--样式重置-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css"  />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/header-small.css"  media="screen and (max-width: 1400px)"/>-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer-small.css" media="screen and (max-width: 1400px)" />-->
+    <link rel="stylesheet" href="__STATIC__/css/read-menu.css">
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/read-menu-small.css" media="screen and (max-width: 1400px)"/>-->
+    <!--引入jq-->
+    <link rel="stylesheet" href="__STATIC__/login/css/mask.css">
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/jquery.cookie.min.js"></script>
+</head>
+<body>
+{include file="public/top"}
+
+<div class="read-menu oh">
+    <!-- 左侧目录栏信息 begin -->
+    <div class="read-left-wrap fl">
+        <p class="read-nav">
+            <a href="{:url('/index')}">首页</a>
+            &gt;
+            <a href="/bookinfo/{$book.book_id}">{$book.book_name}</a>
+        </p>
+
+        <div class="booksInfo">
+            <p class="bookTitle">{$book.book_name}</p>
+            <p class="oh bookUpdateInfo">
+                <span class="fl">小说作者：</span>
+                <a href="#" class="fl author">{$book.author_name}</a>
+                <span fl>更新时间：<?php echo date('Y-m-d H:i',strtotime($book['update_time'])) ?></span>
+
+            </p>
+            <!-- 排序方式? -->
+            <p class="sort "><a href="javascript:;" class="fr" >倒序<i></i></a></p>
+        </div>
+        <!-- 章节信息 BEGINI -->
+        <div class="chap-wrap">
+            {volist name="chapter" id="vo"}
+            <div class=" chapter-part">
+                <!-- 章节分券 -->
+                <p class="chapter-part-title"><span>{$book.book_name} {$vo.title}</span></p>
+                <ul class="chapter-list oh">
+                    {volist name="$vo.chapter" id="v"}
+                    <li class="fl">{if condition="$v.the_price neq 0"}<img src="__STATIC__/images/catalog_icon_vip.png" alt="" class="VIP" />{/if}<a href="javascript:jumpRead({$book.book_id},{$v.num},{$v.the_price});" >{$v.title}</a></li>
+                    {/volist}
+
+                </ul>
+            </div>
+          {/volist}
+
+        </div>
+        <!-- 章节信息 end -->
+
+    </div>
+    <!-- 左侧目录栏信息 END-->
+    <!-- 右侧目录栏信息 begin-->
+    <div class="read-rightInfo fr">
+        <p class="book-celebrity"><span> 本书名人</span></p>
+        <!-- 滚动公告 -->
+        <div class="expentInfo-wrap">
+            <div class="expentInfo">
+                {volist name="exceptional" id="vo"}
+                <p><a href="javascript:;">【{$vo.pen_name}】</a><span>{$vo.dosomething}</span></p>
+                {/volist}
+            </div>
+        </div>
+        <!--滚动公告END-->
+        <!-- 打赏榜单信息 -->
+        <div class="reward-wrap ">
+            <div class="reward-user oh">
+                <div class="userInfo fl">
+                    <!--称号-->
+                    <span class="userTitle">票王</span>
+                    {if condition="count($vipvote) neq 0"}
+                    <p class="user-info"><span>{$vipvote.pen_name}</span><span >•</span><span>VIP</span></p>
+                    <p class="user-level">经验等级：<span class="level">LV.{$vipvote.mem_vip}</span>{$vipvote.mem_vip|mem_vip}</p>
+                    <!--用户排名-->
+                    <p class="userlist">NO.1</p>
+                    {else /}
+                     <p style ="text-align: right; padding: 20px 0;color: #999;">暂无数据</p>
+                    {/if}
+                </div>
+                {if condition="count($vipvote) neq 0"}
+                <div class="userImg fr">
+                    <img src="{$vipvote.portrait}" alt="" alt="" width="60px;" height="60" style=" border-radius:50%"  class="userImgs" />
+                    {if condition="$vipvote.sex eq 1"}
+                    <img src="__STATIC__/images/read/user_icon_boy.png" alt=""  class="userSex"/>
+                    {else /}
+                    <img src="__STATIC__/images/read/user_icon_girl.png" alt=""  class="userSex"/>
+                    {/if}
+                </div>
+                {/if}
+            </div>
+            <div class="reward-user oh mat">
+                <div class="userInfo fl">
+                    <!--称号-->
+                    <span class="userTitle">第一粉丝</span>
+                    {if condition="count($vote) neq 0"}
+                    <p class="user-info"><span>{$vote.pen_name}</span><span >•</span><span>VIP</span></p>
+                    <p class="user-level">经验等级：<span class="level">LV.{$vote.mem_vip}</span>{$vote.mem_vip|mem_vip}</p>
+                    <!--用户排名-->
+                    <p class="userlist">NO.1</p>
+                    {else /}
+                    <p style ="text-align: right; padding: 20px 0;color: #999;">暂无数据</p>
+                    {/if}
+                </div>
+                {if condition="count($vote) neq 0"}
+                <div class="userImg fr">
+                    <img src="{$vote.portrait}" alt="" width="60px" height="60" style=" border-radius:50%"  class="userImgs" />
+                    {if condition="$vote.sex eq 1"}
+                    <img src="__STATIC__/images/read/user_icon_boy.png" alt=""  class="userSex"/>
+                    {else /}
+                    <img src="__STATIC__/images/read/user_icon_girl.png" alt=""  class="userSex"/>
+                    {/if}
+                </div>
+                {/if}
+            </div>
+        </div>
+        <!--铁杆粉丝 BEGIN  -->
+        <div class="bookFans-wrap">
+            <div class="bookFans-title">粉丝榜</div>
+            {if condition="$fan[0] neq null"}
+            <p class="bookFans oh fans-book">
+                <span class="num fl bookFans-num">1</span>
+                <img src="{$fan[0]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;" ><span class="fl user-name">{$fan[0]['pen_name']}</span></a>
+                <span class="recomTime fr times">{$fan[0]['fan_value']}</span>
+            </p>
+            {/if}
+            {if condition="$fan[1] neq null"}
+            <p class="bookFans oh fans-book">
+                <span class="num fl bookFans-nums">2</span>
+                <img src="{$fan[1]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;"><span class="fl user-name">{$fan[1]['pen_name']}</span></a>
+                <span class="recomTimes fr times">{$fan[1]['fan_value']}</span>
+            </p>
+            {/if}
+            {if condition="$fan[2] neq null"}
+            <p class="bookFans oh fans-book split">
+                <span class="num fl bookFans-numss">3</span>
+                <img src="{$fan[2]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;"><span class="fl user-name">{$fan[2]['pen_name']}</span></a>
+                <span class="recomTimess fr times">{$fan[2]['fan_value']}</span>
+            </p>
+            {/if}
+            {volist name="fan" id="vo" offset="3" length="17"}
+            <p class="bookFans oh fans-book col-mat">
+                <span class="num fl ">{$a++}</span>
+                <a href="javascript:;"><span class="fl user-name">{$vo.pen_name}</span></a>
+                <span class=" fr times">{$vo.fan_value}</span>
+            </p>
+            {/volist}
+
+        </div>
+        <!--铁杆粉丝 END-->
+    </div>
+    <!-- 右侧目录栏信息 END-->
+
+</div>
+
+<!--底部BEGIN-->
+{include file="public/bot"}
+<!--底部END-->
+<!--书咚APP下载模块BEGIN-->
+
+<p class="sd-back" id="j-top"><img src="__STATIC__/images/home_btn_top.png" title="返回顶部哟" /></p>
+
+
+
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+<!--APP下载模块END-->
+<!--返回顶部BEGIN-->
+
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="__STATIC__/js/read/read-menu.js"></script>
+
+
+</body>
+
+
+</html>
+<script>
+
+    function jumpRead(bookid,num,price) {
+        if(price>0){
+            if($.cookie('shudong_user')){
+
+                window.location.href="/read/"+bookid+"/"+num;
+            }else {
+
+                $('#masked').show();
+            }
+
+        }else {
+
+            window.location.href="/read/"+bookid+"/"+num;
+        }
+    }
+
+
+</script>

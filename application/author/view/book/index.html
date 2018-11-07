@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>作品管理-{:config('queue.A_Name')}</title>
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="__STATIC__/author/css/rest.css" />
+    <link rel="stylesheet" href="__STATIC__/author/lib/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/author-background/upload_chapter.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/moretext.css" />
+    <link rel="stylesheet" href="__STATIC__/author/css/draft.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/author/css/worksManage.css"/>
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <style type="text/css">
+        .td-info>p>a:hover{
+            background-color: #E6E6E6;
+        }
+        .can-btn:hover{
+            background-color: #E6E6E6;
+        }
+        .input-box:hover{
+            border: 1px solid #FFCA2D;
+            box-shadow: 0px 0px 8px #FFCA2D;
+
+        }
+
+    </style>
+</head>
+<body>
+<!--头部 begin-->
+{include file="public/top"}
+<!--头部--->
+<div class="wrapper">
+    <div class="wrap-nav">
+        <p class="fl">
+            <span>作品管理</span>
+
+        </p>
+
+    </div>
+    <div class="work-nav oh">
+        <div class="fl infos">
+            <p>今天是 <span class="times">{$date} [星期三]</span>，本月截止昨日过去<span class="mark"></span>天</p>
+            <p>书咚家的作者大大们，坚持每日更新，才能拿到全勤奖哟(^ - ^)V</p>
+        </div>
+        <a href="{:url('Book/add')}" class="creatWork fr">+ 新建作品</a>
+    </div>
+    {if condition="$book eq null"}
+    <div class="tab-box">
+        <p class="no-info">暂无相关信息~~</p>
+    </div>
+    {else /}
+    <div class="tab-box">
+        <p class="no-info ">暂无相关信息~~</p>
+        <table border="1" cellspacing="0" cellpadding="0" class="tab">
+            <tr>
+                <th width="123">封面</th>
+                <th width="153">作品名称</th>
+                <th width="158">所属编辑</th>
+                <th width="134">总字数</th>
+                <th width="154">最新章节</th>
+                <th width="136">状态</th>
+                <th width="280">管理操作</th>
+            </tr>
+            {volist name="book" id="vo"}
+            <tr class="tds">
+                <td class="td"><img src="/Upload/Book/zhong/{$vo.upload_img}"/></td>
+                <td class="td titles">{$vo.book_name}</td>
+                <td class="td">
+                    <span>{$vo.edit_name}</span><br />
+                    <span>(QQ:{$vo.qq})</span>
+                </td>
+                <td class="td num">{$vo.words}</td>
+                <td class="td">
+                    <span>{$vo.title}</span><br />
+                    <span>({$vo.time})</span>
+                </td>
+                {if condition="$vo.audit eq 0 or $vo.audit eq 3"}
+                <td class="td">待审核</td>
+                {/if}
+                {if condition="$vo.audit eq 1"}
+                <td class="td">已审核</td>
+                {/if}
+                {if condition="$vo.audit eq 2"}
+                <td class="td">已驳回<a href="javascript:nextTijiao({$vo.book_id});" style="color: red">(二次提交)</a></td>
+                {/if}
+
+                <td class="td-info">
+                    <p class="oh">
+                        <a href="{:url('Chapter/add',['bookid'=>$vo.book_id])}" class="fl"><i class="fl chapter_uploading"></i><span class="fl">上传章节</span></a>
+                        <a href="#" class="fl"><i class="fl book_newcontract"></i><span class="fl dong-signing">新咚签约</span></a>
+
+                    </p>
+                    <p class="oh">
+                        <a href="{:url('Book/set',['id'=>$vo.book_id])}" class="fl"><i class="fl book_setup"></i><span class="fl">作品设置</span></a>
+                        <a href="#" class="fl"><i class="fl book_contract"></i><span class="fl upgrade-sign">升级签约</span></a>
+
+                    </p>
+                    <p class="oh">
+                        <a href="{:url('Chapter/index',['bookid'=>$vo.book_id])}" class="fl"> <i class="fl chapter_management"></i><span class="fl">章节管理</span></a>
+                        <a href="#" class="fl"> <i class="fl book_recommend"></i><span class="fl recommend">申请推荐</span></a>
+
+                    </p>
+
+                </td>
+            </tr>
+          {/volist}
+
+        </table>
+    </div>
+
+    {/if}
+</div>
+
+
+<!--底部 BEGIN-->
+{include file="public/bot"}
+<!--底部 END-->
+<!--遮罩--->
+<div class="mask dn show">
+    <!--弹框--->
+    <div class="monolayer">
+        <!--导航-->
+        <div class="monolayernav">
+            <p class="fl tit"> <span  class="subtitle"> </span> &gt; <span class="type">申请新咚签约</span> </p>
+            <i class="fr close"></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p >一、关于新咚签约：</p>
+            <p>1、作者自主定价、自由上架、开放式签约；</p>
+            <p>2、版权100%归作者所有。</p>
+            <p class="sign">二、申请须知：</p>
+            <p>1、已出版或未出版，并拥有独立网络版权的小说题材作品接受申请；</p>
+            <p>2、不违背国家相关法律的作品接受申请；</p>
+            <p>3、作品正文部分达到 2 万字以上，可申请新咚签约，如有疑问请咨询相关编辑！</p>
+        </div>
+        <input type="hidden" id="bookName" name="book" value="">
+        <input type="hidden" id="words" name="words" value="">
+        <p class="unmet tts">暂未满足申请条件</p>
+        <a href="javascript:apply();" class="applyBtn">立即申请</a>
+    </div>
+    <!--弹框--->
+</div>
+<!--遮罩--->
+
+<!--遮罩--->
+<div class="mask dn shows">
+    <!--弹框--->
+    <div class="monolayer">
+        <!--导航-->
+        <div class="monolayernav">
+            <p class="fl tit"> <span  class="subtitle"> </span> &gt; <span class="type">申请升级签约</span> </p>
+            <i class="fr close"></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p >一、关于升级签约：</p>
+            <p>1、成绩提高时，可向编辑申请提高签约等级；</p>
+            <p>2、编辑会根据作品成绩主动邀请你，提高签约等级。</p>
+            <p class="sign">二、申请须知：</p>
+            <p>1、已出版或未出版，并拥有独立网络版权的小说题材作品接受申请；</p>
+            <p>2、不违背国家相关法律的作品接受申请；</p>
+            <p>3、作品正文部分达到 3 万字以上，可申请升级签约，如有疑问请咨询相关编辑！</p>
+        </div>
+        <input type="hidden" id="bookNames" name="book" value="">
+        <input type="hidden" id="wordss" name="words" value="">
+        <p class="unmet tts">暂未满足申请条件</p>
+        <a href="javascript:applys();" class="applyBtn">立即申请</a>
+    </div>
+    <!--弹框--->
+</div>
+<!--遮罩--->
+
+<div class="mask dn" id="recomed">
+    <!--弹框--->
+    <div class="monolayer maiBox">
+        <!--导航-->
+        <div class="monolayernav ">
+            <p class="fl tit"> <span class="subtitle"> </span> &gt; <span class="type">申请作品推荐</span> </p>
+            <i class="fr close"></i>
+        </div>
+        <!--导航-->
+        <div class="msgInfo msgwid">
+            <p class="msgInfoTitle ">【重要提示】</p>
+            <p>1、推荐位由编辑根据作品成绩安排，作者也可以自己申请或使用积分兑换推荐位。</p>
+            <p>2、申请作品不涉及政治、色情问题，发表正文字数5万字以上（特殊情况可酌减）。</p>
+            <p>3、每部作品每周只接受一次申请，重复申请无效。编辑每周对一部作品的申请也只会回复一次，请勿一周内多次重复申请。</p>
+        </div>
+
+            <div class="form-control  form-box">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">选择申请方式：</span></p></div>
+                <div class="fl input-box sels">
+                    <div>
+                        <input class="txt fl" value="申请主编推荐" type="text" name="recommed" readonly="readonly" id="txt"/>
+                        <i class="fr"></i>
+                        <ul class="roll-list list">
+                            <li>申请主编推荐</li>
+                            <li>积分兑换推荐</li>
+                        </ul>
+                    </div>
+                </div>
+                <input type="hidden" id="Name" name="book" value="">
+                <input type="hidden" id="author_id" value="{$author_id}">
+                <p class="fl intro lh0 asd">选择主编审核推荐，无需兑换作者积分,编辑将在一周内将回复您。</p>
+            </div>
+            <div class="form-control  form-box place dn ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">选择推荐位：</span></p></div>
+                <div class="fl input-box sels">
+                    <div>
+                        <input class="txt fl" value="三星推荐位兑换300作者积分" type="text" id="recomd" name="recomed" readonly="readonly">
+                        <i class="fr"></i>
+                        <ul class="roll-list">
+                            <li>三星推荐位兑换300作者积分</li>
+                            <li>四星推荐位兑换1000作者积分</li>
+                            <li>五星推荐位兑换1800作者积分</li>
+                            <li>超五星推荐位兑换4000作者积分</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fl intro">您当前的积分：<span id="integral">{$integral}</span></p>
+            </div>
+            <div class="form-control  form-box  reason ">
+                <div class="fl title"><p class="fr"><span class="fl">*</span><span class="fl">推荐理由：</span></p></div>
+                <input class="txt fl input-box" placeholder="请输入推荐理由" type="text" name="reason" maxlength="100" id="reason" >
+                <p class="fl intro">请勿使用任何html、javascript脚本或其他非法性字符，推荐理由请少于100字。</p>
+            </div>
+            <p class="unmet "></p>
+            <div class="btn">
+                <button class="can-btn fl">取消</button>
+                <button class="sub-btn fl" onclick="tijiao();">提交申请</button>
+            </div>
+
+    </div>
+    <!--弹框--->
+</div>
+<!--遮罩--->
+<script src="__STATIC__/author/js/monolayer.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/jq-select.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/bookTab.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/manage.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/author/js/author/content.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>
+<script type="text/javascript">
+    function tijiao() {
+       var bookName =document.getElementById("Name").value;
+       var recomd =document.getElementById("recomd").value;
+       var integral=document.getElementById("integral").innerText;
+       var type=document.getElementById("txt").value;
+       var reason =document.getElementById("reason").value;
+       var author_id= document.getElementById("author_id").value;
+
+      $.ajax({
+         url:'/api/Promote/tuijian',
+         type:'post',
+         data:{'bookName':bookName,'recomd':recomd,'integral':integral,'type':type,'reason':reason,'author_id':author_id},
+         success:function (data) {
+             if(data==0){
+                 alert('请输入推荐理由')
+             }
+             if(data==1){
+                 alert('正在申请中');
+             }
+             if(data==2){
+                 alert('申请成功');
+                 window.location.href="/author/Book/index";
+             }
+             if(data==3){
+                 alert('申请失败');
+             }
+             if(data==4){
+                 alert('积分不够');
+             }
+             if(data==5){
+                 alert('您正在申请积分兑换中');
+             }
+             if(data==6){
+                 alert('申请成功');
+                 window.location.href="/author/Book/index";
+             }
+             if(data==7){
+                 alert('申请失败');
+             }
+         }
+
+
+      })
+    }
+
+function nextTijiao(id) {
+    $.ajax({
+        url:'/api/Book/tijiaotwo',
+        type:'post',
+        data:{'bookid':id},
+        success:function (data) {
+            if(data==1){
+                alert('提交成功，等待审核');
+                window.location.href="/author/book/index";
+            }else {
+                alert('提交失败');
+            }
+        }
+
+
+    })
+}
+</script>
+

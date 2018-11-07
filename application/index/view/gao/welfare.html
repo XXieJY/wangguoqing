@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{:config('queue.WebName')}-作者福利</title>
+    <meta name="keywords" content="书咚作者福利，书咚福利，书咚网福利，书咚，书咚">
+    <meta name="description" content="书咚2018年作者福利，为作者写作保驾护航">
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+
+    <!--样式重置-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <!--中间部分样式-->
+
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+
+    <!--书库样式-->
+
+
+    <!-- 同人宅圈 -->
+
+    <link rel="stylesheet" type="text/css"  href="__STATIC__/css/wrap.css" />
+    <!--引入jq-->
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+{include file="public/top"}
+<!--banner END-->
+<!--container-->
+<div class="wraps">
+    <p class="nav">
+        <a href="/index">首页 </a> &gt;
+        <a href="/welfare">作者福利</a>
+    </p>
+    <div class="notice-wrap">
+        <p class="notice-title">
+            <a href="/gao" >约稿公告</a>
+            <a href="javascript:;" class="act">作者福利</a>
+        </p>
+        <div class="notice-detail">
+            <p class="fz12	">2018年书咚网作者福利，带你启航~~（本福利自2018年10月01日开始实施）</p>
+
+            <div class="ref mat" >
+                <p class="title fwb">升级签约</p>
+                <p class="ref"><span class="fwb">【升级签约】</span><span>基于传统的分成签约模式，但签约等级可升级。如果你第一次签约是B级签约，只要你满足升级条件，可以升为A级签约，甚至是S级签约，相应作者福利提高。</span></p>
+                <p class="fwb mat15">一、升级签约全勤奖</p>
+            </div>
+            <table class="tab" cellspacing="0" cellpadding="1">
+                <tr>
+                    <td></td>
+                    <td>日更≧2000字</td>
+                    <td>日更≧4000字</td>
+                    <td>日更≧8000字</td>
+                    <td>升级条件</td>
+                </tr>
+                <tr>
+                    <td>C级签约</td>
+                    <td>300元（约千字5元）</td>
+                    <td>500元</td>
+                    <td>800元</td>
+                    <td class="td">连续三月拿到全勤，便可C→B，享受B级全勤。</td>
+                </tr>
+                <tr>
+                    <td>B级签约</td>
+                    <td>400元（约千字6.7元）</td>
+                    <td>700元</td>
+                    <td>1000元</td>
+                    <td rowspan="3" class="td">根据作品订阅成绩，决定B→A→S，享受高一级全勤。</td>
+                </tr>
+                <tr>
+                    <td>A级签约</td>
+                    <td>600元（约千字10元)</td>
+                    <td>1000元</td>
+                    <td>1500元</td>
+
+                </tr>
+                <tr>
+                    <td>S级签约</td>
+                    <td>800元（约千字13.3元）</td>
+                    <td>1500元</td>
+                    <td>2400元</td>
+                </tr>
+            </table>
+            <p>例如：作者和书咚A级签约，每日更新4000字，持续更新一个自然月，全勤有1000元。</p>
+            <span>注：</span>
+            <p><span>①&nbsp;</span><span>作品签约当月起享有全勤资格，每月可断更一天；</span></p>
+            <p><span>②&nbsp;</span><span>全勤字数统计只计一部作品当日新建章节字数增加量，作者有话说、编辑原章节不计入作品字数统计；</span></p>
+            <p><span>③&nbsp;</span><span>一个作者同一时期仅限一部签约作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p><span>④&nbsp;</span><span>在文章上传中采用欺骗（包括但不限于大量无意义情节填充、重复内容、贴资料等）或者违禁手段（包括但不限于色情、政治、抄袭等）以达到规定的字数，经举报核查将取消全勤资格；</span></p>
+            <p class="ref"><span>⑤ </span><span>签约等级申请升级成功后次月才享受下一级别全勤。如果作者于1月申请由A级签约变为S级签约并且成功升级，作者将于2月享受S级全勤福利。</span></p>
+
+            <p class="fwb">二、升级签约迎新奖</p>
+            <p>首次与书咚网签约成功：50元现金奖励+免费封面；</p>
+            <p>签约作品字数满12万： 100元现金奖励。</p>
+
+            <br>
+            <p class='fwb'>三、升级签约完本续签奖</p>
+            <p></p>
+            <p></p>（1）正常完本字数30W以上，获得200元续签奖励；</p>
+            <p>（2）正常完本字数60W以上，获得500元续签奖励；</p>
+            <p>（3）正常完本字数100W以上，获得1000元续签奖励。</p>
+            <span>注：</span>
+            <p><span>①&nbsp;</span><span>完结90天内，签约新书，可向责编申请，申请后作品字数满12万字后次月发放，逾期视为放弃奖励；</span></p>
+            <p><span>②&nbsp;</span><span>一个作者同一时期仅限一部签约作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p class="ref"><span>③&nbsp;</span><span>如作品有恶意灌水，作品内容涉黄涉政涉暴等一系列恶意欺骗行为，经举报核实，取消奖励。</span></p>
+
+            <p class="title fwb">新咚签约</p>
+            <p class="ref"><span class="fwb">【新咚签约】</span><span>只要字数满3万，都可以申请新咚签约。作者可以自主定价、自由上架，作品版权100%归作者所有。</span></p>
+            <p class="fwb">一、新咚签约勤奋奖</p>
+
+            <p>（1）更新每满15W字，可获得100元现金奖励，以此类推，总字数上限150万字。改签为升级签约，则不享受此种福利；</p>
+            <p>（2）新咚签约勤奋奖不限日更。</p>
+            <span>注：</span>
+            <p class="ref">胡乱灌水、重复内容、抄袭、违反国家政策等将取消新咚签约勤奋奖。</p>
+
+            <p class="fwb">二、新咚签约更新月榜</p>
+            <table border="" cellspacing="" cellpadding="">
+
+                <tr><td> 名次 </td><td> 奖励金额</td></tr>
+                <tr>
+                    <td>第1名  </td>
+                    <td>  200元</td>
+                </tr>
+                <tr>
+                    <td>第2名 </td>
+                    <td>150元</td>
+                </tr>
+                <tr>
+                    <td>第3名   </td>
+                    <td>100元</td>
+                </tr>
+                <tr>
+                    <td>第4-5名 </td>
+                    <td>  50元</td>
+                </tr>
+                <tr>
+                    <td>第6-10名  </td>
+                    <td>  20元</td>
+                </tr>
+
+            </table>
+            <span>注：</span>
+            <p class="ref">名次按新咚签约作品每月更新字数多少排序。</p>
+
+            <p class="fwb">三、新咚签约完本续约奖</p>
+
+
+            <p>（1）正常完本字数30W以上，获得100元续签奖励；</p>
+            <p>（2）正常完本字数50W以上，获得200元续签奖励；</p>
+            <p>（3）正常完本字数100W以上，获得500元续签奖励。</p>
+            <span>注：</span>
+            <p><span></span>①&nbsp;<span>完结90天内，签约新书，可向责编申请，申请后作品字数满12万字后次月发放，逾期视为放弃奖励；</span></p>
+            <p><span>②&nbsp;</span><span>一个作者同一时期仅限一部签约作品享受该福利，不建议作者同时创作多本作品；</span></p>
+            <p class="ref"><span>③&nbsp;</span><span>如作品有恶意灌水，作品内容涉黄涉政涉暴等一系列恶意欺骗行为，经举报核实，取消奖励。</span></p>
+            <p class="title fwb">保底或买断全勤奖</p>
+            <p>日更新4000字：500元</p>
+            <p class="ref">日更新6000字：800元</p>
+
+            <p class="title fwb">月票榜奖励</p>
+            <table border="" cellspacing="" cellpadding="">
+                <tr>
+                    <td>名次</td>
+                    <td>  奖励金额</td>
+                </tr>
+
+                <tr>
+                    <td>第1名  </td>
+                    <td> 2000元</td>
+                </tr>
+                <tr>
+                    <td>第2名   </td>
+                    <td> 1200元</td>
+                </tr>
+                <tr>
+                    <td>第3名    </td>
+                    <td> 800元</td>
+                </tr>
+                <tr>
+                    <td>第4-5名  </td>
+                    <td> 200元</td>
+                </tr>
+                <tr>
+                    <td>第6-10名  </td>
+                    <td> 100元</td>
+                </tr>
+
+
+            </table>
+            <span>注：</span>
+            <p class="ref">月票榜单上榜作品字数需达到1万字以上。除了月票榜奖励，书咚将陆续推出分类特别奖等福利。</p>
+            <p class="title fwb">稿酬分成</p>
+            <p>对象：书咚家所有签约作者（包含新咚签约和升级签约）</p>
+            <span>内容：</span>
+            <p>（1）作者与网站之间订阅的分成比例，扣除运营费后6:4分成（网站Vip用户产生的订阅收入扣除运营费后100%给作者，网站不参与分成）；</p>
+            <p>（2）作者与网站之间道具的分成比例，扣除运营费后7:3分成；</p>
+            <p>（3）第三方收入扣除相关费用之后5:5分成；</p>
+            <p>（4）每张月票计0.5元稿费；</p>
+            <p class="ref">（5）税前稿费满200元才能结算。</p>
+
+            <p class="title fwb">邀请有礼</p>
+            <p>（1）作者每邀请1位作者朋友来书咚发布作品，并该作品成功升级签约，即奖励100元；</p>
+            <p>（2）邀请作品中，作者每月可推荐一本给编辑看哦，编辑会重点关注该作品 ；</p>
+            <p class="ma20">（3）收到签约合同即视为签约成功，新建作品“网编/作者”一栏需填写作者笔名。</p>
+            <p>网站公测期间，可能还存在着一些Bug，给大家带来不便，敬请谅解。客服QQ：1812768618</p>
+        </div>
+    </div>
+</div>
+{include file="public/bot"}
+
+
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdn.bootcss.com/Swiper/3.4.0/js/swiper.min.js"></script>
+<script src="__STATIC__/js/slider.js"></script>
+
+<script src="__STATIC__/js/sd-selectcolor.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+<div class="listItem-book oh">
+    <div class="bookInfo fl">
+        <span class="book-num">NO.1</span>
+        <p class="bookTitle"><a href="/bookinfo/{$click[0]['book_id']}" title="{$click[0]['book_name']}">{$click[0]['book_name']}</a></p>
+        <a href="javascript:;" class="bookAuthor">{$click[0]['author_name']}</a>
+        <p class="bookClick"><span>{$click[0]['click_weeks']|num}</span><span>点击</span></p>
+    </div>
+    <a href="/bookinfo/{$click[0]['book_id']}" title="{$click[0]['book_name']}">
+        <img src="http://images.shuddd.com/{$click[0]['upload_img']}" alt="{$click[0]['book_name']}" class="fl">
+    </a>
+</div>
+<!-- 0书籍详情 END -->
+<div class="book-infos oh">
+    <span class="bookNum fl num-icon">2</span>
+    <span class="items-book fl">[{$click[1]['book_type']}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$click[1]['book_id']}" title="{$click[1]['book_name']}">{$click[1]['book_name']}</a></span>
+    <span class="book-click fr num-icons">{$click[1]['click_weeks']|num}</span>
+</div>
+<div class="book-infos oh">
+    <span class="bookNum fl numIcon">3</span>
+    <span class="items-book fl">[{$click[2]['book_type']}]</span>
+    <span class="book-title fl "><a href="/bookinfo/{$click[2]['book_id']}" title="{$click[2]['book_name']}">{$click[2]['book_name']}</a></span>
+    <span class="book-click fr numIcons">{$click[2]['click_weeks']|num}</span>
+</div>
+{volist name="click" id="vo" offset="3" length="7"}
+<div class="book-infos oh">
+    <span class="bookNum fl">{$a++}</span>
+    <span class="items-book fl">[{$vo.book_type}]</span>
+    <span class="book-title fl"><a href="/bookinfo/{$vo.book_id}" title="{$vo.book_name}">{$vo.book_name}</a></span>
+    <span class="book-click fr">{$vo.click_weeks|num}</span>
+</div>
+{/volist}

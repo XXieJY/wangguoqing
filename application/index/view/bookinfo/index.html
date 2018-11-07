@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$book.book_name}_{$book.author_name}_{:config('queue.WebName')}</title>
+    <meta name="keywords" content="{$book.book_name},{$book.author_name},{$book.book_type},{$book.level|level},{:config('queue.WebName')}">
+    <meta name="description" content="{$book.book_name}，是由{$book.author_name}在{:config('queue.WebName')}创作的原创{$book.book_type}小说，{:config('queue.WebName')}提供{$book.book_name}的最新章节及全本阅读">
+    <!--样式重置-->
+    <!--样式重置-->
+    <link rel="shortcut icon" href="__STATIC__/images/Favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/rest.css" />
+    <!--头部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/header.css"  />
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/header-small.css"  media="screen and (max-width: 1400px)"/>-->
+    <!--中间部分样式-->
+    <!--底部样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/login/css/user.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/js/book-page/style.min.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer-small.css" media="screen and (max-width: 1400px)" />-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/container.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/container-small.css" media="screen and (max-width: 1400px)"/>-->
+    <link rel="stylesheet" href="__STATIC__/css/books.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/books-small.css" media="screen and (max-width: 1400px)" />-->
+    <link rel="stylesheet" href="__STATIC__/css/read-menu.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/read-menu.css"  media="screen and (max-width: 1400px)" />-->
+     <link rel="stylesheet" href="__STATIC__/login/css/mask.css">
+    <link rel="stylesheet" href="__STATIC__/login/css/forget.css">
+    <link rel="stylesheet" href="__STATIC__/login/css/regist.css">
+    <!--阅读介绍样式-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/read.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/read-small.css" media="screen and (max-width: 1400px)"/>-->
+
+     <!--mask-->
+     <link rel="stylesheet" href="__STATIC__/read/css/vip.css" />
+    <link rel="stylesheet" href="__STATIC__/read/css/user.css" />
+    <link rel="stylesheet" href="__STATIC__/read/css/read-tui.css" />
+    <link rel="stylesheet" href="__STATIC__/read/css/tui.css" />
+    <link rel="stylesheet" href="__STATIC__/read/css/order.css" />
+    <link rel="stylesheet" href="__STATIC__/read/css/orderPay.css" />
+    <!--引入jq-->
+    <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <link href="__STATIC__/css/swiper.css" rel="stylesheet">
+    <script src="__STATIC__/js/jquery.cookie.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?2df11b0fa32bd346747a261e889fb2a3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm,s);
+        })();
+    </script>
+</head>
+<body>
+{include file="public/top"}
+<!--banner END-->
+<!--阅读详情页 BEGIN-->
+<div class="read-wrap oh">
+    <div class="wrap-left fl">
+        <!--阅读导航 begin-->
+        <p class="read-nav">
+            <a href="/index.html">首页</a>
+            &gt;
+            {if condition="$urlName neq null"}
+
+            <a href="/{$url}">{$urlName}</a>
+            &gt;
+            {/if}
+            <a href="/bookinfo/{$bookid}">{$book.book_name}</a>
+        </p>
+        <!--阅读导航 end-->
+        <!--书籍介绍 BEGIN-->
+        <div class="book-wraps">
+            <div class="sd-warp ">
+                <div class="book-covers fl">
+                    <img src="http://images.shuddd.com/{$book.upload_img}" alt="" />
+                </div>
+                <div class="books-info fl">
+                    {if condition="$isSign eq 1"}
+                	<img src="__STATIC__/images/book_icon_contract.png" alt=""  class="sigin"/>
+                    {/if}
+                    <p class="title">{$book.book_name}</p>
+                    <p class="authorInfo">
+                    	<span>小说作者：</span>
+                        <a href="#">{$book.author_name}</a>
+                        <span>更新时间：<?php echo date('Y-m-d H:i',strtotime($book['update_time'])) ?></span>
+                    </p>
+                    <!--标签-->
+                    <ol class="oh bookTags">
+                        {volist name="$book.keywords" id="vo"}
+                        <li class="fl"><a href="javascript:;">{$vo}</a></li>
+                        {/volist}
+                    </ol>
+                    <!--书籍状态-->
+                    <ul class="booksState oh">
+                        <li class="fl"><span  class="icon">◆ </span>{$book.book_type}</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.click_total|num}点击</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.collection_total}收藏</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.vote_total}推荐</li>
+                        <li class="fl mat0"><span  class="icon">◆ </span>{$book.words|num}字数</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.gender|gender}</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.state==1? '连载中':'已完本'}</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.cp_id==1? '书咚首发':'他站首发'}</li>
+                        <li class="fl"><span  class="icon">◆ </span>{$book.vip? 'VIP作品':'免费作品'}</li>
+                        <li class="fl mat0"><span  class="icon">◆ </span>{$book.level? 'R18+':'G级'}</li>
+                    </ul>
+                    <!--功能按钮 begin-->
+                    <ul class="btn-action">
+                        <li class="fl current"><a href="/read/{$book.book_id}/1" >点击阅读</a></li>
+                        {if condition="$collection eq 1"}
+                        <li class="fl"><a href="javascript:removeBook({$book.book_id});">取消书架</a></li>
+                        {else /}
+                        <li class="fl"><a href="javascript:joinBook({$book.book_id});">加入书架</a></li>
+                        {/if}
+
+                        <li class="fl"><a href="/chapterlist/{$book.book_id}">章节目录</a></li>
+                        <li class="fl"><a href="javascript:;">订阅</a></li>
+                    </ul>
+                    <!--功能按钮 end -->
+                </div>
+            </div>
+            <p class="authTitle"><span>作品简介</span></p>
+            <div id="wrap">
+                <div class="book-detail">
+                    <p style="text-indent: 2em;">{$book.book_brief}</p>
+                </div>
+                <!--<div id="scoll">
+                    <div id="bar"></div>
+                </div>-->
+                <!--提醒-->
+            </div>
+			<p class="reminder">（本站郑重提醒: 本故事纯属虚构，如有雷同，纯属巧合，切勿模仿。)</p>
+        </div>
+        <!--作者介绍-->
+        <div class="info oh">
+            <div class="author fl">
+                <p class="authImg">
+                    <img src="{$book.portrait}" alt=""  class="userImgs" style="border-radius: 50%;"/>
+                    {if condition="$book.sex eq 1"}
+                    <img src="__STATIC__/images/read/user_icon_boy.png" alt=""  class="userSex"/>
+                    {else /}
+                    <img src="__STATIC__/images/read/user_icon_girl.png" alt=""  class="userSex"/>
+                    {/if}
+                </p>
+                <p class="authorName"><span>{$book.author_name}</span><span> {$book.is_vip?"• VIP":""}</span></p>
+              {if condition="$book.jibie neq 0"}
+                <p class="author-level">LV.{$book.jibie}{$book.jibie|mem_vip}</p>
+                {else /}
+                <p class="author-level">暂无</p>
+              {/if}
+                <span class="pertain">本书作者</span>
+            </div>
+            <!--其他作品  BEGIN-->
+            <div class="other-works fl">
+                <p class="other-works-title"><span>◆ </span>作者其他作品</p>
+                <!--作品展示-->
+                <div class="swiper-container">
+                    <div class="slider swiper-wrapper">
+                        <ul class="book-lists  swiper-slide">
+                         {if condition="$count neq 0"}
+                            {volist name="other" id="vo" }
+                            <li class="fl oh">
+                                <a href="/bookinfo/{$vo.book_id}" class="fl" target="_blank">
+                                    <div class="books-cover">
+                                        <img src="http://images.shuddd.com/{$vo.upload_img}" alt="" />
+                                    </div>
+                                </a>
+                                <div class="book-items-info fl">
+                                    <p class="books-title"><a href="/bookinfo/{$vo.book_id}">{$vo.book_name}</a></p>
+                                    <div>
+                                    	<span class="click-num">{$vo.click_total|num}</span>
+                                    <span class="classify">{$vo.book_type}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            {/volist}
+                            {/if}
+                        </ul>
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!--其他作品  END-->
+        </div>
+        <div class="chapter-lists oh" id="dao-and-zheng">
+            <p class="fl title"><span>章节列表</span></p>
+           <a href="javascript:daoxu();" class="fr sorts" id="daoxu">倒序<i></i></a>
+        </div>
+        <input type="hidden" id="bookid" value="{$bookid}"/>
+        <!--章节列表详情 begin-->
+        <div id="xu">
+        {if condition="$count1 lt '22'"}
+        <ul class="chapter-items oh">
+            {volist name="chapter" id="vo"}
+            <li class="fl oh">
+            	{if condition="$vo.the_price neq 0"}
+                <!--<span class="vip fl">VIP</span>-->
+                <img src="__STATIC__/images/catalog_icon_vip.png" alt="" class="fl" />
+                {/if}
+            	<a href="javascript:jumpRead({$book.book_id},{$vo.num},{$vo.the_price});" class="fl">{$vo.title}</a>
+                
+            </li>
+            {/volist}
+        </ul>
+        {else /}
+
+        <ul class="chapter-items oh" >
+
+            {volist name="chapter" id="vo"  offset="0" length="21"}
+            <li class="fl oh">
+            	 {if condition="$vo.the_price neq 0"}
+                 <img src="__STATIC__/images/catalog_icon_vip.png" alt="" class="fl vip" />
+                {/if}
+            	<a href="javascript:jumpRead({$book.book_id},{$vo.num},{$vo.the_price});" class="fl">{$vo.title}</a>
+               
+            </li>
+            {/volist}
+            <p class="show-all" id="show-all"><a href="javascript:show();" style="color: red;">+显示全部章节</a></p>
+
+        </ul>
+
+        {/if}
+        </div>
+        <!--章节列表详情 end-->
+        <!--书评区-->
+        <div class="discuss"><p>书评区（共<span id="discussTotal">{$count2}</span>条精彩书评）</p></div>
+        <!--评论框 BEGIN-->
+     <div id="zhuijia">
+        <div class="dis-wrap">
+            <!--输入框 begin-->
+            <div class="input-field">
+                <textarea class="text-input txt" id="txt" maxlength="140" placeholder="快来吐槽这本书吧，注意文明用语哦\^o^/"></textarea>
+                <!--发布按钮-->
+                <div class="oh"><div class="fr oh btn"><p class="fl count"><span id="J_counter" >0</span>/140</p><input class="fl btn-publish come-out" type="button" value="发表" onclick="replay({$book.book_id})"></div></div>
+            </div>
+            <!--输入框 end-->
+            <!--评论列表 begin -->
+            <!--<ul class="dis-list"></ul>-->
+            <ul class="dis-list">
+
+
+        {volist name="$message.message" id="vo"}
+                <input type="hidden" name="current" id="current" value="{$current}"/>
+
+                <li>
+                    <div class="oh">
+                        <div class="user-img fl">
+                            <img src="{$vo.portrait}" class="userImg"/>
+                            {if condition="$vo.sex eq 1"}
+                            <img src="__STATIC__/images/read/user_icon_boy.png" alt="" class="sex"/>
+                            {else /}
+                            <img src="__STATIC__/images/read/user_icon_girl.png" alt="" class="sex"/>
+                            {/if}
+                        </div>
+                        <div class="user-infos fl">
+                            <p class="userName oh"><a href="javascript:;" class="fl">{$vo.pen_name}</a>{if condition="$vo.days neq 0"}<span class="VIP fl">• VIP</span>{/if}{if condition="$vo.pen_name eq $book.author_name"}<span class="veritys fl">本书作者</span>{/if}</p>
+                            <span class="user-levels">LV.{$vo.mem_vip}{$vo.mem_vip|mem_vip}</span>
+                            <p class="oh disc">{if condition="$vo.top eq 1"}<span class="stick ">置顶</span>{/if}<span class="">{$vo.content}</span></p>
+                        </div>
+                    </div>
+                    <div class=" sd-infos">
+                        <span class="times fl"><?php echo date('Y-m-d H:i',strtotime($vo['time'])) ?></span>
+                        <div class="fr  btn-item">
+
+                            <p class="agree-assit fl" id="thumb{$vo.z_id}" onclick="thumb({$vo.z_id},{$book.book_id});">
+                                {if condition="$vo.isThumb eq 1"}
+                                <span>取消点赞</span>(<span class="assit">{$vo.thumb}</span>)
+                                {else /}
+                                <span>赞</span>(<span class="assit">{$vo.thumb}</span>)
+                                {/if}
+                            </p>
+
+                            <p class="agree-reply fr">回复(<span class="reply ">{$vo.num}</span>)</p>
+                        </div>
+
+                        <div class="clearFix"></div>
+                        <!--回复区 begin -->
+                        <div class="replyItem input-field dn">
+
+                            <textarea name="" rows="" cols="" id="content{$vo.z_id}" class="replayText text-input" maxlength="140" placeholder="回复这条书评："></textarea>
+                            <div class="oh"><div class="fr oh btn"><p class="fl count"><span id="J_counter">0</span>/140</p><button class="fl btn-publish btns" onclick="replayMsg({$vo.z_id},{$book.book_id})">回复</button></div></div>
+                            <!--回复详情 begin-->
+                           {if condition="$vo.msg" neq null}
+                            <ul class="replyItems  replyItem-border">
+                               {volist name="$vo.msg" id="v"}
+                                <li class="oh item">
+                                    <p class="fl replayImg"><img src="{$v.portrait}" alt="" /></p>
+                                    <div class="replayUser fl">
+                                        <p class="userName oh"><a href="javascript:;" class="fl">{$v.pen_name}</a>{if condition="$v.days neq 0"}<span class="VIP fl">• VIP</span>{/if}{if condition="$v.pen_name eq $book.author_name"}<span class="veritys fl">本书作者</span>{/if}<span class="replayTime fr times"><?php echo date('Y-m-d H:i',strtotime($v['time'])) ?></span></p>
+                                        <p class="replay-word oh disc">{if condition="$v.top eq 1"}<span class="stick ">置顶</span>{/if}{$v.content}</p>
+                                    </div>
+                                </li>
+                               {/volist}
+                            </ul>
+
+                            {/if}
+                            <!--回复详情 end-->
+                        </div>
+                        <!--回复区 end -->
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+            <!--评论列表 END-->
+
+        </div>
+
+
+        <!--分页按钮-->
+        <div class="oh">
+            <div class="book-page fr oh">
+                {if condition="$message.page gt 1"}
+                <ul class="bookNum fr">
+                    {if condition="$current neq 1"}
+                    <a href="javascript:pre_page1();"><li class="arrowLeft"></li></a>
+                    {/if}
+                    {if condition="$current-1 gt 0"}
+                    <a href="javascript:one_page();"><li>{$current-1}</li></a>
+                    {/if}
+                    <a href="javascript:;"><li class="current">{$current}</li></a>
+                    {if condition="$current+1 elt $message.page"}
+                    <a href="javascript:two_page();"><li>{$current+1}</li></a>
+                    {/if}
+                    {if condition="$current+1 elt $message.page"}
+                    <a href="javascript:next_page1();"><li class="arrowRight"></li></a>
+                    {/if}
+                </ul>
+               {/if}
+            </div>
+        </div>
+     </div>
+        <!--评论框 END-->
+        <!--同类作品 begin-->
+        <p class="similar-works"><span>同类作品</span></p>
+        <ul class=" sd-book-list oh">
+         {volist name="bookType" id="vo"}
+            <a href="/bookinfo/{$vo.book_id}" target="_blank">
+                <li class="fl ">
+                    <div class="book-cover">
+                        <img src="http://images.shuddd.com/{$vo.upload_img}" />
+                        <!--书籍遮罩BEGIN-->
+                        <div class="book-cover-mask">
+                            <!--作品信息BEGIN-->
+                            <div class="sd-works">
+                                <p class="book-works">
+                                    <i><img src="{$vo.portrait}" width="25"/></i>
+                                    <span class="sd-author-name">{$vo.author_name}</span>
+                                </p>
+                                <p class="book-intr" style="">
+                                    {$vo.book_brief}
+                                </p>
+                                <span>{$vo.level|level}</span>
+                            </div>
+                            <!--作品信息END-->
+                        </div>
+                        <!--书籍遮罩END-->
+                    </div>
+                    <p class="book-title">{$vo.book_name}</p>
+                    <p class="oh sd-book-info">
+                        <span class="book-price sd-vip fl">{$vo.click_total|num}</span>
+                        <span class="fl sd-bor"></span>
+                        <span class="book-sort fl"> {$vo.book_type}</span>
+                    </p>
+                </li>
+            </a>
+      {/volist}
+
+        </ul>
+        <!--其他作品 begin-->
+    </div>
+    <div class="wrap-right fr">
+        <div class="wrapRight">
+            <p class="skillTitle">支持作品</p>
+            <!--技能标签-->
+            <ul class="skill-tags oh">
+                <li class="fl odd tag-act"><a href="">100咚币</a></li>
+                <li class="fl even"><a href="javasctipt:;">588咚币</a></li>
+                <li class="fl odd"><a href="javasctipt:;">1688咚币</a></li>
+                <li class="fl even"><a href="javasctipt:;">5000咚币</a></li>
+                <li class="fl odd"><a href="javasctipt:;">10000咚币</a></li>
+                <li class="fl even"><a href="javasctipt:;">100000咚币</a></li>
+            </ul>
+            <!--打赏按钮-->
+            <button class="play-tour">打赏么么哒~~</button>
+            <!--投票区-->
+            <div class="vote-item">
+                <ul class="oh vote-total">
+                    <li class="fl">
+                        <p class="vote-num"> {$vote}</p>
+                        <p>推荐</p>
+                    </li>
+                    <li class="fl">
+                        <p class="vote-num">{$votevip}</p>
+                        <p>月票</p>
+                    </li>
+                </ul>
+                <button class="vote-btn">投TA一票~~</button>
+            </div>
+        </div>
+        <!--本书名人-->
+
+        <p class="celebrity-part"><span class="celebrityTitle">本书名人</span></p>
+        <!--//滚动公告-->
+        <div class="scroll-notice">
+            <ul class="notice-item">
+                {volist name="exceptional" id="vo"}
+                <li><a href="javascript:;"><span class="userItem">【{$vo.pen_name}】</span><span>{$vo.time}{$vo.dosomething}</span></a></li>
+
+                {/volist}
+            </ul>
+            <!--票王区-->
+        </div>
+        <div class="reward-wrap ">
+            <div class="reward-user oh reuser">
+                <div class="userInfo fl" style="margin: 0;" >
+                    <!--称号-->
+                    <span class="userTitle">票王</span>
+                    {if condition="$voteone neq 0"}
+                    <p class="user-info"><span>{$voteone.pen_name}</span>{if condition="$voteone.days gt 0"}<span>•</span><span>VIP</span>{/if}</p>
+                    <p class="user-level"><span class="level">LV.{$voteone.mem_vip}</span>{$voteone.mem_vip|mem_vip}</p>
+                    <p class="userlist" style="color: #fff;">NO.1</p>
+                    {else /}
+                    <p style ="text-align: right; padding: 20px 0;color: #999;">暂无数据</p>
+                    {/if}
+                </div>
+
+                {if condition="$voteone neq 0"}
+                <div class="userImg fr">
+                    <img src="{$voteone.portrait}"  style="border-radius: 50%;"/>
+                   {if condition="$voteone.sex eq 1"}
+                    <img src="__STATIC__/images/sd-menu-slice/user_icon_boy.png" alt="">
+                    {else /}
+                    <img src="__STATIC__/images/sd-menu-slice/user_icon_girl.png" alt="">
+                    {/if}
+                </div>
+                {/if}
+
+            </div>
+            <div class="reward-user oh mat tacket">
+                <div class="userInfo fl " style="margin: 0;">
+                    <span class="userTitle">第一粉丝</span>
+                    {if condition="$fans neq 0"}
+                    <p class="user-info"><span>{$fans.pen_name}</span>{if condition="$fans.days gt 0"}<span>•</span><span>VIP</span>{/if}</p>
+                    <p class="user-level"><span class="level">LV.{$fans.mem_vip}</span>{$fans.mem_vip|mem_vip}</p>
+                    <!--用户排名-->
+                    <p class="userlist" style="color: #fff;">NO.1</p>
+                    {else /}
+                    <p style ="text-align: right; padding: 20px 0;color: #999;">暂无数据</p>
+
+                    {/if}
+                </div>
+                {if condition="$fans neq 0"}
+                <div class="userImg fr">
+                    <img src="{$fans.portrait}" width="60" height="60" style="border-radius: 50%;"/>
+                    {if condition="$fans.sex eq 1"}
+                    <img src="__STATIC__/images/sd-menu-slice/user_icon_boy.png" alt="">
+                    {else /}
+                    <img src="__STATIC__/images/sd-menu-slice/user_icon_girl.png" alt="">
+                    {/if}
+                </div>
+                {/if}
+            </div>
+        </div>
+        <div class="bookFans-wrap">
+            <div class="bookFans-title">粉丝榜</div>
+            {if condition="$fan[0] neq null"}
+            <p class="bookFans oh fans-book">
+                <span class="num fl bookFans-num">1</span>
+                <img src="{$fan[0]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;" ><span class="fl user-name">{$fan[0]['pen_name']}</span></a>
+                <span class="recomTime fr times">{$fan[0]['fan_value']}</span>
+            </p>
+            {/if}
+            {if condition="$fan[1] neq null"}
+            <p class="bookFans oh fans-book">
+                <span class="num fl bookFans-nums">2</span>
+                <img src="{$fan[1]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;"><span class="fl user-name">{$fan[1]['pen_name']}</span></a>
+                <span class="recomTimes fr times">{$fan[1]['fan_value']}</span>
+            </p>
+            {/if}
+            {if condition="$fan[2] neq null"}
+            <p class="bookFans oh fans-book split">
+                <span class="num fl bookFans-numss">3</span>
+                <img src="{$fan[2]['portrait']}" alt="" class="fl user-img">
+                <a href="javascript:;"><span class="fl user-name">{$fan[2]['pen_name']}</span></a>
+                <span class="recomTimess fr times">{$fan[2]['fan_value']}</span>
+            </p>
+            {/if}
+           {volist name="fan" id="vo" offset="3" length="17"}
+            <p class="bookFans oh fans-book col-mat">
+                <span class="num fl ">{$a++}</span>
+                <a href="javascript:;"><span class="fl user-name">{$vo.pen_name}</span></a>
+                <span class=" fr times">{$vo.fan_value}</span>
+            </p>
+             {/volist}
+
+        </div>
+    </div>
+</div>
+<!--阅读详情页 END-->
+
+<!--底部BEGIN-->
+{include file="public/bot"}
+<!--底部END-->
+<!--书咚APP下载模块BEGIN-->
+<div class="mask1">
+    <div>
+        <p>加入书架</p>
+        <p>您已成功将这本书加入书架！</p>
+    </div>
+</div>
+
+<div class="mask2">
+    <div>
+        <p>取消书架</p>
+        <p>您已成功将这本书取消书架！</p>
+    </div>
+</div>
+
+
+<!--订阅-->
+<div class="mask mak" id="order">
+    <form action="/bookinfo/buyOrder" method="post" autocomplete="off">
+        <div class="loginBox">
+            <div class="code-title">
+                <p class="title">章节订阅</p>
+                <i class="btn-close btnClose"></i>
+            </div>
+            <p >您的钱包余额：</p>
+            <p class="bdb"><span class="num" id="num">{$wallet.alance} </span>咚币/<span >{$wallet.dobing}</span>赠币</p>
+         
+            <div class="line oh">
+                <span class=" fl icons" id="2"><i></i></span>
+                <p class="fl"><span class="fwb">全本订阅 </span> <span>需购：{$total}章，应付总额：<span id="tota">{$money}</span>咚币您将购买：{$title1} 至：{$title2} </span></p>
+            </div>
+            <div class="line oh">
+                <span class=" fl icons" id="3"><i></i></span>
+                <p class="fl"><span class="fwb">自动订阅下一章      </span></p>
+            </div>
+            <div class="notice ">
+                <p>* 温馨提示：</p>
+                <p>1、全本订阅是订阅目前已更新的全部章节，如期间有免费章节和已购买章节，下载时将一并下载。</p>
+                <p>2、免费章节及已购买章节不会重复扣费，请放心购买。</p>
+            </div>
+            <input type="hidden" value= '1' name="type" id="sexSelect"/>
+            <input type="hidden" name="bookid" value="{$book.book_id}"/>
+            <input type="hidden" name="userid" value="{$Think.cookie.shudong_user['user_id']}"/>
+
+            <!-- 功能按钮 -->
+            <div class="btnpay ">
+                <a href="javascript:;" class="fl">充值中心</a>
+                <input type="submit" class="act"  class="fl" value="确定订阅" id="sub"/>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!--打赏-->
+<div class="mask maks" >
+
+    <div class="loginox loginBox">
+        <div class="code-title">
+            <p class="title">打赏作者</p>
+            <i class="btn-close btnClose"></i>
+        </div>
+        <p >您的钱包余额：</p>
+        <p class="bdb"><span class="num" id="NUM">{$wallet.alance}</span> 咚币/<span >{$wallet.dobing}</span>赠币</p>
+        <ul class="amount bdb">
+            <li class="act">100咚币</li>
+            <li>588咚币</li>
+            <li>1688咚币</li>
+            <li>5000咚币+2月票</li>
+            <li>10000咚币+5月票</li>
+            <li>100000咚币+50月票</li>
+            <div class="clearfix"></div>
+        </ul>
+        <div class="adds">
+            <p class="fl">打赏：共<span id="total">0</span>咚币</p>
+            <p class="fr count"><span id="reduce">-</span><span class="n-txt" id="count1">1</span><span id="add" class="act">+</span> </p>
+            <div class="clearfix"></div>
+        </div>
+        <input type="hidden" value= '1' id="sexSelect"/>
+        <!-- 功能按钮 -->
+        <div class="btnpay ">
+            <a href="javascript:;" class="fl">充值中心</a>
+            {if condition="$wallet.alance gt 99"}
+            <button class="act"  class="fl" onclick="dashang({$book.book_id},{$Think.cookie.shudong_user['user_id']})">确定打赏</button>
+            {else /}
+            <button class="act"  class="fl" >确定打赏</button>
+            {/if}
+        </div>
+
+    </div>
+
+</div>
+
+<!--//订阅-->
+<div class="mask mak" id="order" >
+    <!--<form action="/vipread/buyOrder" method="post" autocomplete="off">-->
+        <div class="loginBox">
+            <div class="code-title">
+                <p class="title">章节订阅</p>
+                <i class="btn-close btnClose"></i>
+            </div>
+            <p>您的钱包余额：</p>
+            <p class="bdb"><span class="num">400</span>咚币/<span>50</span>赠币</p>
+            <div class="line oh">
+                <span class="fl icons icon" id="2"><i></i></span>
+                <p class="fl"><span class="fwb">全本订阅 </span> <span>需购：500章，应付总额：<span id="tota">5000</span>咚币您将购买：第16章  魔人的小妖精魔人的小妖精小… 至：第500章  熟悉的味道 </span></p>
+            </div>
+            <div class="line oh">
+                <span class="fl icons" id="3"><i></i></span>
+                <p class="fl"><span class="fwb">自动订阅下一章      </span></p>
+            </div>
+            <div class="notice ">
+                <p>* 温馨提示：</p>
+                <p>1、全本订阅是订阅目前已更新的全部章节，如期间有免费章节和已购买章节，下载时将一并下载。</p>
+                <p>2、免费章节及已购买章节不会重复扣费，请放心购买。</p>
+            </div>
+            <input type="hidden" value="1" id="sexSelect">
+         
+            <!-- 功能按钮 -->
+            <div class="btnpay ">
+                <a href="javascript:;" class="fl">充值中心</a>
+                <input type="submit" class="act" value="确定订阅">
+            </div>
+
+        </div>
+    <!--</form>-->
+</div>
+
+
+<!--登陆弹窗-->
+<div class="mask" id="masked">
+    <div class="loginBox">
+        <div class="code-title" style="    margin-bottom: 0px">
+            <i class="btn-close"></i>
+        </div>
+        <p class="login-logo"></p>
+        <form action="/login/login" method="post" autocomplete="off">
+            <input type="text" placeholder="请输入您注册的手机号" name="phone" id="email" class="email db inputBox">
+            <p class="warn emailWarn dn"><i class="fl"></i><span class="fl">手机号码不对</span></p>
+            <div class="pwd inputBox">
+                <input type="password" name="password" placeholder="请输入密码" class="fl" id="pwds" maxlength="20">
+                <span class="fr " id="J_showHide"></span>
+            </div>
+            <input type="hidden" name="url" value="{$url}"/>
+            <p class="warn pwdWarn dn"><i class="fl"></i><span class="fl">密码格式不对</span></p>
+            <div class="oh"><p class="forgetPwd  fr">
+                <a href="javascript:forgetMask();" class=" forget">忘记密码</a><a href="javascript:registerMask();">注册</a></p></div>
+            <!--<a href="" class="db signIn">登录</a>-->
+            <input type="submit" class="db signIn" value="登陆"/>
+            <p class="loginWay-title"> 第三方账户登录</p>
+            <p class="loginWay-logo">
+                <a href="javasctipt:;"></a>
+                <a href="javasctipt:;"></a><a href="javasctipt:;"></a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!--忘记密码弹窗-->
+<div class="mask" id="forgetMask">
+    <!--登录框-->
+    <div class="registBoxs ">
+        <div class="code-title">
+            <i class="btn-close"></i>
+        </div>
+        <p class="title">忘记密码</p>
+        <form action="/register/signLogin.html" method="post">
+            <input type="text" placeholder="请输入手机号（目前仅支持中国大陆手机）" class="phone db" id="phone" name="phone" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11" />
+            <p class="warn dn phoneWarn"><i class="fl"></i><span class="fl">手机号码格式不对</span></p>
+            <div class="code-box">
+                <input type="text" class="codes fl"  placeholder="请输入短信验证码" name="code" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                <a href="javascript:;" value="" class="fr codeBtn" id="code" />获取验证码</a>
+                <input type="hidden" name="url" value="{$url}"/>
+            </div>
+            <div class="pwd fpwds" id="pssd">
+                <input type="password" name="passWord" placeholder="设置密码（6-20位，仅限字母数字）" class="fl" id="fpwd" maxlength="20"  />
+                <span class="fr "></span>
+            </div>
+            <p class="warn pwdw dn"><i class="fl"></i><span class="fl">密码格式不对</span></p>
+            <div class="pwd rePwd pp" style="margin-bottom: 0px;">
+                <input type="password" name="cofirmWord" placeholder="确认密码" class="fl" id="rePwd" maxlength="20" />
+                <span class="fr"></span>
+            </div>
+            <p class="warn pwdWarns dn"><i class="fl"></i><span class="fl">两次输入的密码不对</span></p>
+
+            <p class="forgetPwd  fr"><a href="javascript:masked();">直接登录</a></p>
+            <div class="clearfix"></div>
+            <input type="submit" class="db signIn" value="提交并登录"/>
+        </form>
+    </div>
+</div>
+<!--注册弹框-->
+<div class="mask" id="registrMask">
+    <div class="registBox">
+        <div class="code-title">
+            <i class="btn-close"></i>
+        </div>
+        <p class="title">注册</p>
+        <form action="" method="post">
+            <input type="text" placeholder="请输入手机号（目前仅支持中国大陆手机）" class="phone db" name="phone" id="phones" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11" id="rephone"/>
+            <p class="warn dn phoneWarn"><i class="fl"></i><span class="fl">手机号码格式不对</span></p>
+            <div class="code-box">
+                <input type="text" class="codes fl" placeholder="请输入短信验证码" name="code" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                <a	 href="javascript:;" value="" class="fr codeBtn" id="codess"/>获取验证码</a>
+
+            </div>
+            <div class="pwd pwdss">
+                <input type="password" name="new-password" placeholder="设置密码（6-20位，仅限字母数字）" class="fl" id="pwdss" maxlength="20"  />
+                <span class="fr "></span>
+            </div>
+            <p class="warn pwdWa dn"><i class="fl"></i><span class="fl">密码格式不对</span></p>
+            <div class="pwd rePwdss">
+                <input type="password" name="new-password" placeholder="确认密码" class="fl" id="rePwdss" maxlength="20" />
+                <span class="fr"></span>
+            </div>
+            <p class="warn pwdWas dn"><i class="fl"></i><span class="fl">两次输入的密码不对</span></p>
+            <div class="pwd " style="margin-bottom: 0px;">
+                <input type="text" name="name" placeholder="请输入昵称" class="fl" id="name" autocomplete="off" />
+                <div class="sex fr">
+                    <span class="icon "><i ></i></span>
+                    <span  id="0">男</span>
+                    <span class="icon select"><i ></i></span>
+                    <span id="1">女</span>
+                    <input type="hidden" value= '1' id="sexSelects"/>
+                </div>
+            </div>
+            <p class="forgetPwd  fr"><a href="javascript:masked();">直接登录</a></p>
+            <div class="clearfix"></div>
+            <a href class="db signIn">注册</a>
+        </form>
+    </div>
+</div>
+
+<p class="sd-back" id="j-top"><img src="__STATIC__/images/home_btn_top.png" title="返回顶部哟" /></p>
+<!--<script type="text/javascript" src="__STATIC__/js/jquery.dotdotdot.js"></script>-->
+<script type="text/javascript" src="__STATIC__/js/clamp.js"></script>
+<script src="__STATIC__/js/sd-scroll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-backTop.js" type="text/javascript" charset="utf-8"></script>
+<!--返回顶部END-->
+<script src="__STATIC__/js/book-page/jquery.nicescroll.min.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="__STATIC__/js/book-page/scrollbar.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="__STATIC__/js/book-page/mousewheel.min.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="__STATIC__/js/scorll.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd-search.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/sd.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/book-page/scroll.js"></script>
+<!--<script src="__STATIC__/js/book-page/items.js"></script>-->
+
+<script src="__STATIC__/js/book-page/chapter.js"></script>
+<script src="__STATIC__/js/page1.js"></script>
+<script src="__STATIC__/js/book-page/btn-publish.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/book-page/page.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/book-page/slide-notice.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/swiper.js"></script>
+<script src="__STATIC__/js/book-page/sliders.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/bookinfo.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/read/js/roll/order.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/read/js/roll/orderPay.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/read/js/roll/recom-tui.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="__STATIC__/login/js/login.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="__STATIC__/login/js/regist.js" type="text/javascript" charset="utf-8"></script>-->
+</body>
+</html>
+<script>
+
+    function jumpRead(bookid,num,price) {
+        if(price>0){
+            if($.cookie('shudong_user')){
+
+                window.location.href="/read/"+bookid+"/"+num;
+            }else {
+
+                $('#masked').show();
+            }
+
+        }else {
+
+            window.location.href="/read/"+bookid+"/"+num;
+        }
+    }
+
+    function forgetMask() {
+         $("#masked").hide();
+         $('.pwdWarn').addClass('dn');
+	  	$('.pwdw').addClass('dn');
+            
+	  	$('#pssd').css("margin-bottom","20px");
+	  	$('.pwds').css("margin-bottom","20px");
+         $("#forgetMask").show();
+    }
+    
+    function registerMask() {
+    	$("#masked").hide();
+		 $("#forgetMask").hide();
+        $("#registrMask").show();
+    }; 
+    function masked() {
+    	$("#masked").show();
+		 $("#forgetMask").hide();
+        $("#registrMask").hide();
+    }
+
+
+</script>
